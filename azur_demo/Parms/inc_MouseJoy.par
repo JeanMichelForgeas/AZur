@@ -1,0 +1,81 @@
+
+MOUSE_JOY:
+
+    ButRight+QUALBUTLEFT        Fold TOGGLE /* Plie ou déplie en cliquant Gauche+Droit */
+    ButRight+QUALBUTLEFT+DOUBLE Fold TOGGLE
+    ButRight+QUALBUTLEFT+TRIPLE Fold TOGGLE
+
+    ButLeft                     Block POINTER MOVECURS START CLEAR
+    ButLeft+DOUBLE              Block STARTDO POINTER MOVECURS BWORD
+    ButLeft+TRIPLE              Block STARTDO POINTER MOVECURS BLINE
+    ButLeft+CTRL                Block STARTDO POINTER MOVECURS
+    ButLeft+CTRL+DOUBLE         Block STARTDO POINTER MOVECURS BWORD
+    ButLeft+CTRL+TRIPLE         Block STARTDO POINTER MOVECURS BLINE
+
+    ButLeft+SHIFT               Block POINTER MOVECURS
+    MouseMove+QUALBUTLEFT       Block POINTER MOVECURS
+    MouseMove+QUALBUTLEFT+CTRL  Block POINTER MOVECURS
+    MouseMove+QUALBUTLEFT+SHIFT Block POINTER MOVECURS
+
+    ButRight                Block POINTER MOVECURS BFULLRECT START CLEAR
+    ButRight+CTRL           Block POINTER MOVECURS BFULLRECT START
+    MouseMove+QUALBUTRIGHT  Block POINTER MOVECURS BFULLRECT
+
+    ButRight+SHIFT               Block POINTER MOVECURS BFULLRECT
+    MouseMove+QUALBUTRIGHT       Block POINTER MOVECURS BFULLRECT
+    MouseMove+QUALBUTRIGHT+CTRL  Block POINTER MOVECURS BFULLRECT
+    MouseMove+QUALBUTRIGHT+SHIFT Block POINTER MOVECURS BFULLRECT
+
+  /*-------------- Exemples (en commentaires) ------------------
+    /* Commande sur la sélection d'une direction du joystick */
+    JoyUp     Cursor REL -1
+    JoyDown   Cursor REL +1
+    JoyLeft   Cursor REL COL -1
+    JoyRight  Cursor REL COL +1
+
+    /* Sélection d'une direction avec SHIFT ou ALT */
+    SHIFT+JoyLeft  Cursor COL 1
+    SHIFT+JoyRight Cursor COL -1
+    ALT+JoyUp      Cursor 1 1
+    ALT+JoyDown    Cursor -1 -1
+
+    /* Répétition quand une direction est sélectionnée */
+    JoyTick+QUALJOYUP    Cursor REL -1
+    JoyTick+QUALJOYDOWN  Cursor REL +1
+    JoyTick+QUALJOYLEFT  Cursor REL COL -1
+    JoyTick+QUALJOYRIGHT Cursor REL COL +1
+
+    /* Répétition quand appui sur les boutons de la souris */
+    JoyTick+QUALBUTLEFT  Text2Win "LMB "
+    JoyTick+QUALBUTRIGHT Text2Win "RMB "
+
+    /* Lors de l'appui sur le bouton du joystick */
+    JoyFire   Delete COL=1 BOUND
+
+    /* Répétition */
+    JoyTick   Cursor REL COL +1
+
+    /* Répétition quand bouton appuyé */
+    JoyTick+QUALJOYFIRE  Text2Win "F "
+
+    /* Répétition quand bouton appuyé avec une direction */
+    JoyTick+QUALJOYFIRE+QUALJOYUP    Text2Win "U "
+    JoyTick+QUALJOYFIRE+QUALJOYDOWN  Text2Win "D "
+    JoyTick+QUALJOYFIRE+QUALJOYLEFT  Text2Win "L "
+    JoyTick+QUALJOYFIRE+QUALJOYRIGHT Text2Win "R "
+
+    /* Répétition quand bouton appuyé avec une direction et ALT */
+    JoyTick-Alt-QUALJOYFIRE-QUALJOYUP    Text2Win "Alt-U "
+    JoyTick-Alt-QUALJOYFIRE-QUALJOYDOWN  Text2Win "Alt-D "
+    JoyTick-Alt-QUALJOYFIRE-QUALJOYLEFT  Text2Win "Alt-L "
+    JoyTick-Alt-QUALJOYFIRE-QUALJOYRIGHT Text2Win "Alt-R "
+
+    /* Répétition quand bouton appuyé avec une direction et LOCK1 */
+    JoyTick-LOCK1-QUALJOYFIRE-QUALJOYUP    Text2Win "L1-U "
+    JoyTick-LOCK1-QUALJOYFIRE-QUALJOYDOWN  Text2Win "L1-D "
+    JoyTick-LOCK1-QUALJOYFIRE-QUALJOYLEFT  Text2Win "L1-L "
+    JoyTick-LOCK1-QUALJOYFIRE-QUALJOYRIGHT Text2Win "L1-R "
+
+    NoSpecial   kprintf NoSpecial
+  */
+#

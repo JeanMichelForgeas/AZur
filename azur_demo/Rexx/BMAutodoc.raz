@@ -1,0 +1,33 @@
+/** $VER: BMAutodoc.raz 1.0 (4.6.94)
+ **
+ ** Ajoute une marque pour chaque nom de fonction dans un fichier
+ ** au format autodoc standard, puis ouvre la palette des marques.
+ **/
+
+OPTIONS RESULTS
+
+/*------- Sauvegarde la position de départ --------*/
+
+ReqClose Bookmarks      /* ferme la palette des marques */
+
+Lock INPUT DISPLAY /*STATUS*/ ON
+GetPos; PARSE VAR RESULT startline startcol .
+Cursor 1 1
+
+/*------- Parcoure les lignes du texte --------*/
+
+DO FOREVER
+    Search RESET CONVERT '"\x0C"'; IF (RC >= 5) THEN BREAK
+    Search RESET '"/"';            IF (RC >= 5) THEN BREAK
+    GetWord NEXT; word = STRIP(RESULT)
+    IF LENGTH(word)~=0 THEN BMAdd word
+END
+
+/*------- Restore la position de départ --------*/
+
+Cursor startline startcol
+Lock INPUT DISPLAY /*STATUS*/ OFF
+
+/*------- Ouvre la sélection flottante --------*/
+
+ReqOpen Bookmarks

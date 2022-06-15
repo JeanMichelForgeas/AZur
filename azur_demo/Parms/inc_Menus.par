@@ -1,0 +1,396 @@
+MENUS: /* Dépliez chaque menu pour avoir accès au texte */
+
+   MENU "Projet"
+    ITEM "Effacer tout"         WinClear
+    ITEM "Nouvelle fenêtre" "T" File2NewWin FILEREQ
+    DIV
+    ITEM "Ouvrir..."        "O" File2Win SETCURRENT CLEAR NOCURS
+    ITEM "Autres"
+        SUB "Reouvrir"      "<" File2Win CLEAR SAME NOCURS
+        SUB "Insérer..."        File2Win
+        SUB "Lire..."           File2Win SETCURRENT CLEAR NOCURS READONLY
+        SUB "Sous curseur"  "Z" File2NewWin CURSNAME
+        SDIV
+        SUB "Backups..."        ExeARexxCmd OPTIONS RESULTS;\
+                GetPrefs BACKUPDIRNAME;\
+                File2NewWin RESULT PAT "#?" FILEREQ
+    DIV
+    ITEM "Sauver"           "S" Win2File SAME
+    ITEM "Sauver en..."     "A" Win2File SETCURRENT CONFIRM
+    ITEM "Autres"
+        SUB "Sauver vers..."    Win2File CONFIRM
+        SUB "Ajouter à..."      Win2File APPEND
+        SUB "Sauver bloc..."    Block2File NB NI CONFIRM
+        SUB "Sauver ProPage"    Win2File SAME NT PARAGRAPH
+    DIV
+    ITEM "Imprimer"
+        SUB "Tout"          "P" Win2File NB NI NT PRT:
+        SUB "Tout Async"        ExeARexxCmd Win2File NB NI NT "T:TmpPrt"; ExeDOSCmd ASYNC Copy "T:TmpPrt" "PRT:"
+        SUB "Bloc"          ";" Block2File NB NI PRT:
+        SUB "Bloc Async"        ExeARexxCmd Block2File NB NI "T:TmpPrt"; ExeDOSCmd ASYNC Copy "T:TmpPrt" "PRT:"
+        SUB "Clip"              CB2File NB NI PRT:
+        SUB "Clip Async"        ExeARexxCmd CB2File NB NI "T:TmpPrt"; ExeDOSCmd ASYNC Copy "T:TmpPrt" "PRT:"
+        SBAR
+        SUB "Pré-Visualiser"    ExeARexxCmd OPTIONS RESULTS;\
+                Win2CB CLIP 255             ;\
+                File2NewWin CREATE "Visualisation" WIDTH 340 HEIGHT 400;\
+                IF (RC == 0) THEN DO        ;\
+                    portname = RESULT       ;\
+                    ADDRESS VALUE portname  ;\
+                    SetPrefs VFN "topaz" VFH 4;\
+                    CB2Win CLIP 255         ;\
+                    SetModified OFF         ;\
+                END                         ;\
+                Text2CB CLIP 255 TEXT " "
+    BAR
+    ITEM "Fichier"
+        SUB "Effacer..."        ExeARexxCmd OPTIONS RESULTS;\
+            ReqFile '"Effacer Fichier" EXIST';\
+            IF (RC == 0) THEN DO;\
+                filename = RESULT;\
+                ReqMulti "Confirmation" B1 "Fichier+icône" B2 '"Icône seul"' STDCANCEL CONVERT TEXT "Voulez-vous vraiment effacer :\n    "||filename;\
+                PARSE VAR RESULT button "," .;\
+                IF (button ~= CANCEL) THEN DO;\
+                    ADDRESS COMMAND "Delete "||'"'filename||".info"'"';\
+                    IF (button == OK) THEN ADDRESS COMMAND "Delete "||'"'filename'"';\
+                END;\
+            END
+        SUB "Renommer..."       ExeARexxCmd OPTIONS RESULTS;\
+            ReqFile '"Renommer Fichier" EXIST';\
+            IF (RC == 0) THEN DO;\
+                filename = RESULT;\
+                ReqMulti "Renommer" DEFAULT "'"filename"'" ACT STDCANCEL CONVERT TEXT "Donner le nouveau nom (même répertoire)";\
+                PARSE VAR RESULT button "," newname "," .;\
+                IF (button ~= CANCEL) THEN DO;\
+                    ADDRESS COMMAND 'Rename "'||filename||'" '||newname;\
+                    ADDRESS COMMAND 'Rename "'||filename||'.info" "'||STRIP(newname,,'"')||'.info"';\
+                END;\
+            END
+        SDIV
+        SUB "Créer répertoire..."   ExeARexxCmd OPTIONS RESULTS;\
+            ReqFile '"Créer répertoire" DIRMODE';\
+            IF (RC == 0) THEN ADDRESS COMMAND "MakeDir "||'"'RESULT'"'
+    ITEM "Attributs..."     AZFileProt "Attributs du fichier"
+    BAR
+    ITEM "Arranger"
+        SUB "En horizontal" "" ExeARexxScript AZur:Rexx/Mozahic.raz H
+        SUB "En vertical"   "" ExeARexxScript AZur:Rexx/Mozahic.raz V
+        SUB "En cascade"    "" ExeARexxScript AZur:Rexx/Mozahic.raz C
+    ITEM "Iconifier"       "I" WinIconify ON
+    ITEM "Fermer"          "Q" WinClose
+    BAR
+    ITEM "A Propos"        "?" ReqOpen About
+    ITEM "Info"            ""  ReqOpen Info
+    BAR
+    ITEM "Projet entier"
+        SUB "Charger un projet"     ExeARexxScript AZur:Rexx/Project.raz OPENAS
+        SUB "Sauvegarder ce projet" ExeARexxScript AZur:Rexx/Project.raz SAVEAS
+        SBAR
+        SUB "Sauver si modifiés" ExeARexxScript AZur:Rexx/CmdToAll.raz Win2File SAME MODIFIED
+        SUB "Tout iconifier"     ExeARexxScript AZur:Rexx/CmdToAll.raz Iconify ON
+        SUB "Tout dé-iconifier"  ExeARexxScript AZur:Rexx/CmdToAll.raz Iconify OFF
+    ITEM "Quitter & Laisser" "" WinClose ALL /* laisse en mémoire si lancé avec option RESIDENT OU NOPROC */
+    ITEM "Quitter & Oublier" "" ExeARexxCmd \
+                OPTIONS RESULTS;\
+                'ReqMulti STDCANCEL TEXT "Voulez-vous vraiment tout quitter et oublier ?"';\
+                PARSE VAR RESULT button "," .;\
+                IF (button ~= CANCEL) THEN WinClose ALL FORCE
+
+   MENU "Edition"
+    ITEM "Couper"
+        SUB "Unité 0"       "X" Block CLIP=0 ERASE
+        SUB "Unité 1"       ""  Block CLIP=1 ERASE
+        SUB "Unité 2"       ""  Block CLIP=2 ERASE
+        SUB "Unité 3"       ""  Block CLIP=3 ERASE
+    ITEM "Copier"
+        SUB "Unité 0"       "C" Block2CB CLIP=0
+        SUB "Unité 1"       ""  Block2CB CLIP=1
+        SUB "Unité 2"  "Ctl+F4" Block2CB CLIP=2
+        SUB "Unité 3"  "Alt+F4" Block2CB CLIP=3
+    ITEM "Coller"
+        SUB "Unité 0"       "V" CB2Win CLIP=0
+        SUB "Unité 1"       ""  CB2Win CLIP=1
+        SUB "Unité 2"  "Ctl+F5" CB2Win CLIP=2
+        SUB "Unité 3"  "Alt+F5" CB2Win CLIP=3
+    DIV
+    ITEM "Coller vertical"
+        SUB "Vertical unité 0"     "F6" CB2Win VERTICAL CLIP=0
+        SUB "Vertical unité 1"          CB2Win VERTICAL CLIP=1
+        SUB "Vertical unité 2" "Ctl+F6" CB2Win VERTICAL CLIP=2
+        SUB "Vertical unité 3" "Alt+F6" CB2Win VERTICAL CLIP=3
+        SUB "Par-dessus"                CB2Win OVERLAY
+        SUB "Par-dessus Vertical"       CB2Win VERTICAL OVERLAY
+    BAR
+    ITEM "Sélectionner Tout"    "!" Block ALL STARTDO
+    BAR
+    ITEM "Majuscule"
+        SUB "En Majuscule"      "+" CharConvert UPPER
+        SUB "En minuscule"      "-" CharConvert LOWER
+        SUB "Inverser Maj/min"  "K" CharConvert TOGGLE
+    ITEM "Insérer/Remplacer"    "W" SetWriteReplace TOGGLE
+    DIV
+    ITEM "Cloner ligne"         "L" LineClone
+    ITEM "Joindre lignes"       "J" LineJoin
+    ITEM "Formater"
+        SUB "Formater Paragraphe" "Ctl+F" TextFormat
+        SUB "Formater & joindre"  "Ctl+A" TextFormat JOINPARA
+    ITEM "Justifier"
+        SUB "Centrer"   "Ctl+Q,C" TextJustify CENTER
+        SUB "A gauche"  "Ctl+Q,G" TextJustify LEFT
+        SUB "A droite"  "Ctl+Q,D" TextJustify RIGHT
+        SUB "Remplir"   "Ctl+Q,R" TextJustify FLUSH
+    DIV
+    ITEM "Echanger"
+        SUB "Echanger blocs"              ExeARexxScript AZur:Rexx/SwapBlocks.raz
+        SUB "Echanger mots"       "Ctl+)" ExeARexxScript AZur:Rexx/SwapWords.raz
+        SUB "Echanger caractères"     ")" ExeARexxScript AZur:Rexx/SwapChars.raz
+    DIV
+    ITEM "Insérer Texte"
+        SUB "Date"                "Ctl+D" ExeARexxCmd Text2Win Date()
+        SUB "Heure"               "Ctl+H" ExeARexxCmd Text2Win Time()
+        SUB "Saut de page"        "Ctl+L" Text2Win CONVERT "\x0C"
+        SUB "Séquence ANSI"       "Ctl+S" ExeARexxScript AZur:Rexx/InsertANSI.raz
+        SUB "Séquence AmigaGuide" "Ctl+G" ExeARexxScript AZur:Rexx/InsertAGuide.raz
+        SBAR
+        SUB "Insérer Héxa..."     "H"     ReqOpen Hex
+        SUB "Table ASCII..."      "Ctl+T" AZCharTable "Table ASCII"
+    BAR
+    ITEM "Remettre"         "U" CB2Win CLIP=1
+    ITEM "Remettre vertical"    CB2Win CLIP=1 VERTICAL
+
+   MENU "Recherche"
+    ITEM "Chercher bloc"       "2" Search CLEAR PREFS FROMBLOCK FORW FROMCURS SINGLE
+    ITEM "Chercher..."         "F" Search CLEAR PREFS FORW REQ
+    ITEM "Compter..."          ""  Search CLEAR PREFS ALL FORW FULL TOBLOCKS NOCURS REQ
+    ITEM "         Palette..." ""  ReqOpen Search
+    DIV
+    ITEM "Chercher suivant"    "N" Search CLEAR FORW FROMCURS SINGLE
+    ITEM "Chercher précédent"  "B" Search CLEAR BACK FROMCURS SINGLE
+    ITEM "Chercher tous"       ""  Search CLEAR FULL ALL FORW
+    BAR
+    ITEM "Remplacer bloc..."   "3" Replace CLEAR PREFS FROMBLOCK FORW FROMCURS SINGLE REQ
+    ITEM "Remplacer..."        "E" Replace CLEAR PREFS FORW FROMCURS SINGLE REQ
+    ITEM "         Palette..." ""  ReqOpen Replace
+    DIV
+    ITEM "Remplacer suivant"   "R" Replace CLEAR FORW FROMCURS SINGLE
+    ITEM "Remplacer précédent" "Y" Replace CLEAR BACK FROMCURS SINGLE
+    ITEM "Tout, texte entier"  ""  Replace CLEAR FORW FULL ALL
+    ITEM "Tout, depuis curseur" "$" Replace CLEAR FORW ALL
+
+   MENU "Outils"
+    ITEM "Aller à la ligne"
+        SUB "Une fois..." "G"       Cursor REQUEST
+        SUB "Palette flottante..."  ReqOpen LineCol
+    ITEM "Aller à l'offset"
+        SUB "Une fois..."           Cursor OFFSET 0 REQUEST
+        SUB "Palette flottante..."  ReqOpen Offset
+    ITEM "Aller à la marque"
+        SUB "N°1"       "Alt+Num1"  BM 1
+        SUB "N°2"       "Alt+Num2"  BM 2
+        SUB "N°3"       "Alt+Num3"  BM 3
+        SUB "N°4"       "Alt+Num4"  BM 4
+        SDIV
+        SUB "Nommée..." "Alt+Enter" BM
+        SDIV
+        SUB "Suivante"      Cursor NEXTMARK
+        SUB "Précédente"    Cursor PREVMARK
+        SDIV
+        SUB "Palette flottante..." "|" ReqOpen Bookmarks
+    ITEM "Aller au bloc"
+        SUB "Suivant"   "]" Cursor NEXTBLOCK
+        SUB "Précédent" "[" Cursor PREVBLOCK
+    ITEM "Aller au pli"
+        SUB "Suivant"    "F2"     Cursor NEXTFOLD
+        SUB "Précédent"  "Alt+F2" Cursor PREVFOLD
+    BAR
+    ITEM "Poser des marques"
+        SUB "N°1"       "Ctl+Num1"  BMAdd 1 DELPROOF /* en fait les numéros sont aussi des noms */
+        SUB "N°2"       "Ctl+Num2"  BMAdd 2 DELPROOF
+        SUB "N°3"       "Ctl+Num3"  BMAdd 3 DELPROOF
+        SUB "N°4"       "Ctl+Num4"  BMAdd 4 DELPROOF /* on peut aller à l'infini... */
+        SDIV
+        SUB "Mot"       "Ctl+Num+"  ExeARexxCmd ASYNC OPTIONS RESULTS; GetWord; BMAdd RESULT
+        SUB "Bloc"      "Ctl+Num*"  BMAdd BLOCK
+        SUB "Nommer..." "Ctl+Enter" BMAdd
+        SDIV
+        SUB "Fonctions C"           ExeARexxScript ASYNC AZur:Rexx/BMCFuncs.raz
+        SUB "Fonctions Asm"         ExeARexxScript ASYNC AZur:Rexx/BMAsmFuncs.raz
+        SUB "Fonct. Autodoc"        ExeARexxScript ASYNC AZur:Rexx/BMAutodoc.raz
+        SUB "Noeuds AmigaGuide"     ExeARexxScript ASYNC AZur:Rexx/BMAGuide.raz
+    ITEM "Enlever des marques"
+        SUB "Enlever une seule..."  BMRemove
+        SUB "Vider tout"            BMRemove ALL
+        SUB "Laisser les chiffres"  BMRemove PATTERN ??#?
+        SUB "Avec joker..."         ExeARexxCmd OPTIONS RESULTS;\
+                ReqMulti "Enlever" DEFAULT "'"#?"'" ACT STDCANCEL CONVERT TEXT "Entrez le joker AmigaDOS pour déterminer\nles marques à supprimer";\
+                PARSE VAR RESULT button "," patt "," .;\
+                IF (button ~= CANCEL) THEN BMRemove PATTERN patt
+    BAR
+    ITEM "Convertir bloc"
+        SUB "ASCII 7 bits"    "Alt+F10" CharConvert ASCII7 NOCURS
+        SUB "Rotation 13"               CharConvert NOCURS ROTATE
+        SUB "Amiga -> Vidéotex"         CharConvert NOCURS AM2VDX
+        SUB "Vidéotex -> Amiga"         CharConvert NOCURS VDX2AM
+        SUB "Amiga -> MSDOS"            CharConvert NOCURS AM2MS
+        SUB "MSDOS -> Amiga"            CharConvert NOCURS MS2AM
+    ITEM "Entourer bloc"
+        SUB "C /** **/"     "Ctl+E,1" Surround "/**** " " ****/" " **** "
+        SUB "C //"          "Ctl+E,2" Surround "// " "//" "// "
+        SUB "C Header"      "Ctl+E,3" Surround "/**********************************************" " **********************************************/" " **\t"
+        SUB "Asm ;"         "Ctl+E,4" Surround "; " "; " "; "
+        SUB "Asm Header"    "Ctl+E,5" Surround "**********************************************" "**********************************************" "**\t"
+        SUB "Colonnes"      "Ctl+E,6" Surround "| " " |" " |"
+        SUB "Citation"      "Ctl+E,7" Surround "> " "> " "> "
+        SUB "Tableau ***"   "Ctl+E,8" Surround OVERLAY "**" "**" "**" "**"
+        SUB "Tableau |+-"   "Ctl+E,9" Surround OVERLAY "|" "|" "-" "+"
+    ITEM "Trier bloc"
+        SUB "Ascendant"             Sort
+        SUB "Descendant"            Sort DESCENDING
+    BAR
+    ITEM "Lancer programme"
+        SUB "Calculatrice..."   ExeDOSCmd SCREEN ASYNC SYS:Tools/Calculator
+        SUB "Horloge..."        ExeDOSCmd SCREEN ASYNC SYS:Utilities/Clock DIGITAL LEFT 502 TOP 0 FORMAT 2
+    ITEM "Executer"
+        SUB "Executer bloc DOS"         "Ctl-X,D"   ExeDOSCmd BLOCK CONSOLE ASYNC
+        SUB "Executer script DOS..."    "Ctl-X,S,D" ExeDOSScript CONSOLE ASYNC
+        SBAR
+        SUB "Executer bloc ARexx"       "Ctl-X,A"   ExeARexxCmd BLOCK ASYNC
+        SUB "Executer script ARexx..."  "Ctl-X,S,A" ExeARexxScript CONSOLE ASYNC PAT="#?.raz"
+        SDIV
+        SUB "* Révision+1..."           ExeARexxScript AZur:Rexx/Version.raz
+        SUB "* Numéroter/Enlever..."    ExeARexxScript AZur:Rexx/NumLines.raz
+        SUB "* Mailing..."              ExeArexxScript ASYNC AZur:Rexx/Mailing.raz
+    ITEM "Tester"
+        SUB "Tester []{}()" "\" Match [ ] { } ( )
+        SUB "Tester DO END"     Match DO END
+        SUB "Tester /* */"      Match "/** **/"
+        SUB "Tout []{}()"       Match FULL [ ] { } ( )
+        SUB "Tout /* */"        Match FULL "/** **/"
+    ITEM "Aide"
+        SUB "Paramétrage"   "Help"  ExeARexxCmd OPTIONS RESULTS ;\
+                IF (Exists("SYS:Utilities/Amigaguide")) THEN ExeDOSCmd SCREEN ASYNC CMD "SYS:Utilities/Amigaguide AZur:Man/Aide.guide" ;\
+                ELSE File2NewWin READONLY "AZur:Man/Aide.guide"
+        SDIV
+        SUB "AZMan"         "Sft+Help" AZMan
+        SUB "AZMan fenêtre" "Alt+Help" AZMan PROMPT
+        SUB "Créer index AZMan"        ExeDOSCmd ASYNC AZur:Utilities/AZMan_MakeIndex
+        SDIV
+        SUB "AmigaGuide"            ExeArexxScript AZur:Rexx/AmigaGuide.raz SYNC
+        SUB "AmigaGuide, Fenêtre"   ExeArexxScript AZur:Rexx/AmigaGuide.raz ASYNC
+        SDIV
+        SUB "Includes Système"   "Ctl+I,S" File2NewWin READONLY FILEREQ "Include:" PAT "#?.h"
+        SUB "Includes Intuition" "Ctl+I,I" File2NewWin READONLY FILEREQ "Include:Intuition/" PAT "#?.h"
+        SDIV
+        SUB "Autodocs"  ExeARexxCmd OPTIONS RESULTS ;\
+            IF OPEN(in,"ENV:AzurEditor/Commands/AZMan","R") ~= 0 THEN DO ;\
+                filename = READLN(in) ;\
+                CALL CLOSE(in) ;\
+                File2NewWin READONLY FILEREQ filename PAT "#?.doc" ;\
+            END
+    ITEM "Priorité"             SetPri
+    BAR
+    ITEM "Console AZur..."      "=" ExeARexxScript ASYNC CONSOLE AZur:Rexx/Console.raz
+    ITEM "Console de test ON/OFF"   SetDebug TOGGLE
+
+   MENU "Macro"
+    ITEM "Enregistrer Macro"    "M" MacRecord
+    ITEM "Effacer dernier"      "0" MacDelete
+    ITEM "Arrêter Enreg."       ":" MacEnd
+    DIV
+    ITEM "Jouer Macro"          "ù" MacPlay 1
+    ITEM "Jouer plusieurs..."       MacPlay
+    BAR
+    ITEM "Macro vers texte"         Mac2Win
+    ITEM "Bloc vers Macro"          Block2Mac CLEAR
+    DIV
+    ITEM "Charger Macro..."         File2Mac "AZur:Rexx/" PAT "#?.maz"
+    ITEM "Sauver Macro..."          Mac2File "AZur:Rexx/" PAT "#?.maz"
+    BAR
+    ITEM "Exécuter..."              ExeARexxCmd File2Mac "AZur:Rexx/" PAT "#?.maz"; IF RC = 0 THEN MacPlay 1;
+    ITEM "Editer..."                File2NewWin FILEREQ "AZur:Rexx/" PAT "#?.maz"
+
+   MENU "Plis"
+    ITEM "Créer"        "Ctl+R,C"   Fold SET
+    ITEM "Créer1"       "Ctl+R,X"   Fold SET ADDSAME
+    ITEM "Créer-Plier"  "Ctl+R,V"   Fold SET ON
+    ITEM "Créer1-Plier" "Ctl+R,W"   Fold SET ADDSAME ON
+    BAR
+    ITEM "Plier"        "Ctl+R,P"   Fold ON
+    ITEM "Déplier"      "Ctl+R,D"   Fold OFF
+    ITEM "Changer"      "F1"        Fold TOGGLE
+    DIV
+    ITEM "Enlever"      "Ctl+R,E"   Fold UNSET
+    BAR
+    ITEM "Plier   imbriqué"         Fold ON SUB
+    ITEM "Déplier imbriqué"         Fold OFF SUB
+    ITEM "Changer imbriqué"         Fold TOGGLE SUB
+    DIV
+    ITEM "Enlever imbriqué"         Fold UNSET SUB
+    BAR
+    ITEM "Plier   tout"             Fold ON ALL SUB
+    ITEM "Déplier tout"             Fold OFF ALL SUB
+    ITEM "Changer tout" "Alt+F1"    Fold TOGGLE ALL SUB
+    DIV
+    ITEM "Enlever tout"             Fold UNSET ALL SUB
+
+   MENU "Prefs"
+    ITEM "Mode écran AZur..." "Ctl+P,A"   ReqOpen DisplayPrefs
+    ITEM "Edition..."   "Ctl+P,E"   ReqOpen EditPrefs
+    ITEM "Recherche..." "Ctl+P,R"   ReqOpen SearchPrefs
+    ITEM "Général/ARexx..."   "Ctl+P,G"   ReqOpen EnvPrefs
+    ITEM "Fenêtre/Polices..."   "Ctl+P,F"   ReqOpen WindowPrefs
+    DIV
+    ITEM "Fichier de paramètres"    File2NewWin "AZur:Parms/AZur.par" PAT "#?.par"
+    BAR
+    ITEM "Requête AutoSauve ON/OFF" ExeARexxCmd OPTIONS RESULTS;\
+            GetPrefs REQAUTOSAVE ;\
+            IF (RESULT == "ON") THEN reqtext = "La requête pour confirmer les sauvegardes\nautomatiques est active.\nVoulez-vous la désactiver ?" ;\
+            ELSE reqtext = "La requête pour confirmer les sauvegardes\nautomatiques n'est pas active.\nVoulez-vous qu'elle soit activée ?" ;\
+            ReqMulti "AutoSauve" STDCANCEL CONVERT TEXT reqtext ;\
+            PARSE VAR RESULT button "," . ; IF (button == CANCEL) THEN EXIT ;\
+            SetPrefs REQAUTOSAVE TOGGLE
+    ITEM "Protège/Déprotège ON/OFF" SetPrefs READONLY TOGGLE
+    ITEM "PowerPacker       ON/OFF" SetCompress TOGGLE
+    ITEM "Sauver avec icône ON/OFF" ExeARexxCmd OPTIONS RESULTS;\
+            GetPrefs SAVEICON; name = RESULT ;\
+            IF (RESULT == "ON") THEN reqtext = "La sauvegarde d'icône avec le fichier est active.\nVoulez-vous la désactiver ?" ;\
+            ELSE reqtext = "La sauvegarde d'icône avec le fichier n'est pas active.\nVoulez-vous qu'elle soit activée ?" ;\
+            ReqMulti "AutoSauve" STDCANCEL CONVERT TEXT reqtext ;\
+            PARSE VAR RESULT button "," . ; IF (button == CANCEL) THEN EXIT ;\
+            SetPrefs SAVEICON TOGGLE
+    ITEM "Icône application ON/OFF" ExeARexxCmd OPTIONS RESULTS;\
+            GetPrefs APPICONNAME; name = RESULT ;\
+            GetPrefs APPICON ;\
+            IF (RESULT == "ON") THEN reqtext = "L'icône d'application est active.\nVoulez-vous la désactiver ?" ;\
+            ELSE reqtext = "L'icône d'application n'est pas active.\nVoulez-vous qu'elle soit activée ?" ;\
+            ReqMulti '"'||"Icône d'application"||'"' STDCANCEL T1 "Nom" D1 name CONVERT TEXT reqtext ;\
+            PARSE VAR RESULT button ',"' name '","' . ; IF (button == CANCEL) THEN EXIT ;\
+            SetPrefs APPICON TOGGLE APPICONNAME name
+    ITEM "Pavé numérique    ON/OFF" Qualifier LOCK2 TOGGLE
+    DIV
+    ITEM "Marges            ON/OFF" "Ctl+M,M" SetPrefs USEMARGINS TOGGLE
+    ITEM "Auto formatage    ON/OFF" "Ctl+M,A" SetPrefs AUTOFORMAT TOGGLE
+    ITEM "Marge gauche au curseur"  "Ctl+M,G" ExeARexxCmd OPTIONS RESULTS;\
+            GetPos; PARSE VAR RESULT . curscol .;\
+            SetPrefs LEFTMARGIN curscol-1
+    ITEM "Marge droite au curseur"  "Ctl+M,D" ExeARexxCmd OPTIONS RESULTS;\
+            GetPos; PARSE VAR RESULT . curscol .;\
+            SetPrefs RIGHTMARGIN curscol
+    DIV
+    ITEM "Tabulation"
+        SUB "Tabulation 3" "Ctl+Z,3" SetPrefs TabLen 3
+        SUB "Tabulation 4" "Ctl+Z,4" SetPrefs TabLen 4
+        SUB "Tabulation 8" "Ctl+Z,8" SetPrefs TabLen 8
+    BAR
+    /* ITEM "Edition binaire" SetPrefs AF OFF StripChange OFF Tab2Space OFF Space2Tab OFF StripSave OFF StripLoad OFF LoadCR2LF OFF LoadCRLF2LF OFF SaveLF2CR OFF SaveLF2CRLF OFF TextReplace ON
+    DIV */
+    ITEM "Charger Prefs (défaut)"   File2Prefs DEFAULT
+    ITEM "Charger depuis..."        File2Prefs
+    DIV
+    ITEM "Sauver Prefs"             Prefs2File DEFAULT
+    ITEM "Sauver Prefs en..."       Prefs2File
+#
+
+INCLUDES:
+    AZur:Parms/Compiler_Menus.inc
+#

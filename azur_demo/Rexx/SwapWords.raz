@@ -1,0 +1,28 @@
+/** $VER: SwapWords.raz 1.1 (28.8.94)
+ **
+ ** Pour inverser un mot avec le mot précédent, en tenant
+ ** compte du saut de ligne et de plusieurs caractères
+ ** entre les mots.
+ **/
+
+OPTIONS RESULTS
+
+Cursor WORD 0       /* début du mot */
+Cursor WORD "-1"      /* début du texte ??? */
+IF (RC = 0) THEN DO
+
+    Block BWORD STARTDO     /* efface le premier */
+    Block CLIP 255 ERASE
+
+    GetPos; PARSE VAR RESULT startline startcol .
+
+    Block WORD "1" BWORD STARTDO    /* efface le deuxième */
+    Block CLIP 254 ERASE
+
+    CB2Win CLIP 255
+
+    Cursor startline startcol
+    CB2Win CLIP 254
+    Cursor WORD "1"
+
+END

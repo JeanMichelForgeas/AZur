@@ -1,0 +1,140 @@
+/** $VER: InsertAGuide.raz 1.1 (12.12.94)
+ **
+ ** Insère une séquence de codes AmigaGuide
+ **/
+
+OPTIONS RESULTS
+
+label_list = "DATABASE\nAUTHOR\nCOPYRIGHT\nVERSION\nMASTER\nFONT\nINDEX\nHELP\nWORDWRAP\nNODE\nDNODE\nREMARK"
+label_test = "DATABASE AUTHOR COPYRIGHT VERSION MASTER FONT INDEX HELP WORDWRAP NODE DNODE REMARK"
+label_result = "@DATABASE @AUTHOR @(C) @$VER: @MASTER @FONT @INDEX @HELP @WORDWRAP @NODE @DNODE @REMARK"
+label_func = "Get_NameQ Get_NameQ Get_Copyright Get_Version Get_NameQ Get_Name_Font Get_NameQ Get_NameQ Get_None Get_Node Get_Node Get_Name"
+
+node_list = "TITLE\nTOC\nPREV\nNEXT\nKEYWORDS\nFONT\nBUTTON\nENDNODE"
+node_test = "TITLE TOC PREV NEXT KEYWORDS FONT BUTTON ENDNODE"
+node_result = "@TITLE @TOC @PREV @NEXT @KEYWORDS @FONT @{ @ENDNODE"
+node_func = "Get_NameQ Get_NameQ Get_Name Get_Name Get_NameQ Get_Name_Font Get_Button Get_None"
+
+action_list = "ALINK\nCLOSE\nLINK\nRX\nRXS\nSYSTEM\nQUIT"
+action_test = "ALINK CLOSE LINK RX RXS SYSTEM QUIT"
+action_result = "ALINK CLOSE LINK RX RXS SYSTEM QUIT"
+action_func = "Get_Name_Line Get_None Get_Name_Line Get_NameQ Get_NameQ Get_NameQ Get_None"
+
+ReqMulti "Insérer AmigaGuide" CONVERT B1 "_Label" B2 "_Noeud" B3 "_Action" TEXT "Quelle commande AmigaGuide voulez-vous insérer ?"
+PARSE VAR RESULT button ',' .
+SELECT
+    WHEN (button == OK)     THEN DO
+        title = "Label"; list = label_list; test = label_test; res = label_result; func = label_func;
+        CALL GetListResult
+    END
+    WHEN (button == MIDDLE) THEN DO
+        title = "Noeud"; list = node_list; test = node_test; res = node_result; func = node_func;
+        CALL GetListResult
+    END
+    WHEN (button == CANCEL) THEN DO
+        title = "Action"; list = action_list; test = action_test; res = action_result; func = action_func;
+        CALL GetListResult
+    END
+    OTHERWISE NOp
+END
+
+EXIT
+
+GetListResult: PROCEDURE EXPOSE title list test res func
+    ReqList title CONVERT TEXT list; IF (RC > 0) THEN EXIT
+    cmdname = RESULT
+    DO i=1 to 15;
+        IF (cmdname == WORD(test,i)) THEN DO
+            execfunc = WORD(func,i)
+            INTERPRET "CALL "execfunc"(cmdname,WORD(res,i))"
+        END
+    END
+RETURN
+
+Get_None:
+ARG cmdname,keyword
+    Text2Win COL 1 CONVERT TEXT keyword'\n'
+RETURN
+
+Get_Copyright:
+ARG cmdname,keyword
+    GetFileInfo; PARSE VAR RESULT . . ' "' filename '"'
+    today = DATE('E'); PARSE VAR today jj '/' mm '/' aa
+    ReqMulti STDCANCEL cmdname CONVERT STR1 ACT TEXT "Entrez le nom de l'auteur"
+    PARSE VAR RESULT button ',"' name '","' .
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword '"'filename", Copyright © 19"aa name', Tous Droits Reservés"\n'
+    END
+RETURN
+
+Get_Version:
+ARG cmdname,keyword
+    GetFileInfo; PARSE VAR RESULT . . ' "' filename '"'
+    today = DATE('E'); PARSE VAR today jj '/' mm '/' aa
+    jj = STRIP(jj,'L','0'); mm = STRIP(mm,'L','0'); aa = STRIP(aa,'L','0')
+    Text2Win COL 1 CONVERT TEXT keyword WORD(filename,1) "1.0" "("jj"."mm"."aa")\n"
+RETURN
+
+Get_Name:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 ACT TEXT "Entrez le texte de cette commande"
+    PARSE VAR RESULT button ',"' name '","' .
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword name'\n'
+    END
+RETURN
+
+Get_NameQ:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 ACT TEXT "Entrez un nom pour cette commande"
+    PARSE VAR RESULT button ',"' name '","' .
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword '"'name'"\n'
+    END
+RETURN
+
+Get_Node:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 T1 "Nom" STR2 T2 "Titre" ACT TEXT "Entrez un nom et un titre (optionnel) pour cette commande"
+    PARSE VAR RESULT button ',"' name '","' title '"'
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword name '"'title'"\n'
+        Text2Win NOCURS CONVERT TEXT "\n@ENDNODE\n"
+    END
+RETURN
+
+Get_Name_TitleQ:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 T1 "Nom" STR2 T2 "Titre" ACT TEXT "Entrez un nom et un titre (optionnel) pour cette commande"
+    PARSE VAR RESULT button ',"' name '","' title '"'
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword name '"'title'"\n'
+    END
+RETURN
+
+Get_Name_Font:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 T1 "Nom" STR2 T2 "Taille" ACT TEXT "Entrez le nom puis la taille de la fonte"
+    PARSE VAR RESULT button ',"' name '","' size '"'
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword name size'\n'
+    END
+RETURN
+
+Get_Name_Line:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 T1 "Nom" STR2 T2 "Ligne" ACT TEXT "Entrez le nom du noeud puis le numéro de la\nligne dans le document (optionnel)"
+    PARSE VAR RESULT button ',"' name '","' line '"'
+    IF (button == OK) THEN DO
+        Text2Win COL 1 CONVERT TEXT keyword name line'\n'
+    END
+RETURN
+
+Get_Button:
+ARG cmdname,keyword
+    ReqMulti STDCANCEL cmdname CONVERT STR1 T1 "Bouton" STR2 T2 "Commande" ACT TEXT "Entrez le nom pour le bouton, puis la\ncommande qui doit être exécutée"
+    PARSE VAR RESULT button ',"' name '","' cmd '"'
+    IF (button == OK) THEN DO
+        Text2Win CONVERT TEXT keyword'"' name '"' cmd'}\n'
+    END
+RETURN

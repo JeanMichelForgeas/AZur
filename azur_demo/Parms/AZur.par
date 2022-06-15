@@ -1,0 +1,25 @@
+    /** Différents chapitres permettent de configurer différents
+     ** aspects du programme. Ce paramétrage consiste à utiliser
+     ** les commandes de différentes façons. Quand vous écrivez
+     ** leur ligne d'arguments n'oubliez pas que l'interprétation
+     ** des arguments est régie par les mêmes règles que pour la
+     ** ligne d'arguments dans un Shell AmigaDOS.
+     **
+     ** On peut indiquer une continuation sur la ligne suivante
+     ** avec un "\" en dernier caractère d'une ligne (attention,
+     ** pas d'espaces derrière).
+     **
+     ** Pour que le fichier total ne dépasse pas la possibilité
+     ** de cette version de démonstration, il a été découpé en
+     ** plusieurs morceaux.
+     ** Pour les ouvrir facilement placez le curseur sur leur nom
+     ** et faite Amiga+Z
+     **/
+
+INCLUDES:
+    AZur:Parms/inc_Alias.par
+    AZur:Parms/inc_Keys.par
+    AZur:Parms/inc_MainMenus.par
+    AZur:Parms/inc_Menus.par
+    AZur:Parms/inc_MouseJoy.par
+#

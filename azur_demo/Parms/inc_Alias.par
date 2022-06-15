@@ -1,0 +1,130 @@
+
+ALIAS:
+/*********************************************************************
+ **
+ **  Enlever les commentaires autour de ceux qui vous interressent.
+ **  Les guillemets sont obligatoires autour du premier argument.
+ **
+ *********************************************************************/
+
+ /*------------- Conformité avec "AMIGA User Interface Style Guide" */
+ /*------------- et avec "AMIGA Programmer's Guide to ARexx"        */
+ "OPEN"       File2Win SETCURRENT CLEAR NOCURS
+ "SAVE"       Win2File SAME
+ "PRINT"      Win2File PTR:
+ "GOTO"       Cursor FOLDS LINE
+ "GOTOLINE"   Cursor FOLDS LINE
+ "GOTOCOLUMN" Cursor COL
+ "CURSOR UP"    Cursor REL UP LINES=1
+ "CURSOR DOWN"  Cursor REL LINES=1
+ "CURSOR LEFT"  Cursor REL LEFT CHARS=1
+ "CURSOR RIGHT" Cursor REL CHARS=1
+ "LINE"       Cursor REL LINE
+ "COLUMN"     Cursor REL COL
+ "NEXT"       NOp
+ "PREVIOUS"   NOp
+ "POSITION"   NOp
+ "FONT"       NOp
+ "MOVEWINDOW"     WinChange
+ "SIZEWINDOW"     WinChange -1 -1
+ "ZOOMWINDOW"     NOp
+ "UNZOOMWINDOW"   NOp
+ "PAGEUP"         Cursor LINE -1 PAGE RELATIVE
+ "PAGEDOWN"       Cursor LINE +1 PAGE RELATIVE
+
+ "PASTE"    CB2Win
+ "COPY"     Block CLIP=0
+ "CUT"      Block CLIP=0 ERASE
+
+ "LOCKGUI"    Lock INPUT ON
+ "UNLOCKGUI"  Lock INPUT OFF
+ "CMDSHELL"   ExeARexxScript CONSOLE AZur:Rexx/Console.raz
+
+ "GETATTR"        GetPrefs
+ "SETATTR"        SetPrefs
+ "TEXTPEN"        SetPrefs TEXTPEN
+ "BACKGROUNDPEN"  SetPrefs BACKPEN
+ "ACTIVATE"       WinAct
+
+ "REQUESTFILE"      ReqFile
+ "REQUESTSTRING"    ReqMulti
+ "REQUESTNUMBER"    ReqMulti
+ "REQUESTRESPONSE"  ReqMulti
+ "REQUESTNOTIFY"    ReqMulti
+/*
+ "BAUDS"          NOp
+ "PARITY"         NOp
+ "STOPBITS"       NOp
+ "DUPLEX"         NOp
+ "PROTOCOL"       NOp
+ "SENDFILE"       NOp
+ "CAPTURE"        NOp
+ "DIAL"           NOp
+ "REDIAL"         NOp
+ "SEND"           NOp
+ "WAIT"           NOp
+ "TIMEOUT"        NOp
+
+ "WINDOW"         NOp
+ "DEACTIVATE"     NOp
+ "DISABLE"        NOp
+ "ENABLE"         NOp
+ "LEARN"          NOp
+ "ALIAS"          NOp
+ "SELECT"         NOp
+
+ "BUTTON"         NOp
+ "KEYBORD"        NOp
+ "MENU"           NOp
+ */
+
+ /*
+ /*------------- Emulation commandes SAS Editor */
+ "BL" Cursor COL 1
+ "BT" Cursor 1 1
+ "CO" ExeDOSCmd LC:SCOpts
+ "CS" WinChange
+ "DC" Del
+ "DE" Del BOUND
+ "DL" Del LINES
+ "DW" Del WORDS
+ "EL" Cursor COL -1
+ "ET" Cursor -1 -1
+ "FB" Win2Back
+ "FW" WinNext
+ "GL" Cursor
+ "HE" Help
+ "IL" Text2Win PREFS CONVERT \n
+ "IN" NOp
+ "MB" Block START
+ "MC" Match [ ] { } ( )
+ "ME" NOp
+ "NC" Cursor REL COL +1
+ "NL" Cursor REL +1
+ "NP" Cursor LINE +1 PAGE RELATIVE
+ "NW" Cursor WORD +1 RELATIVE
+ "OW" File2NewWin
+ "PC" Cursor REL COL -1
+ "PP" Cursor LINE -1 PAGE RELATIVE
+ "PW" Cursor WORD -1 RELATIVE
+ "QU" WinClose
+ "RK" CB2Win CLIP=1
+ "SA" Search
+ "SC" ExeDOSCmd LC:SC
+ "CR" Text2Win CONVERT \n
+ "GC" GetPos
+ "GI" GetPos
+ "GT" GetLine
+ "GW" GetWord
+ "RM" ExeARexxScript
+ */
+
+ /*------------- En plus ... */
+ "DeleteSOF"    Del 0x7fffffff PREV
+ "DeleteEOF"    Del  $7fffffff
+ "ReplaceWord"  ExeARexxCmd GetWord MC; Del WORDS 1; Text2Win
+ "NewLine"      Text2Win COL=-1 PREFS CONVERT \n
+ "ClearQ"       Clear QUIET
+ "QuitQ"        Quit QUIET
+ "-"            InactivateCmdLine
+#

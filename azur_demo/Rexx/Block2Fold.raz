@@ -1,0 +1,11 @@
+/** $VER: Block2Fold.raz 1.0 (14.11.94)
+ **
+ ** Replie un bloc. Inutile car il suffit d'utiliser un menu. Il est juste
+ ** un exemple montrant la simplicité d'écriture de script avec AZur.
+ **/
+
+OPTIONS RESULTS
+
+GetNumBlocks; numblocks = RESULT
+IF (numblocks > 0) THEN Fold SET ON
+ELSE ReqMulti "Erreur" TEXT "Aucun bloc défini..."

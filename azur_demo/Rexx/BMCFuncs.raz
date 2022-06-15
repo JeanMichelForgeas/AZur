@@ -1,0 +1,79 @@
+/** $VER: BMCFuncs.raz 1.2 (30.12.94)
+ **
+ ** Ajoute une marque pour chaque nom de fonction dans un
+ ** source en langage C, puis ouvre la palette flottante
+ ** des marques.
+ ** Ne sont pris que les noms qui précèdent une "(" et qui
+ ** sont suivis d'une "{".
+ **
+ ** Comme ce script doit rester le plus rapide possible il
+ ** n'est pas question d'en faire un interpréteur de
+ ** langage C. En particulier il n'aime pas les (){} qui sont
+ ** à l'intérieur de commentaires.
+ **/
+
+OPTIONS RESULTS
+
+/*------- Sauvegarde la position de départ --------*/
+
+ReqClose Bookmarks      /* ferme la palette des marques */
+
+Lock INPUT DISPLAY STATUS ON
+GetPos; PARSE VAR RESULT startline startcol .
+Cursor 1 1
+
+/*------- Parcoure les lignes du texte --------*/
+
+oldline = 0
+oldcol = 0
+
+DO FOREVER
+    Search RESET FROMCURS "{"; IF (RC >= 5) THEN LEAVE
+    GetPos; PARSE VAR RESULT acline accol .
+
+    Search RESET FROMCURS ")" BACK;
+    GetPos; PARSE VAR RESULT endparline endparcol .
+    IF (RC = 0) THEN DO
+        Match "(" ")"; IF (RC >= 5) THEN LEAVE
+        GetPos; PARSE VAR RESULT parline parcol .
+        IF ((parline > oldline) | (parline = oldline & parcol > oldcol)) THEN DO
+            GetWord parline parcol PREV MOVECURS; word = STRIP(RESULT)
+            IF LENGTH(word) ~= 0 THEN DO
+                Cursor ENDWORD; PARSE VAR RESULT wordline wordcol .
+                GetText wordline wordcol parline parcol; string = RESULT; len = LENGTH(string)
+                ok = 1
+                DO i=1 TO len-1
+                    ch = SUBSTR( string, i, 1 )
+                    IF ((ch ~= '20'x) & (ch ~= '09'x) & (ch ~= '0A'x)) THEN DO; ok = 0; LEAVE; END
+                END
+                IF ok == 1 THEN DO
+                    GetText endparline endparcol acline accol; string = RESULT; len = LENGTH(string)
+                    DO i=2 TO len-1
+                        ch = SUBSTR( string, i, 1 )
+                        IF ((ch ~= '20'x) & (ch ~= '09'x) & (ch ~= '0A'x)) THEN DO
+                            IF (ch == ';') THEN ok = 0 /* si ';' fortes chances que c'est une définition de prototype */
+                            LEAVE  /* sinon c'est peut-être une déclaration vieux style des paramètres */
+                        END
+                    END
+                    IF ok == 1 THEN DO
+                        GetLine 'LINE' parline; string = STRIP(RESULT)
+                        IF (LEFT(string,7) ~= "#define") THEN BMAdd word  /* sinon c'est une macro */
+                    END
+                END
+            END
+        END
+    END
+    Cursor acline accol /* remet pour le Match qui suit */
+
+    Match "{" "}"; IF (RC >= 5) THEN LEAVE /* et hop! saute tout le corps de la fonction */
+    GetPos; PARSE VAR RESULT oldline oldcol .
+END
+
+/*------- Restore la position de départ --------*/
+
+Cursor startline startcol
+Lock INPUT DISPLAY STATUS OFF
+
+/*------- Ouvre la sélection flottante --------*/
+
+ReqOpen Bookmarks

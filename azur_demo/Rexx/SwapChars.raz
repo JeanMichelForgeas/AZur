@@ -1,0 +1,14 @@
+/** $VER: SwapChars.raz 1.1 (28.8.94)
+ **
+ ** Pour inverser les deux précédents caractères tapés.
+ ** Très utile pour les malades mentaux comme bibi qui
+ ** passent leurs loisirs à inverser ce qu'ils tapent.
+ **/
+
+OPTIONS RESULTS
+
+Cursor LEFT COL 1
+GetChar; ch = RESULT
+Del
+Text2Win LEFT COL 1 "'"||ch||"'"
+Cursor REL COL 1

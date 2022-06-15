@@ -1,0 +1,42 @@
+/** $VER: FindWin.raz 1.0 (14.5.94)
+ **
+ ** Met en avant la fenêtre qui contient le fichier dont le
+ ** début du nom est donné en paramètre.
+ ** Exemple :
+ **             AZur:Rexx/FindWin.raz Toto
+ **/
+
+OPTIONS RESULTS
+
+PARSE ARG name line
+
+ports = SHOW("p") /* Commande ARexx : liste des ports dans le Système */
+namelen = LENGTH(name)
+
+DO FOREVER
+    PARSE VAR ports portname ' ' ports      /* on prend chaque nom de port */
+    IF (portname == '') THEN LEAVE
+    IF LEFT(portname,4) = "AZUR" THEN DO    /* est-ce une tâche AZur? */
+        ADDRESS VALUE portname              /* on l'adresse par défaut */
+        GetFileInfo                         /* nom du fichier édité? */
+        PARSE VAR RESULT . " " . " " filename   /* extraction du nom */
+        filename = STRIP(filename,,'"')
+        IF LEFT(UPPER(filename),namelen) = UPPER(name) THEN DO
+            Win2Front
+            Cursor line
+            EXIT
+            END
+        END
+END
+
+/* Si on arrive ici : la fenêtre n'est pas trouvée
+ *
+ * On peut alors par exemple décider de charger le
+ * fichier dans une nouvelle fenêtre :
+ *
+ * ADDRESS AZURMAST File2NewWin "SRC:"||name
+ * IF (RC > 0) THEN DO SAY AZURMAST.LASTERROR; EXIT; END
+ * portname = RESULT
+ * ADDRESS VALUE portname Cursor line
+ * etc...
+ */

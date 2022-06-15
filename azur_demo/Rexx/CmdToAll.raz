@@ -1,0 +1,59 @@
+/** $VER: CmdToAll.raz 1.1 (7.2.95)
+ **
+ ** Pour chaque tâche d'édition de la même tâche maîtresse, appelle
+ ** une ou plusieurs commandes.
+ ** Les commandes doivent être séparées par des point-virgules.
+ **
+ ** Exemple : on veut sauvegarder ou iconifier le contenu de toutes
+ ** les fenêtres :
+ **
+ ** AZur:Rexx/CmdToAll.raz Win2File SAME MODIFIED
+ ** AZur:Rexx/CmdToAll.raz Iconify ON
+ **/
+
+OPTIONS RESULTS
+SIGNAL ON BREAK_C
+
+/*------ Place les commandes dans un tableau de variables ------*/
+
+PARSE ARG parameters    /* met la ligne d'arguments du script dans une variable */
+
+numcmd = 0
+cmd = ''
+DO FOREVER
+    PARSE VAR parameters cmd ';' parameters    /* on prend chaque commande une par une dans 'cmd' */
+    IF (cmd == '') THEN LEAVE                  /* et on remet le reste dans 'parameters' */
+    numcmd = numcmd + 1
+    cmd_to_execute.numcmd = cmd
+END
+
+/*------ Liste des ports d'une même tâche mère ------*/
+
+GetPortList
+portlist = RESULT
+IF (portlist == '') THEN EXIT
+
+/*------ Mémorise les ports des tâches d'édition  ------*/
+
+windownum = 0
+win = 1
+DO FOREVER
+    PARSE VAR portlist portname.win ',' portlist
+    IF (portname.win == '') THEN BREAK
+    portname.win = STRIP(portname.win,,'"')
+    win = win + 1
+    windownum = windownum + 1
+END
+
+/*------- Parcoure les lignes du texte et exécute les commandes --------*/
+
+DO win = 1 TO windownum
+    ADDRESS VALUE portname.win
+    DO num = 1 TO numcmd;
+        cmd_to_execute.num;
+        if (RC = 20) THEN EXIT
+    END
+END
+
+EXIT
+BREAK_C:

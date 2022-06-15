@@ -1,0 +1,9 @@
+/** $VER: ExecuteLine.raz 1.0 (15.11.94)
+ **
+ ** Exécute une ligne DOS directement depuis le texte.
+ **/
+
+OPTIONS RESULTS
+
+GetLine
+ExeDOSCmd CONSOLE ASYNC RESULT

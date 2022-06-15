@@ -1,0 +1,40 @@
+/** $VER: SwapBlocks.raz 1.1 (8.10.94)
+ **
+ ** Pour inverser deux blocs. Rectangulaires aussi. Cool.
+ **/
+
+OPTIONS RESULTS
+
+/*------ Lit les blocs ------*/
+
+GetNumBlocks;   IF (RESULT ~= 2) THEN EXIT
+
+GetBlockInfo 1; PARSE VAR RESULT . rectangle1 startline1 startcol1 . .
+GetBlock 1;     contains1 = RESULT
+
+GetBlockInfo 2; PARSE VAR RESULT . rectangle2 startline2 startcol2 . .
+GetBlock 2;     contains2 = RESULT
+
+/*------ Marque le début du 2ème ------*/
+
+BMAdd DELPROOF '"_SwapBlocks.raz : StartBlock 2"' startline2 startcol2
+
+Lock DISPLAY ON
+
+/*------ Efface les blocs et vient au début du 2ème ------*/
+
+Block ERASE
+BMCursor '"_SwapBlocks.raz : StartBlock 2"'
+BMRemove '"_SwapBlocks.raz : StartBlock 2"'
+
+/*------ Remet le 1er, puis le 2ème ------*/
+
+IF (rectangle1 = "ON")
+    THEN Text2Win RECT TEXT contains1
+    ELSE Text2Win      TEXT contains1
+
+IF (rectangle2 = "ON")
+    THEN Text2Win LINE startline1 COL startcol1 RECT TEXT contains2
+    ELSE Text2Win LINE startline1 COL startcol1      TEXT contains2
+
+Lock DISPLAY OFF

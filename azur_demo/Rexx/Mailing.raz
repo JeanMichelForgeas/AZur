@@ -1,0 +1,226 @@
+/**    $VER: Mailing.raz 1.6 (16.12.94)
+ **
+ **    Usage  : Mailing.raz <fichier_adresses> <fichier_courrier> <fichier_resultat> <extra_lignes>
+ **
+ **    Auteur : Patrick Brulé
+ **
+ **    V1.5 : On ne peut plus l'éxecuter depuis un Shell, seulement depuis
+ **             AZur. Les sorties en cas d'erreur montrent maintenant un
+ **             message d'explication. Les noms de fichier avec des espaces
+ **             ne posent plus de problème.
+ **
+ **    V1.3 : ajout de l'option NOICON à File2NewWin et File2Win
+ **
+ **    Ce script est très puissant : il permet de faire différents types
+ **    de mailings car c'est le fichier des adresses lui-même qui contient
+ **    la description de ses zones.
+ **    Il pourra donc être utilisé aussi pour autre chose que du mailing,
+ **    par exemple pour remplacer beaucoup d'occurences dans un seul
+ **    texte...
+ **    Il nécessite qu'une tâche maîtresse AZur soit lancée.
+ **
+ **    Le script prend 4 paramètres :
+ **
+ **    - Le nom du fichier contenant les adresses (obligatoire)
+ **         Il comporte 2 zones :
+ **         - la définition des noms de remplacement (chaque nom commence
+ **           en colonne 1)
+ **         - la liste des noms et adresses qui commence par la chaîne
+ **           "BASE_DE_DONNEES" et fini par la chaîne "FIN_DE_LA_BASE".
+ **         Il faut un champ par ligne, et chaque ensemble d'adresse doit
+ **         se terminer par une ligne vide.
+ **
+ **    - Le nom du fichier contenant la lettre type (obligatoire)
+ **         Cela peut être aussi un masque d'étiquettes, etc...
+ **         Les noms de champs à remplacer doivent être entourés de
+ **         "<<" et de ">>". Exemple : <<nom>>
+ **
+ **    - Le nom du fichier qui contiendra le résultat. S'il n'est pas donné
+ **      il s'appellera "RAM:Resultat_Mailing".
+ **
+ **    - Le nombre de lignes vides à ajouter à chaque fois (optionnel)
+ **         Si on ne met rien ou bien 0, un saut de page sera ajouté
+ **         entre chaque exemplaire résultant.
+ **
+ **    Exemple de fichier d'adresses
+ **    -----------------------------
+ **    .....................début fichier......................
+ **    Nom
+ **    Prenom
+ **    Adresse
+ **    Ville
+ **    Code
+ **    Telephone
+ **    +BASE_DE_DONNEES+----------------
+ **    Casanova
+ **    Robert
+ **    Place du mors aux dents
+ **    PataugeBoeufs
+ **    99999
+ **    11.11.11.11
+ **
+ **    Fricotin
+ **    Bibi
+ **    6 rue de l'album
+ **    Grosses Bouses Les Marais
+ **    88888
+ **    22.22.22.22
+ **
+ **    +FIN_DE_LA_BASE+-----------------
+ **    ......................fin fichier........................
+ **
+ **
+ **    Exemple de lettre type
+ **    ----------------------
+ **    .....................début fichier......................
+ **    Monsieur <<Nom>>,
+ **    J'ai le plaisir de vous apprendre que vous vous prénommez <<Prenom>>
+ **    et que vous habitez <<Adresse>>,
+ **    dans la ville de "<<Ville>>".
+ **    ......................fin fichier........................
+ **
+ **
+ **    Variables du script
+ **    -------------------
+ **    NumClefs = nombre de mots clefs
+ **    Base = Place de la chaine "BASE_DE_DONNEES"
+ **    EndFile = Place de la chaine "+FIN_DE_LA_BASE+"
+ **    StartBase = 1er élément de la base
+ **    EndBase = dernier élément de la base
+ **    CompteurBase = indice de la base
+ **    Base.x.y => base avec x pour CompteurBase
+ **                       et y pour NumClefs
+ **    MotClef.NumClefs => base des mots clefs
+ **
+ **    Pour économiser le temps des affichages successifs, vous pouvez
+ **    insérer les commandes "Lock DISPLAY ON" et "Lock DISPLAY OFF"
+ **/
+
+OPTIONS RESULTS
+
+/*---------- On prend les arguments passés au script ----------*/
+
+PARSE ARG fichier_adresses fichier_courrier fichier_resultat extra_lignes
+
+IF fichier_adresses = "" THEN DO
+    GetVar "Mailing_Adresses"; fichier_adresses = RESULT
+    IF fichier_adresses = "" THEN fichier_adresses = "Work:"
+    ReqFile '"Fichier adresses"' '"'fichier_adresses'"' EXIST
+    IF (RC > 0) THEN EXIT
+    fichier_adresses = RESULT
+    SetVar "Mailing_Adresses" fichier_adresses
+END
+
+IF fichier_courrier = "" THEN DO
+    GetVar "Mailing_Courrier"; fichier_courrier = RESULT
+    IF fichier_courrier = "" THEN fichier_courrier = fichier_adresses
+    ReqFile '"Fichier courrier"' '"'fichier_courrier'"' EXIST
+    IF (RC > 0) THEN EXIT
+    fichier_courrier = RESULT
+    SetVar "Mailing_Courrier" fichier_courrier
+END
+
+IF fichier_resultat = "" THEN DO
+    GetVar "Mailing_Resultat"; fichier_resultat = RESULT
+    IF fichier_resultat = "" THEN fichier_resultat = "RAM:Resultat_Mailing"
+    SetVar "Mailing_Resultat" fichier_resultat
+END
+
+IF extra_lignes = "" THEN extra_lignes = 0
+
+/************************************************************************/
+/************************ Lecture des adresses **************************/
+/************************************************************************/
+
+File2NewWin NOICON '"'fichier_adresses'"'
+IF (RC > 0) THEN DO; ReqMulti CONVERT TEXT "Chargement impossible du fichier d'adresses :\n   "fichier_adresses; EXIT; END;
+portname = RESULT
+ADDRESS VALUE portname
+SetPrefs TAB2SPACE OFF DOAUTOSAVE OFF DOBACKUP OFF
+
+        /*------ rechercher la ligne contenant la chaine "BASE_DE_DONNEES" */
+Search RESET SINGLE FULL "BASE_DE_DONNEES"
+IF (RC > 0) THEN DO; ReqMulti TEXT 'Début des données introuvable : "BASE_DE_DONNEES"'; EXIT; END;
+
+GetPos                      /* Position du curseur => ligne limite */
+PARSE VAR RESULT Base . .
+
+        /*------ Copier les mots-clefs dans MotClef.NumClefs */
+DO NumClefs=1 TO Base-1
+        Cursor LINE NumClefs COL 1
+        GetWord
+        MotClef.NumClefs = '<<'||RESULT||'>>'
+END
+NumClefs = Base - 1 /* en fait quand on sort de la boucle : NumClefs = Base */
+
+        /*------ rechercher la ligne contenant la chaine "+FIN_DE_LA_BASE+" */
+Search RESET SINGLE "FIN_DE_LA_BASE"
+IF (RC > 0) THEN DO; ReqMulti TEXT 'Fin des données introuvable : "FIN_DE_LA_BASE"'; EXIT; END;
+
+GetPos                        /* Position du curseur => ligne limite */
+PARSE VAR RESULT EndFile . .
+
+        /*------ Initialiser le premier element de la base */
+StartBase = Base +1
+
+        /*------ Initialiser le dernier element de la base */
+EndBase =   EndFile -1
+
+        /*------ Tester si la base est correcte*/
+c = EndBase - StartBase + 1 /* pour avoir le nombre de ligne entre les deux */
+modulo = c // (NumClefs+1)
+IF (RC > 0) THEN DO; ReqMulti TEXT 'Le nombre de lignes dans les données est incorrect'; EXIT; END;
+
+        /*------ Compter l'indice de la base base.X.Y */
+CompteurBase = c/(NumClefs+1)
+
+/********************* Copier les data dans base.X.Y */
+Lock DISPLAY ON
+DO x = 1 TO CompteurBase
+        DO y =1 TO NumClefs
+            Cursor LINE StartBase + (x-1)*(NumClefs+1) + (y-1) COL 1
+            GetLine
+            Base.x.y = RESULT
+        END
+END
+Lock DISPLAY OFF
+
+/************************************************************************/
+/******************** Création du fichier résultat **********************/
+/************************************************************************/
+
+File2Win CLEAR NOCURS NOICON '"'fichier_courrier'"'
+IF (RC > 0) THEN DO; ReqMulti CONVERT TEXT "Chargement impossible du fichier courrier :\n   "fichier_courrier; EXIT; END;
+
+/*****************BOUCLE = CompteurBase COMMENCE ICI */
+
+DO x = 1 TO CompteurBase
+        DO y =1 TO NumClefs
+            /*---- remplace chaque occurence dans tout le fichier ----*/
+            Replace RESET ALL FULL TEXT '"'MotClef.y'"' WITH '"'Base.x.y'"'
+        END
+
+        /*---- sauve la fenêtre à la suite dans le fichier ----*/
+        Win2File APPEND NAME '"'fichier_resultat'"'
+
+        IF extra_lignes = 0 THEN DO
+            /*---- insère le caractère de saut de page entre ----*/
+            Text2File APPEND NAME '"'fichier_resultat'"' TEXT '0C'x
+            END
+        ELSE/*---- insère des lignes vides ----*/
+            DO y =1 TO extra_lignes
+                Text2File APPEND NAME '"'fichier_resultat'"' CONVERT TEXT "\n"
+            END
+
+        /*---- recharge le fichier pour l'adresse suivante ----*/
+        File2Win CLEAR NOCURS NOICON '"'fichier_courrier'"'
+END
+
+/********************* FIN DE LA BOUCLE CompteurBase */
+
+/************************************************************************/
+/********** Chargement du fichier résultat pour vérification ************/
+/************************************************************************/
+
+SetPrefs TAB2SPACE ON
+File2Win CLEAR NOCURS NOICON '"'fichier_resultat'"'

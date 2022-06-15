@@ -1,0 +1,38 @@
+/** $VER: CStatement.raz 1.0 (14.11.94)
+ **
+ ** Insère un ensemble comme pour IF, FOR, WHILE, etc... en langage C
+ **/
+
+OPTIONS RESULTS
+
+PARSE ARG statement
+statement = UPPER( statement )
+
+SELECT
+    WHEN statement = "IF" THEN DO
+        'Text2Win CONVERT INDENT TEXT if ('
+        'Text2Win CONVERT INDENT NOCURS TEXT )\n\t{\n\t}\nelse{\n\t}'
+    END
+
+    WHEN statement = "FOR" THEN DO
+        'Text2Win CONVERT INDENT TEXT for (i=0; i < '
+        'Text2Win CONVERT INDENT NOCURS TEXT ; i++)\n\t{\n\t}'
+    END
+
+    WHEN statement = "WHILE" THEN DO
+        'Text2Win CONVERT INDENT TEXT while ('
+        'Text2Win CONVERT INDENT NOCURS TEXT )\n\t{\n\t}'
+    END
+
+    WHEN statement = "SWITCH" THEN DO
+        'Text2Win CONVERT INDENT TEXT switch ('
+        'Text2Win CONVERT INDENT NOCURS TEXT )\n\t{\n\tcase : ; break;\n\tcase : ; break;\n\tdefault: ; break;\n\t}\n'
+    END
+
+    WHEN statement = "CASE" THEN DO
+        'Text2Win CONVERT INDENT TEXT case '
+        'Text2Win CONVERT INDENT NOCURS TEXT : ; break;'
+    END
+
+    OTHERWISE NOp
+END

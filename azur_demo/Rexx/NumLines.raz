@@ -1,0 +1,31 @@
+/** $VER: NumLines.raz 1.1 (23.11.94)
+ **
+ ** Numérote et dénumérote les lignes du texte.
+ **/
+
+OPTIONS RESULTS
+
+GetNumLines; numlines = RESULT
+GetPort; varname = RESULT||"_NumLines.raz_width"
+
+GetVar varname; width = RESULT
+IF (width == "") THEN DO
+    ReqMulti "Numéroter" STR1 ACT DEFAULT "1" STDCANCEL TEXT "Numéroter à partir de quel numéro ?"
+    PARSE VAR RESULT button ',"' startnum '","' .
+    IF (button == OK) THEN DO
+        width = LENGTH( startnum + numlines )
+        SetVar varname width+2
+        AZColNum startnum 1 1 '-1' NOCURS
+        AZColIns '": "' 1 width+1 '-1' NOCURS
+        SetModified OFF
+    END
+END
+ELSE DO
+    ReqMulti "Numéroter" STDCANCEL TEXT "D'accord pour supprimer les numéros de ligne ?"
+    PARSE VAR RESULT button ',"' . '","' .
+    IF (button == OK) THEN DO
+        SetVar varname
+        AZColDel 1 1 '-1' width NOCURS
+        SetModified OFF
+    END
+END

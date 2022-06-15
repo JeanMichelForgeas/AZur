@@ -1,0 +1,42 @@
+/** $VER: BMAsmFuncs.raz 1.1 (26.10.94)
+ **
+ ** Ajoute une marque pour chaque étiquette dans un source en assembleur,
+ ** puis ouvre la palette des marques afin d'afficher la liste.
+ ** Une étiquette est déterminée par une ligne dont le premier caractère
+ ** fait partie d'un mot
+ **
+ ** Comment fonctionne cette recherche (Search) :
+ ** - n'importe quel (PAT = pattern : les ? servent de motif de recherche)
+ ** - caractère ("?")
+ ** - en début de mot et donc faisant partie d'un mot (SOW = start of word)
+ ** - en début de ligne (SOL = start of line)
+ **/
+
+OPTIONS RESULTS
+
+/*------- Sauvegarde la position de départ --------*/
+
+ReqClose Bookmarks      /* ferme la palette des marques */
+
+Lock INPUT DISPLAY /*STATUS*/ ON
+GetPos; PARSE VAR RESULT startline startcol .
+Cursor 1 1
+
+/*------- Parcoure les lignes du texte --------*/
+
+DO FOREVER
+    Search RESET PAT SOL SOW "?"; IF (RC >= 5) THEN BREAK
+    GetWord; word = STRIP(RESULT)
+    IF ((LEFT(word,1) ~= '.') & (LEFT(word,1) ~= '$')) THEN DO
+        IF (LENGTH(word) > 1) THEN BMAdd word
+    END
+END
+
+/*------- Restore la position de départ --------*/
+
+Cursor startline startcol
+Lock INPUT DISPLAY /*STATUS*/ OFF
+
+/*------- Ouvre la sélection flottante --------*/
+
+ReqOpen Bookmarks

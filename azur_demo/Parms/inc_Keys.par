@@ -1,0 +1,164 @@
+
+KEYS: ADD
+/********************************************************************
+ **
+ **  Dans une combinaison l'ordre des touches et qualifiers est sans
+ **  importance. Ils sont séparés par + ou -.
+ **  Chaque combinaison doit se terminer par un espace ou bien par une
+ **  virgule si elle est suivie par une autre combinaison.
+ **
+ ********************************************************************/
+
+    F3      File2NewWin FILEREQ
+    F4      Block2CB
+    F5      CB2Win
+    F7      WinChange HEIGHT 400
+    F8      WinIconify ON
+    F9      Win2File SAME
+    F10     WinClose SAVE
+
+    SHIFT+F8    WinZoom TOGGLE
+
+    AMIGA+Space ExeLastCmd
+    AMIGA+µ     ActivateCmdLine
+
+    CTRL-&      Lock INPUT TOGGLE /* Quand le chat se prépare à marcher sur le clavier... */
+
+    Tab             Indent
+    Tab+SHIFT       Indent BACK
+    Tab+ALT         Curs COL 1 WORD 1
+    Tab+AMIGA       Curs TAB 1
+    Tab+SHIFT+AMIGA Curs TAB -1
+    Tab+CTRL        Indent SPACE
+    Tab+SHIFT+CTRL  Indent SPACE BACK
+
+    /* Certains aiment mettre le qualifier NOREPEAT pour Return, ex : Return+SHIFT+NOREPEAT ... */
+    Return          Text2Win CONVERT PREFS \n
+    Return+SHIFT    Text2Win CONVERT COL=-1 PREFS \n
+    Enter           Text2Win CONVERT INDENTPREV \n
+    Enter+SHIFT     Text2Win CONVERT COL=-1 INDENTPREV \n
+
+    Del+AMIGA       Del LINES
+    Del+SHIFT       Del BOUND
+    Del+CTRL        Del LINES
+    Del+ALT         Del WORDS
+    Del             Del
+    BackSpace       Del PREV NOCLIP
+    BackSpace+SHIFT Del PREV BOUND
+    BackSpace+CTRL  Del PREV BOUND
+    BackSpace+ALT   Del PREV WORDS
+
+    CursUp              Cursor CLEAR REL -1
+    CursDown            Cursor CLEAR REL +1
+    CursLeft            Cursor CLEAR REL COL -1
+    CursRight           Cursor CLEAR REL COL +1
+    SHIFT+CursUp        Cursor CLEAR REL LINE -1 PAGE
+    SHIFT+CursDown      Cursor CLEAR REL LINE +1 PAGE
+    SHIFT+CursLeft      Cursor CLEAR COL 1
+    SHIFT+CursRight     Cursor CLEAR COL -1
+    ALT+CursUp          Cursor CLEAR 1 1
+    ALT+CursDown        Cursor CLEAR -1 -1
+    ALT+CursLeft        Cursor CLEAR REL WORD -1
+    ALT+CursRight       Cursor CLEAR REL WORD +1 ENDWORD
+    ALT+SHIFT+CursUp    Cursor CLEAR REL -3
+    ALT+SHIFT+CursDown  Cursor CLEAR REL +3
+    ALT+SHIFT+CursLeft  Cursor CLEAR REL -1 PAGE
+    ALT+SHIFT+CursRight Cursor CLEAR REL +1 PAGE
+
+    AMIGA+1         Block BWORD STARTDO
+    AMIGA+&         Block BWORD STARTDO
+
+    CTRL+Space               Block CLEAR START
+    CTRL+CursUp              Block MOVECURS REL LINE -1
+    CTRL+CursDown            Block MOVECURS REL LINE +1
+    CTRL+CursLeft            Block MOVECURS REL COL  -1
+    CTRL+CursRight           Block MOVECURS REL COL  +1
+    CTRL+SHIFT+CursUp        Block MOVECURS REL LINE -1 PAGE
+    CTRL+SHIFT+CursDown      Block MOVECURS REL LINE +1 PAGE
+    CTRL+SHIFT+CursLeft      Block MOVECURS COL 1
+    CTRL+SHIFT+CursRight     Block MOVECURS COL -1
+    CTRL+ALT+CursUp          Block MOVECURS 1 1
+    CTRL+ALT+CursDown        Block MOVECURS -1 -1
+    CTRL+ALT+CursLeft        Block MOVECURS REL WORD -1
+    CTRL+ALT+CursRight       Block MOVECURS REL WORD +1 ENDWORD
+    CTRL+ALT+SHIFT+CursUp    Block MOVECURS REL -3
+    CTRL+ALT+SHIFT+CursDown  Block MOVECURS REL +3
+    CTRL+ALT+SHIFT+CursLeft  Block MOVECURS REL COL -1 PAGE
+    CTRL+ALT+SHIFT+CursRight Block MOVECURS REL COL +1 PAGE
+
+    ALT+<               Cursor COL 80
+    ALT+CTRL+CursUp     CursOld
+    ALT+CTRL+CursDown   CursLastChange
+
+    /* les claviers n'ayant pas la touche de code $30 (juste à droite du
+     * shift de gauche) ont cependant la touche dans leur keymap! Par
+     * exemple le clavier américain doit représenter "<" et ">" respecti-
+     * vement par "SHIFT+," et "SHIFT+."
+     * Donc les lignes ci-dessous devront commencer par "CTRL+SHIFT+,,K" etc...
+     */
+    CTRL+<,K ExeARexxCmd CMD 'Text CONVERT COL=-1 PREFS \n'; 'Curs COL 1'; 'Text kprintf( "'; 'Text NOCURS \n" );'
+    CTRL+<,ù Text2Win '=%ld'
+    CTRL+<,L Text2Win 'kprintf( "=%ld, =%ld, =%ld, =%ld\n", , , ,  );'
+    CTRL+<,S ExeARexxCmd CMD 'Text2Win CONVERT INDENT TEXT switch ('; 'Text2Win CONVERT INDENT NOCURS TEXT )\n\t{\n\tcase : ; break;\n\tcase : ; break;\n\tdefault: ; break;\n\t}\n'
+    CTRL+<,I ExeARexxCmd CMD 'Text2Win CONVERT INDENT TEXT if ('; 'Text2Win CONVERT INDENT NOCURS TEXT )\n\t{\n\t}\nelse{\n\t}'
+    CTRL+<,F ExeARexxCmd CMD 'Text2Win CONVERT INDENT TEXT for (i=0; i < '; 'Text2Win CONVERT INDENT NOCURS TEXT ; i++)\n\t{\n\t}'
+    CTRL+<,W ExeARexxCmd CMD 'Text2Win CONVERT INDENT TEXT while ('; 'Text2Win CONVERT INDENT NOCURS TEXT )\n\t{\n\t}'
+    CTRL+<,O Text2Win INDENT CONVERT "ULONG file;\nif (file = Open( name, MODE_OLDFILE ))\n\t{\n\tClose( file );\n\t}"
+
+    /*------ Touche Escape ------*/
+    ALT+Esc WinClose QUIET
+    Esc,A   AbortARexx
+
+    /* Emulation macros emacs */
+    Esc,(    MacRecord
+    Esc,)    MacEnd
+    Esc,1    MacPlay 1
+    Esc,2    MacPlay 2
+    Esc,3    MacPlay 3
+    Esc,4    MacPlay 4
+    Esc,5    MacPlay 5
+    Esc,6    MacPlay 6
+    Esc,7    MacPlay 7
+    Esc,8    MacPlay 8
+    Esc,9    MacPlay 9
+    Esc,NP_1 MacPlay 1
+    Esc,NP_2 MacPlay 2
+    Esc,NP_3 MacPlay 3
+    Esc,NP_4 MacPlay 4
+    Esc,NP_5 MacPlay 5
+    Esc,NP_6 MacPlay 6
+    Esc,NP_7 MacPlay 7
+    Esc,NP_8 MacPlay 8
+    Esc,NP_9 MacPlay 9
+
+    /*------ Pavé numérique */
+    LOCK2-NP_NumL     Qualifier LOCK2 TOGGLE
+    LOCK2-NUM_PAD-.   Del
+    LOCK2-NUM_PAD-0   SetWriteReplace TOGGLE
+    LOCK2-NUM_PAD-1   Cursor -1 -1
+    LOCK2-NUM_PAD-2   Cursor REL 1
+    LOCK2-NUM_PAD-3   Cursor LINE +1 PAGE RELATIVE
+    LOCK2-NUM_PAD-4   Cursor REL COL -1
+    LOCK2-NUM_PAD-5   NOP
+    LOCK2-NUM_PAD-6   Cursor REL COL 1
+    LOCK2-NUM_PAD-7   Cursor 1 1
+    LOCK2-NUM_PAD-8   Cursor REL -1
+    LOCK2-NUM_PAD-9   Cursor LINE -1 PAGE RELATIVE
+
+    SHIFT-ALT-NP_NumL     Qualifier LOCK2 TOGGLE
+    SHIFT-ALT-NUM_PAD-.   Del
+    SHIFT-ALT-NUM_PAD-0   SetWriteReplace TOGGLE
+    SHIFT-ALT-NUM_PAD-1   Cursor -1 -1
+    SHIFT-ALT-NUM_PAD-2   Cursor REL 1
+    SHIFT-ALT-NUM_PAD-3   Cursor LINE +1 PAGE RELATIVE
+    SHIFT-ALT-NUM_PAD-4   Cursor REL COL -1
+    SHIFT-ALT-NUM_PAD-5   NOP
+    SHIFT-ALT-NUM_PAD-6   Cursor REL COL 1
+    SHIFT-ALT-NUM_PAD-7   Cursor 1 1
+    SHIFT-ALT-NUM_PAD-8   Cursor REL -1
+    SHIFT-ALT-NUM_PAD-9   Cursor LINE -1 PAGE RELATIVE
+#
+
+INCLUDES:
+    AZur:Parms/Compiler_Keys.inc
+#

@@ -1,0 +1,19 @@
+/** $VER: CountWords.raz 1.0 (10.5.94)
+ **
+ ** Compte le nombre de mots dans le document.
+ **/
+
+OPTIONS RESULTS
+
+numwords = 0
+Cursor 1 1
+
+Lock DISPLAY STATUS ON
+DO FOREVER
+    Cursor WORD 1
+    IF (RC > 0) THEN BREAK
+    numwords = numwords + 1
+END
+Lock DISPLAY STATUS OFF
+
+SAY numwords "words."

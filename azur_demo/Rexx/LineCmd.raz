@@ -1,0 +1,71 @@
+/** $VER: LineCmd.raz 1.0 (27.3.94)
+ **
+ ** Pour chaque ligne appelle une ou plusieurs commandes.
+ ** Les commandes doivent être séparées par des point-virgules.
+ ** Si des blocs sont tracés seules les lignes comprises dans
+ ** les blocks sont parcourues
+ **
+ ** Exemple : on veut mettre quelques lignes de texte entre
+ ** guillements pour en faire un tableau de chaînes pour le
+ ** langage C. On trace un bloc (ou plusieurs) sur les lignes
+ ** que l'on veut transformer, puis on execute le script avec
+ ** les paramètres suivants :
+ **
+ ** (les commandes doivent être séparées par des points-virgules)
+ **
+ ** AZur:Rexx/LineCmd.raz Text CONVERT '\t"'; Text COL -1 '",'
+ **/
+
+OPTIONS RESULTS
+SIGNAL ON ERROR
+SIGNAL ON BREAK_C
+
+/*------ Place les commandes dans un tableau de variables ------*/
+
+PARSE ARG parameters    /* met la ligne d'arguments du script dans une variable */
+
+numcmd = 0
+cmd = ''
+DO FOREVER
+    PARSE VAR parameters cmd ';' parameters    /* on prend chaque commande une par une dans 'cmd' */
+    IF (cmd == '') THEN LEAVE                  /* et on remet le reste dans 'parameters' */
+    numcmd = numcmd + 1
+    cmd_to_execute.numcmd = cmd
+END
+
+/*------- Mémorise seulement les blocs à utiliser --------*/
+
+'GetNumBlocks'
+numblocks = RESULT
+
+IF (numblocks = 0) THEN DO  /*------ tout le fichier ------*/
+    numblocks = 1
+
+    'GetNumLines'
+    numlines.1 = RESULT
+    startline.1 = 1
+END
+ELSE DO                     /*------ ou seulement chaque bloc ------*/
+    DO block = 1 TO numblocks
+        'GetBlockInfo' block
+        PARSE VAR RESULT . . start . end .
+
+        numlines.block = end - start + 1
+        startline.block = start
+    END
+END
+
+/*------- Parcours les lignes du texte et exécute les commandes --------*/
+
+DO block = 1 TO numblocks
+    DO line = 0 TO numlines.block - 1
+        /*------ place le curseur en début de chaque ligne ------*/
+        'Cursor' (startline.block + line) 1
+        /*------ exécute toutes les commandes dans une boucle ------*/
+        DO num = 1 TO numcmd; cmd_to_execute.num; END
+    END
+END
+
+EXIT
+ERROR:
+BREAK_C:

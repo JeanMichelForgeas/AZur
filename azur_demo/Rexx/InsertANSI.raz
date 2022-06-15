@@ -1,0 +1,63 @@
+/** $VER: InsertANSI.raz 1.1 (23.11.94)
+ **
+ ** Insère une séquence de codes ANSI
+ **/
+
+OPTIONS RESULTS
+
+list1 = "Normal\nGras\nLéger\nItaliques\nSouligné\nInversé\nCaché\nCouleur normale\nFin Italiques\nFin Souligné\nFin Inversé\nFin Caché\n"
+list2 = "Texte 0\nTexte 1\nTexte 2\nTexte 3\nTexte 4\nTexte 5\nTexte 6\nTexte 7\nTexte Défaut\n"
+list3 = "Fond Texte 0\nFond Texte 1\nFond Texte 2\nFond Texte 3\nFond Texte 4\nFond Texte 5\nFond Texte 6\nFond Texte 7\nFond Texte Défaut\n"
+list4 = "Fond Doc 0\nFond Doc 1\nFond Doc 2\nFond Doc 3\nFond Doc 4\nFond Doc 5\nFond Doc 6\nFond Doc 7\n"
+
+ReqList "Attribut" CONVERT LIST list1 || list2 || list3 || list4
+IF (RC == 0) THEN DO
+    seq = ""
+    attr = RESULT
+    SELECT
+        WHEN attr = "Normal"            THEN seq = "\x9b0m"
+        WHEN attr = "Gras"              THEN seq = "\x9b1m"
+        WHEN attr = "Léger"             THEN seq = "\x9b2m"
+        WHEN attr = "Italiques"         THEN seq = "\x9b3m"
+        WHEN attr = "Souligné"          THEN seq = "\x9b4m"
+        WHEN attr = "Inversé"           THEN seq = "\x9b7m"
+        WHEN attr = "Caché"             THEN seq = "\x9b8m"
+        WHEN attr = "Couleur normale"   THEN seq = "\x9b22m"
+        WHEN attr = "Fin Italiques"     THEN seq = "\x9b23m"
+        WHEN attr = "Fin Souligné"      THEN seq = "\x9b24m"
+        WHEN attr = "Fin Inversé"       THEN seq = "\x9b27m"
+        WHEN attr = "Fin Caché"         THEN seq = "\x9b28m"
+
+        WHEN attr = "Texte 0"           THEN seq = "\x9b30m"
+        WHEN attr = "Texte 1"           THEN seq = "\x9b31m"
+        WHEN attr = "Texte 2"           THEN seq = "\x9b32m"
+        WHEN attr = "Texte 3"           THEN seq = "\x9b33m"
+        WHEN attr = "Texte 4"           THEN seq = "\x9b34m"
+        WHEN attr = "Texte 5"           THEN seq = "\x9b35m"
+        WHEN attr = "Texte 6"           THEN seq = "\x9b36m"
+        WHEN attr = "Texte 7"           THEN seq = "\x9b37m"
+        WHEN attr = "Texte Défaut"      THEN seq = "\x9b39m"
+
+        WHEN attr = "Fond Texte 0"      THEN seq = "\x9b40m"
+        WHEN attr = "Fond Texte 1"      THEN seq = "\x9b41m"
+        WHEN attr = "Fond Texte 2"      THEN seq = "\x9b42m"
+        WHEN attr = "Fond Texte 3"      THEN seq = "\x9b43m"
+        WHEN attr = "Fond Texte 4"      THEN seq = "\x9b44m"
+        WHEN attr = "Fond Texte 5"      THEN seq = "\x9b45m"
+        WHEN attr = "Fond Texte 6"      THEN seq = "\x9b46m"
+        WHEN attr = "Fond Texte 7"      THEN seq = "\x9b47m"
+        WHEN attr = "Fond Texte Défaut" THEN seq = "\x9b49m"
+
+        WHEN attr = "Fond Doc 0"        THEN seq = "\x9b>0m"
+        WHEN attr = "Fond Doc 1"        THEN seq = "\x9b>1m"
+        WHEN attr = "Fond Doc 2"        THEN seq = "\x9b>2m"
+        WHEN attr = "Fond Doc 3"        THEN seq = "\x9b>3m"
+        WHEN attr = "Fond Doc 4"        THEN seq = "\x9b>4m"
+        WHEN attr = "Fond Doc 5"        THEN seq = "\x9b>5m"
+        WHEN attr = "Fond Doc 6"        THEN seq = "\x9b>6m"
+        WHEN attr = "Fond Doc 7"        THEN seq = "\x9b>7m"
+
+        OTHERWISE NOp
+    END
+    IF (seq ~= "") THEN Text2Win CONVERT TEXT seq
+END

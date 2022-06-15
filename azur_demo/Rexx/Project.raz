@@ -1,0 +1,142 @@
+/** $VER: Project.raz 1.3 (9.2.95)
+ **
+ ** Permet de mémoriser l'état d'un projet en cours : les fenêtres qui
+ ** sont ouvertes et celles qui sont iconifiées, leurs position/taille
+ ** et le fichier qu'elles éditent.
+ ** Permet aussi de relire un projet et d'ouvrir les fenêtres dans
+ ** l'état où elles étaient.
+ **
+ ** Option acceptées par le script : Project.raz <mode> <port> <name>
+ ** <port> est le nom du port ARexx d'une tâche AZur (optionnel).
+ ** <name> est un nom de fichier comportant ou pas le chemin complet.
+ ** Si rien n'est indiqué name est égal à ".project".
+ ** <mode> est pour indiquer soit la sauvegarde soit la relecture.
+ ** <mode> peut avoir les valeurs suivantes :
+ ** - SAVE      Sauver dans le répertoire courant sous le nom <name>
+ ** - SAVEAS    Sauver dans le répertoire/nom de son choix
+ ** - OPEN      Relire <name>
+ ** - OPENAS    Relire le projet de son choix
+ **
+ ** En mode sauvegarde les fichiers modifiés sont sauvegardés
+ ** automatiquement.
+ **/
+
+OPTIONS RESULTS
+
+PARSE ARG mode port name
+
+IF (port = '') THEN DO; GetMasterPort; port = RESULT; END
+IF (name = '') THEN name = ".project"
+
+mode = UPPER( mode )
+port = UPPER( port )
+name = STRIP( name )
+ADDRESS VALUE port
+
+/*------ Mémorise les ports des tâches d'édition  ------*/
+
+GetPortList; portlist = RESULT
+
+windownum = 0
+win = 1
+DO WHILE (portlist ~= '')
+    PARSE VAR portlist portname.win ',' portlist
+    portname.win = STRIP(portname.win,,'"')
+    win = win + 1
+    windownum = windownum + 1
+END
+
+/*------ On agit selon le mode demandé ------*/
+
+errmsg = ''
+SELECT
+    WHEN mode = "SAVE" THEN DO
+        CALL ProjectSave
+    END
+
+    WHEN mode = "SAVEAS" THEN DO
+        ReqFile '"Sauvegarder le projet"' PATH name PAT "#?.proj"
+        IF (RC > 0) THEN EXIT
+        name = result
+        suffix = RIGHT(name,5)
+        IF (suffix ~= ".proj") THEN name = name||".proj"
+        CALL ProjectSave
+    END
+
+    WHEN mode = "OPEN" THEN DO
+        CALL ProjectOpen
+    END
+
+    WHEN mode = "OPENAS" THEN DO
+        ReqFile '"Ouvrir un projet"' PATH name PAT "#?.proj"
+        IF (RC > 0) THEN EXIT
+        name = RESULT
+        CALL ProjectOpen
+    END
+
+    OTHERWISE errmsg = "Utilisation : Project.raz <mode> <port> <name>\n\n<mode> : SAVE|SAVEAS|OPEN|OPENAS\n<port> : nom d'une tâche AZur (optionnel)\n<name> : nom de fichier (optionnel)"
+END
+
+IF (errmsg ~= '') THEN 'ReqMulti "Gestion de projet" CONVERT REQWIN TEXT' errmsg
+EXIT
+
+/*=====================================================================*/
+
+ProjectSave: PROCEDURE EXPOSE name windownum portname. errmsg
+    IF (OPEN( file, name, 'W' ) ~= 0) THEN DO
+        CALL WRITELN( file, "File Format Version 1.0" )
+        DO i=1 TO windownum;
+            ADDRESS VALUE portname.i
+
+            GetFilePath
+            CALL WRITELN( file, RESULT )
+
+            GetPri; priority = RESULT
+            GetReadonly; IF (RESULT = "ON") THEN readonly = "READONLY"; ELSE readonly = ""
+            CALL WRITELN( file, priority||" "||readonly )
+
+            GetWinInfo WINDOW
+            CALL WRITELN( file, RESULT )
+        END
+        CALL CLOSE( file )
+    END
+    ELSE errmsg = "Ouverture impossible du fichier "||name||" en écriture"
+RETURN
+
+ProjectOpen: PROCEDURE EXPOSE name windownum portname. errmsg port
+    DO i=1 TO windownum;
+        ADDRESS VALUE portname.i
+        Win2File SAME MODIFIED
+        WinClose FORCE
+    END
+
+    ADDRESS COMMAND 'Wait 1 SEC'
+
+    ADDRESS VALUE port
+    IF (OPEN( file, name, 'R' ) ~= 0) THEN DO
+        line = READLN( file ) /* read version of file format, futur use */
+        DO UNTIL (EOF( file ))
+            line = READLN( file )
+            IF (EOF( file ) ~= 0) THEN BREAK
+            name = line
+
+            line = READLN( file )
+            IF (EOF( file ) ~= 0) THEN BREAK
+            PARSE VAR line priority readonly
+
+            line = READLN( file )
+            IF (EOF( file ) ~= 0) THEN BREAK
+
+            IF EXISTS( name ) THEN DO
+                nowindow = ""
+                iconify = ""
+                IF (LENGTH( line) > 0) THEN PARSE VAR line icon left top width height minwidth minheight .
+                ELSE nowindow = "NOWINDOW"
+                IF (icon = "ON") THEN iconify = "ICONIFY"
+                File2NewWin '"'name'"' nowindow iconify readonly 'PRI' priority 'LEFT' left 'TOP' top 'WIDTH' width 'HEIGHT' height
+            END
+        END
+        CALL CLOSE( file )
+    END
+    ELSE errmsg = "Ouverture impossible du fichier "||name||" en lecture"
+RETURN

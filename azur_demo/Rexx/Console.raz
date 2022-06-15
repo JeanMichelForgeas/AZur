@@ -1,0 +1,78 @@
+/** $VER: Console.raz 1.1 (5.9.94)
+ **
+ ** Console de commandes pour AZur
+ **
+ ** Inspiré de CmdShell.ttx de David N. Junod, Bill Hawes et Martin Taillefer
+ **
+ ** Version AZur : Jean-Michel Forgeas
+ **
+ ** La console accepte des commandes AZur en direct, mais qui vont passer
+ ** par l'intermédiaire de ARexx.
+ ** Il est possible de taper des commandes ARexx qui ne soient pas AZur
+ ** en mettant un " ou un ' en début de ligne (si il y a des " dans la commande
+ ** mettez un ' et inversement).
+ ** Par exemple pour afficher 5 fois XXX vous pouvez taper :
+ **     "do i=1 to 5; say XXX; end
+ ** Ou encore pour tester la fonction ARexx "index()" tapez :
+ **     'say index("aa bb cc dd ","cc")
+ ** qui va afficher : 7
+ **/
+
+
+OPTIONS RESULTS
+OPTIONS FAILAT 100
+
+nl = 'a'x
+HelpString = '1b'x||"[1;;47;>7m"||"       »»» Console de commandes AZur «««"||nl||nl||'1b'x||"[0;32;47;>7m"||"       Quitter ==> <RETURN>"||nl"       Aide    ==> Help <nom de commande>"||nl||'1b'x||"[0m"
+SAY HelpString
+
+DO FOREVER      /* Get input until the user closes the Command Shell */
+    /*
+    OPTIONS PROMPT '1b'x||"[1;35m"Time()" AZur> "||'1b'x||"[0;31m"
+    */
+    OPTIONS PROMPT '1b'x||"[1;36;47;>7m"Time()" AZur> "||'1b'x||"[0;31;47;>7m"
+    PARSE PULL CmdString    /* Wait until the user types a command followed by RETURN */
+    SELECT
+        WHEN (CmdString = "") THEN LEAVE
+        WHEN (CmdString = "?") | (UPPER(CmdString) = "HELP") THEN SAY HelpString
+        OTHERWISE CALL HandleCmd(CmdString)
+    END
+END
+EXIT
+
+HandleCmd: PROCEDURE
+PARSE ARG CmdString
+
+    ch = LEFT(CmdString,1)
+    IF (ch~="'" & ch~='"' & WORDS(CmdString)=2) THEN DO
+        IF (WORD(CmdString,2)="?") THEN CmdString = 'Help '||WORD(CmdString,1)
+    END
+
+    CmdString /* Execute the command */
+
+    IF RC = 0 THEN DO /* See if the command succeeded */
+        /*IF symbol('RESULT') == "VAR" THEN SAY RESULT*/
+        IF (length(RESULT) > 0) THEN SAY RESULT
+        RETURN
+    END
+
+    error = AZur.LastError; IF error = "AZUR.LASTERROR" THEN error = AZurMast.LastError
+    errortext = AZur.LastErrorText; IF errortext = "AZUR.LASTERRORTEXT" THEN errortext = AZurMast.LastErrorText
+
+    IF error = 24 THEN DO
+        /* Wasn't an editor command, try running it as an ARexx script */
+        ADDRESS REXX CmdString
+                /* On pourrait voir si c'est une commande Shell avec la ligne
+                 * ci-dessous, mais j'ai jugé cela trop dangereux pour le laisser
+                 * par défaut : des commandes Shell pourraient avoir le même nom
+                 * qu'une commande non trouvée de AZur. Par exemple si on tapait
+                 * "Format" pour mettre le texte en forme, cela enverrait la
+                 * commande Shell "Format"...
+                 *
+                 * IF RC > 0 THEN ADDRESS COMMAND CmdString
+                 */
+        IF RC > 0 THEN SAY "»»» Commande passée à ARexx : erreur "RC
+    END
+    ELSE SAY '»»» Erreur 'error' : 'errortext
+
+RETURN

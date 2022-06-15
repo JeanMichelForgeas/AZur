@@ -1,0 +1,14 @@
+/** $VER: Accol2Block.raz 1.0 (14.11.94)
+ **
+ ** Met un bloc autour des accolades
+ **/
+
+OPTIONS RESULTS
+
+Search RESET FROMCURS BACK "{"; IF (RC >= 5) THEN EXIT
+GetPos; PARSE VAR RESULT startline . .
+Match "{" "}"; IF (RC >= 5) THEN EXIT
+GetPos; PARSE VAR RESULT endline . .
+
+Block startline START BLINE MOVECURS
+Block endline MOVECURS

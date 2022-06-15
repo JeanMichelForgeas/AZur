@@ -1,0 +1,46 @@
+/** $VER: AmigaGuide.raz 1.0 (22.4.94)
+ **
+ ** Affiche l'autodoc AmigaGuide du mot qui est sous le curseur
+ ** Inspiré largement de GetXRef.ttx 2.0 (30.10.91) de David N. Junod
+ ** fournis avec l'ensemble AmigaGuide
+ **
+ ** Si vous ne travaillez pas sur l'écran AZur (option SZ de AZur)
+ ** enlevez l'option : pubscreen "AZur Screen"
+ **
+ ** Ajouter les lignes suivantes à votre fichier S:user-startup
+ **   RX "AddLib( 'amigaguide.library', 0, -30 )"
+ **   RX "LoadXRef( 'autodocs.xref' )"
+ **/
+
+OPTIONS RESULTS
+
+PARSE ARG mode
+
+GetWord
+word = RESULT
+function = word||"()"    /* ajoute les parenthèses */
+
+xref = 0
+line = GetXRef( function )
+IF line = 10 THEN DO
+    function = word
+    line = GetXRef( function )
+    IF line ~= 10 THEN xref = 1
+    END
+ELSE xref = 1
+
+IF ~SHOW( 'P', 'AUTODOCS' ) THEN DO   /* pas de fenêtre ouverte */
+    IF xref = 0 THEN      /* charge une database */
+        cmd = 'run AmigaGuide '||function||' portname AUTODOCS pubscreen "AZur Screen" requester'
+    ELSE                  /* charge un document */
+        cmd = 'run AmigaGuide document '||function||' portname AUTODOCS pubscreen "AZur Screen" requester'
+    ADDRESS COMMAND cmd
+    END
+ELSE DO
+    link = "Link"
+    IF mode = "ASYNC" THEN link = "ALink"
+    IF xref = 0 THEN cmd = link||" "||function||"/main"      /* charge une database */
+    ELSE cmd = link||" "||function     /* charge un document */
+    ADDRESS AUTODOCS cmd
+    ADDRESS AUTODOCS "windowtofront"
+    END

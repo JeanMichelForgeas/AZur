@@ -1,0 +1,44 @@
+
+MAIN_MENUS:
+
+   MENU "Projet"
+    ITEM "Nouvelle fenêtre"         "T" File2NewWin FILEREQ
+    ITEM "Executer script ARexx..." "A" ExeARexxScript CONSOLE ASYNC PAT="#?.raz"
+    ITEM "Fenêtre AZMan"            "M" AZMan PROMPT
+    ITEM "Console..."               "=" ExeARexxScript ASYNC CONSOLE AZur:Rexx/Console.raz
+    DIV
+    ITEM "Activer dernière"   "D" WinLast
+    ITEM "Activer suivante"   "S" WinNext
+    ITEM "Activer précédente" "P" WinPrev
+    BAR
+    ITEM "A Propos"        "?" ReqOpen About
+    BAR
+    ITEM "Projet entier"
+        SUB "Charger un projet..."  ExeARexxScript AZur:Rexx/Project.raz OPENAS
+        SUB "Sauvegarder ce projet" ExeARexxScript AZur:Rexx/Project.raz SAVEAS
+        SBAR
+        SUB "Sauver si modifiés" ExeARexxScript AZur:Rexx/CmdToAll.raz Win2File SAME MODIFIED
+        SUB "Tout iconifier"     ExeARexxScript AZur:Rexx/CmdToAll.raz Iconify ON
+        SUB "Tout dé-iconifier"  ExeARexxScript AZur:Rexx/CmdToAll.raz Iconify OFF
+    ITEM "Quitter & Laisser" "" WinClose ALL /* laisse en mémoire si lancé avec option RESIDENT OU NOPROC */
+    ITEM "Quitter & Oublier" "" ExeARexxCmd \
+                OPTIONS RESULTS;\
+                'ReqMulti STDCANCEL TEXT "Voulez-vous vraiment tout quitter et oublier ?"';\
+                PARSE VAR RESULT button "," .;\
+                IF (button ~= CANCEL) THEN WinClose ALL FORCE
+
+   MENU "Prefs"
+    ITEM "Affichage..." ReqOpen DisplayPrefs
+    ITEM "Edition...  " ReqOpen EditPrefs
+    ITEM "Recherche..." ReqOpen SearchPrefs
+    ITEM "Général..."   ReqOpen EnvPrefs
+    ITEM "Fenêtre..."   ReqOpen WindowPrefs
+    DIV
+    ITEM "Fichier de paramètres" "" File2NewWin "AZur:Parms/AZur.par" PAT "#?.par"
+    BAR
+    ITEM "Charger Prefs"   "" File2Prefs DEFAULT
+    ITEM "Charger depuis..." "" File2Prefs
+    DIV
+    ITEM "Sauver Prefs"       "" Prefs2File DEFAULT
+    ITEM "Sauver Prefs En..." "" Prefs2File
+#

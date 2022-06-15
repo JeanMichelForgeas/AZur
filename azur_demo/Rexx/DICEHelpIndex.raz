@@ -1,0 +1,92 @@
+/*
+ * $Id: DICEHelpIndex.raz,v 1.5 1994/12/11 17:09:11 DBernard Rel $
+ *
+ * Patche le fichier d'index de DiceHelp (s:DiceHelp.index)
+ * pour que DICEHelp traite correctement les entrées:
+ * - dont la taille de block (3è mot) est égale à ffffffff
+ *   si on laisse tel-quel, DICEHelp essaiera d'alouer 4 Go (ULONG)(-1)
+ *   de mémoire, au lieu de se contenter de charger le fichier jusqu'à
+ *   la fin.
+ * - la dernière entrée de chaque fichier .doc n'a pas de tabulations
+ *   (poutant nécessaires à DICEHelp) et la taille du bloc est ffffffff :-{
+ *
+ * Normalement, il n'y a que la dernière entrée d'un fichier et toutes les
+ * entrées dont la taille est ffffffff qu'il faut reformatter.
+ *
+ * Notez aussi que la manip prend moins de 2 minutes avec un fichier de
+ * 4500 lignes sur un 68030 (jusqu'à 3 mn si vos fichiers sont sur une
+ * partition auto-compressée).
+ */
+
+OPTIONS RESULTS
+
+/* Chargement de DICEHelp.index */
+Say "Chargement du fichier..."
+File2NewWin "NOWINDOW s:DICEHelp.index"
+port = RESULT
+ADDRESS VALUE port
+Say 'OK. Port "'port'"'
+
+/* Réglage des préférences */
+Say "Modif préférences..."
+SetPrefs 'TabLen 1'
+SetPrefs 'Tab2Space OFF'
+SetPrefs 'Space2Tab OFF'
+SetPrefs 'DoAutoSave OFF'
+
+/* Et on le recharge ! */
+Say "Rechargement du fichier..."
+File2Win CLEAR SAME NOCURS
+
+/* Recherche du premier */
+Cursor OFFSET 0
+
+DO FOREVER
+
+    GETLINE
+    line = RESULT
+    if line = "" THEN BREAK
+
+    if SUBSTR(line, 1, 1) = "~" THEN DO
+        /* on récupère le nom du fichier et sa taille */
+        GETPOS 'LINE' ; curl = RESULT
+        filename = SUBSTR(line, 2)
+        SAY RIGHT(curl,4,'0')||":" filename"..."
+        OPEN( 'temp', filename, 'READ' )
+        filelen = SEEK( 'temp', 0, 'END' )
+        CLOSE( 'temp' )
+        END
+    ELSE DO
+        f = 0
+        /* Ligne normale */
+        /* y'a deux tabs ? */
+        PARSE VAR line fnct '09'x offset '09'x taille
+        if offset = "" | taille = "" THEN DO
+            PARSE VAR line fnct offset taille
+            f = 1
+            END
+        offset = STRIP(offset)
+        taille = STRIP(taille)
+        IF taille == 'ffffffff' THEN DO                 /* Recalcul de la taille ! */
+            taille = D2X( filelen - X2D(offset) )
+            f = 1
+            END
+        IF f = 1 THEN DO
+            SAY "< "line
+            SAY "> "fnct||'09'x||offset||'09'x||taille
+            DEL LINES
+            TEXT2WIN "CONVERT NOCURS TEXT" fnct || "\t" || offset || "\t" || taille || "\n"
+            END
+        END
+    CURSOR "CLEAR REL +1"
+    If RC > 0 THEN BREAK
+END
+
+/* On sauve */
+ADDRESS COMMAND "Rename s:DICEHelp.index s:DICEHelp.index.old"
+Win2File NI SAME
+
+WinClose
+
+SAY "T-E-R-M-I-N-E !"
+SAY "Backup du fichier original: s:DICEHelp.index.old"

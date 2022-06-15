@@ -1,0 +1,49 @@
+/** $VER: Version.raz 1.0 (14.11.94)
+ **
+ ** Incrémente le compteur de révision au format Système. Ce format
+ ** est composé de quatre parties séparées par un espace :
+ **             $VER nom numéros date
+ **             Exemple : $VER: myapp 37.1 (20.3.91)
+ ** Dans les fichiers binaires cette chaîne doit être entourée par
+ ** un caractère de code $00.
+ **
+ ** nom : il ne doit pas comporter d'espaces, sinon les programmes
+ **     comme C:Version ou Installer ne peuvent pas trouver le bon
+ **     numéro de version qui suit, donc les scripts foirent.
+ ** numéros : numéro de version et numéro de révision séparés par
+ **     un point
+ ** date : elle doit être composée ainsi : (jj.mm.aa) afin que
+ **     la commande C:Version puisse l'interpréter et la traduire
+ **     dans le format du pays de l'utilisateur (localisation).
+ **     jj, mm ou aa ne doivent pas avoir de 0 de rempissage : si
+ **     ils n'ont qu'un chiffre il faut mettre un seul chiffre.
+ **/
+
+OPTIONS RESULTS
+
+Search RESET FULL "$VER:"; IF (RC >= 5) THEN EXIT
+GetPos; PARSE VAR RESULT verline vercol .
+
+GetLine LINE verline STARTCOL vercol; str = RESULT
+PARSE VAR str ver ' ' name ' ' version '.' revision ' (' datever ')' .
+
+IF WORDS(ver)~=1 | WORDS(name)~=1 | WORDS(version)~=1 | WORDS(revision)~=1 | WORDS(datever)~=1 THEN DO
+    ReqMulti "Erreur" TEXT "La chaîne de version n'est pas dans le format standard, et poum"
+    EXIT
+END
+IF DATATYPE(version)~="NUM" | DATATYPE(revision)~="NUM" THEN DO
+    ReqMulti "Erreur" TEXT "La chaîne de version n'est pas dans le format standard, et pim"
+    EXIT
+END
+
+verlastcol = vercol + LENGTH(ver) + LENGTH(name) + LENGTH(version) + LENGTH(revision) + LENGTH(datever) + 5
+verlen = verlastcol - vercol + 1
+
+today = DATE('E'); PARSE VAR today jj '/' mm '/' aa
+jj = STRIP(jj,'L','0'); mm = STRIP(mm,'L','0'); aa = STRIP(aa,'L','0')
+
+revision = revision + 1
+IF revision > 99 THEN DO; revision = 0; version = version + 1; END
+
+Del verlen
+Text2Win TEXT ver name version"."revision "("jj"."mm"."aa")"
