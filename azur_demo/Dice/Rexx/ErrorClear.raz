@@ -1,0 +1,20 @@
+/*
+**      $Id: ErrorClear.raz,v 1.3 1994/10/05 14:33:44 DBernard Rel $
+**
+**      DICE Error Parsing system.  Script for AZur editor (©1994 J.M. Forgeas).
+**
+**      Original work from Bryce Nesbitt
+**
+**  Notes: This assumes that your DCC:Config/DCC.Config file contains the
+**         following line:
+**  cmd= rx DCC:Rexx/TTX_ErrorParse.rexx %e "%c" "%f" "%0"
+*/
+
+OPTIONS RESULTS
+
+'BMRemove' "PAT DERR_#?"
+
+IF ~show('p','DICE_ERROR_PARSER') THEN
+   EXIT 0
+
+ADDRESS DICE_ERROR_PARSER Clear

@@ -1,0 +1,54 @@
+/*
+**      $Id: ErrorMove.raz,v 1.7 1994/11/20 23:56:17 DBernard Rel $
+**
+**      DICE Error Parsing system.  Script for AZur editor (©1994 J.M. Forgeas).
+**
+**      Original work from Bryce Nesbitt
+**
+**  Notes: This assumes that your DCC:Config/DCC.Config file contains the
+**         following line:
+**
+**  cmd= rx DCC:Rexx/RAZ_ErrorParse.rexx %e "%n" "%c" "%f" "%0"
+*/
+
+PARSE UPPER ARG COMMAND  /* Valid commands: Current First Next Prev */
+
+OPTIONS RESULTS
+
+IF ~show('p','DICE_ERROR_PARSER') THEN DO
+    'REQMULTI' "TEXT DError inactif !"
+    EXIT 0
+END
+
+ADDRESS DICE_ERROR_PARSER COMMAND E
+IF rc ~= 0 THEN DO
+    IF COMMAND = 'FIRST' THEN
+        'REQMULTI' "TEXT Pas d''erreurs !"
+    ELSE
+        'REQMULTI' "TEXT Plus d''erreurs !"
+    exit 0
+END
+
+IF E.LINE = 0 THEN DO
+    IF LEFT(E.TEXT, 5) = 'DLINK' THEN DO
+        /* TT = TRANSLATE(E.STRING, '-', '"') */
+        /* This is a DLINK error, we need to handle it special */
+        SAY "DLINK:" E.STRING
+        exit 0
+    END
+END
+
+ADDRESS DICE_ERROR_PARSER TTXSAME '"'E.FPATH'" "'E.ARGS'"'
+IF RC ~= 0 THEN
+    DO
+        'REQMULTI' 'CONVERT TEXT Unable to open file:\n'||E.FPATH
+        exit 0
+    END
+
+Port = RESULT
+ADDRESS Value Port
+if E.Col = 0 THEN E.Col = 1
+'BM' "DERR_"||E.Line
+'Cursor' "FOLDS COL" E.Col
+
+'REQMULTI' "TEXT" E.STRING

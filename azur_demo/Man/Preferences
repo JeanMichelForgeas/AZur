@@ -1,0 +1,432 @@
+
+                    LES EDITEURS DE PREFERENCES
+
+
+
+VUE D'ENSEMBLE
+--------------
+
+Dans cet environnement multi-tâches, la façon dont les préférences sont
+passées d'une tâche à une autre a été prévue pour permettre une grande
+souplesse d'utilisation : le très grand nombre de paramètres se devait
+d'améliorer le confort et non l'inverse. Il est néanmoins nécessaire de se
+faire une petite idée de l'intéraction entre les tâches au niveau des
+préférences.
+
+Chaque tâche, que ce soit la tâche maîtresse ou les tâches d'édition
+(fenêtres), possède sa propre copie des préférences pour travailler. Ceci
+permet par exemple d'avoir une fenêtre (tâche d'édition) paramétrée pour
+taper du courrier avec les marges et le formatage automatique de
+paragraphes, une autre fenêtre sans marge et sans formatage pour faire de la
+programmation, une autre fenêtre avec des tabulations de longueur
+différente, etc...
+
+Afin que cette multiplicité rime avec simplicité, des attributs de
+préférences sont sauvegardés dans l'icône pour être repris en compte
+lorsqu'on relit le fichier, afin que chaque fichier retrouve instantanément
+son environnement d'édition. La liste de ces attributs est dans
+"Documentation/AZurCommandes.doc", à la commande SetPrefs.
+
+Lorsqu'on ouvre une nouvelle fenêtre (lance une nouvelle tâche), ses
+préférences sont obtenues en copiant celles de la tâche initiatrice : la
+nouvelle hérite ses attributs.
+
+Lorsqu'on modifie les préférences à l'aide des fenêtres du menu "Prefs",
+seules les préférences locales à la tâche sont modifiées. Si celle-ci
+démarre une nouvelle tâche elle lui en fera hériter.
+
+La sauvegarde des préférences quant à elle, non seulement sauvegarde ses
+préférences locales dans un fichier, mais les recopie vers celles de la
+tâche maîtresse afin qu'elles deviennent les nouvelles préférences par
+défaut. Cependant les copies locales des autres tâches d'édition ne sont pas
+affectées afin de permettre de continuer le travail d'édition dans leur
+environnement propre.
+
+Dans les listes qui suivent, les symboles suivants sont utilisés pour
+représenter :
+    [...] : les cadres gravés
+    (L)   : les listes
+    (V)   : les boutons à cocher
+    (E)   : les boutons d'exclusion mutuelle
+    (S)   : les zones de saisie de chaîne ou de nombre
+    (F)   : les zones de sélection fichier ou de répertoire
+    (P)   : les zones de sélection de police de caractère
+
+
+PREFERENCES D'AFFICHAGE
+-----------------------
+
+Elle concernent le mode d'affichage de l'écran AZur uniquement. Pour qu'elles
+soient prises en compte il faut sauvegarder les préférences puis redémarrer
+AZur.
+
+(L) Mode d'affichage    Selection d'un mode graphique Système.
+
+[Propriétés]            Liste d'information sur le mode sélectionné.
+
+(L) Couleurs            Sélection du nombre de couleurs de l'écran AZur.
+
+(S) Largeur
+(S) Hauteur
+            Dimensions de l'écran en pixels. Si elles sont supérieures à
+            l'overscan choisi, l'écran devient virtuel (scrollable).
+
+(E) Standard
+(E) OvScan texte
+(E) OvScan graph.
+(E) OvScan max.
+(E) Autre taille
+            Choix du type d'overscan (zone d'affichage vidéo).
+
+
+PREFERENCES D'EDITION
+---------------------
+
+[Ecriture]
+    (V) Efface bloc
+            La frappe d'un caractère supprime les blocs en cours
+    (V) Remplace
+            Ecrit par remplacement au lieu d'insérer
+    (V) Purger EOL
+            Enlève les espaces de fin de ligne à chaque changement de
+            ligne
+    (V) Auto format
+            Formatage automatique pendant la saisie et l'effacement de
+            caractères
+    (V) (((dans version future)))
+
+[Indentation]
+    Lors de l'insertion d'un caractère de fin de ligne, le curseur va
+    se placer en :
+    (E) Aucune
+            Colonne 1 dans tous les cas
+    (E) Normale
+            Même colonne que la ligne non vide au-dessus
+    (E) TTX
+            Si ligne non vide juste au-dessus : même colonne que cette ligne.
+            si ligne vide au-dessus : ne change pas de colonne.
+
+[Tabulation]
+    (V) Active  (((dans version future)))
+            Tabulations réelles
+    (V) Tab > Esp
+            A l'insertion de texte toutes les tabulations sont transformées
+            en espaces.
+    (V) Esp > Tab
+            A la sauvegarde du texte tous les espaces sont transformés en
+            tabulations.
+    (S) Longueur
+            Nombre d'espaces équivalent.
+
+[Clignotement]
+    (V) Clignoter     Clignotement du curseur
+    (S) Durée plein   Durée durant laquelle il reste affiché (en 1/10 sec)
+    (S) Durée vide    Durée durant laquelle il reste effacé (en 1/10 sec)
+
+[Affichage]
+    (V) Montrer tab   On affiche un symbole spécial pour la tabulation
+    (S)               Code ASCII de ce symbole  (((dans version future)))
+    (V) Montrer vide  On affiche le vide de tabulation
+    (S)               Code ASCII de ce symbole  (((dans version future)))
+    (V) Montrer esp   Affichage des espaces en pointillés
+    (S)               Code ASCII de ce symbole  (((dans version future)))
+    (V) Montrer EOL   Montre fins de lignes
+    (S)               Code ASCII de ce symbole
+    (V) Montrer EOF   Montre fin de fichier
+    (S)               Code ASCII de ce symbole
+    (V) Numérote lignes (((dans version future)))
+
+[Marges]
+    (S) G
+            Nombre d'espaces à gauche du texte
+    (V) Utilise
+            Active les marges pour les commandes TextFormat, TextJustify,
+            et le formatage automatique.
+    (S) D
+            Colonne de fin de texte
+
+[Couleurs]
+    Il faut préciser un numéro de couleur de la palette.
+    (S) Texte
+            Ecriture du texte normal
+    (S) Fond
+            Fond du texte normal
+    (S) Texte bloc
+            Ecriture du texte qui est dans un bloc
+    (S) Fond bloc
+            Fond du texte qui est dans un bloc
+    (S) Curseur texte
+            Couleur du caractère inscrit sur le curseur
+    (S) Curseur fond
+            Couleur du curseur
+    (S) C. texte bloc
+            Couleur du caractère inscrit sur le curseur quand celui-ci
+            est dans un bloc
+    (S) C. fond bloc
+            Couleur du curseur quand celui-ci est dans un bloc
+
+[Blocs]
+    La notion de bloc par défaut a trait aux options de la commande Block qui
+    est attachées à des menus ou à des raccourcis claviers dans le fichier de
+    paramètres. Les cinq premiers boutons définissent le type de bloc tracé
+    par la commande Block lorsque aucune option ne lui en précise le type.
+    (E) Caractère
+            Les blocs par défaut commencent et finissent sur la frontière
+            entre deux caractères
+    (E) Mot
+            Les blocs par défaut commencent et finissent sur des mots en
+            entier.
+    (E) Ligne
+            Les blocs par défaut commencent et finissent sur des lignes
+            entières.
+    (E) Rectangle
+            Les blocs par défaut commencent et finissent sur des lignes
+            entières. Si les lignes finissent avant l'extrémité droite du
+            bloc AUCUN espace n'est ajouté lors de la copie.
+    (E) Rect plein
+            Les blocs par défaut commencent et finissent sur des lignes
+            entières Si les lignes finissent avant l'extrémité droite du
+            bloc, des espaces sont ajoutés lorsque le bloc est copié, afin
+            qu'il soit réellement rectangulaire.
+    (S) Limite X ±
+    (S) Limite Y ±
+            Nombre de pixels en X et Y que la souris doit parcourir au delà
+            de la position de clic avant que le bloc commence à se tracer.
+    (V) BLoc-ligne
+            Blocs par lignes entières dans tous les cas. Même les options de
+            la commande Block sont ignorées.
+
+[Plis]
+    (S) Coul Texte
+    (S) Coul Fond
+            Couleurs pour les lignes de début de repli
+    (V) Souligné
+    (V) Gras
+    (V) Italique
+            Mode d'écriture des lignes de début de repli
+
+PREFERENCES DE FENETRE
+----------------------
+
+[Police de caractères]
+    (P) Interface
+            Fonte pour l'interface utilisateur : fenêtres, requêtes, boutons.
+            Pour qu'elle soit prise en compte pour les menus de l'écran AZur
+            il faut sauvegarder les préférences et redémarrer AZur.
+    (P) Vues
+            Fonte pour la zone d'édition, la barre de status et la ligne de
+            commande.
+
+[Ouverture]
+    L'écran sur lequel vont s'ouvrir les fenêtres des tâches filles est décidé
+    au lancement de la tâche mère.
+    (V) Ecran de devant (sauvegarder les préférences puis redémarrer AZur)
+            L'ouverture est demandée sur l'écran de devant
+    (V) Ecran AZur      (sauvegarder les préférences puis redémarrer AZur)
+            L'ouverture est demandée sur un écran AZur
+    (V) Plein écran     (sauvegarder les préférences puis redémarrer AZur)
+            La fenêtre doit s'ouvrir en occupant tout l'écran sauf sa barre de
+            titre.
+    (S) X
+    (S) Y
+            Position d'ouverture des fenêtres.
+    (S) Largeur
+    (S) Hauteur
+            Dimension d'ouverture des fenêtres.
+
+[Fenêtre]
+    (V) Barre de status
+            Affichage de la barre de status en haut de la fenêtre.
+    (V) Ligne de commande
+            Affichage de la ligne de commande en bas de la fenêtre.
+
+[Bord horizontal]
+    (V) Butée
+    (V) Flêches
+    (V) Prop
+    (V) Flêches
+    (V) Butée
+            Sélection des éléments de la barre horizontale des vues. Si
+            l'ascenceur (Prop) est désactivé, toute la barre est enlevée.
+
+[Bord vertical]
+    (V) Butée
+    (V) Flêches
+    (V) Prop
+    (V) Flêches
+    (V) Butée
+            Sélection des éléments de la barre verticale des vues. Si
+            l'ascenceur (Prop) est désactivé, toute la barre est enlevée.
+
+[Palette de couleurs]
+    Palette de couleurs pour l'écran AZur uniquement.
+
+
+PREFERENCES DE RECHERCHE
+------------------------
+
+Ces différents drapeaux servent à re-initialiser les drapeaux de recherche
+des commandes Search et Replace lorsque leur option PREFS est précisée sur
+leur ligne d'arguments.
+Ces deux commandes ne sont donc pas obligées d'utiliser ces préférences, et
+de plus, elles possèdent d'autres options permettant de modifier chacun de
+ces drapeaux un par un.
+Dans le paramétrage des menus de recherche et de remplacement, ces deux
+commandes sont utilisées avec leur option PREFS qui écrasent leur propre
+mémorisation des drapeaux, pour les remplacer avec les préférences de
+recherche; puis d'autres options sont ajoutées selon les menus pour forcer
+certains drapeaux. Exemple :
+        Search CLEAR PREFS FROMBLOCK FORW FROMCURS SINGLE
+Si vous voulez conserver les drapeaux d'une recherche à l'autre vous pouvez
+donc supprimer l'option PREFS et d'autres si besoin. Le fichier de paramètres
+existe pour que vous puissiez paramétrer AZur comme vous le souhaitez.
+
+[Aire]
+    (E) Document
+            Recherche sur le document entier.
+    (E) Bloc
+            Rechercher seulement dans les blocs tracés.
+    (E) Curseur
+            Rechercher à partir du curseur.
+    (V) Arrière
+            Rechercher en arrière.
+
+[Occurences]
+    (E) Toutes
+            Recherche toutes les occurences dans l'aire indiquée ci-dessus,
+            donc continue après la prochaine.
+    (E) Prochaine
+            Recherche une seule fois : seulement la prochaine.
+    (V) Montrer
+            Créer un bloc sur la (les) chaîne(s) de caractères trouvée(s)
+            ou remplacée(s).
+
+[Restrictions]
+    (V) Déb lig <
+            L'occurence est trouvée si elle est en début de ligne.
+    (V) Fin lig >
+            L'occurence est trouvée si elle est en fin de ligne.
+    (V) Déb mot [
+            L'occurence est trouvée si elle est en début de mot.
+    (V) Fin mot ]
+            L'occurence est trouvée si elle est en fin de mot.
+
+[Extension]
+    (V) Joker ?
+            Permet l'utilisation du caractère "?" comme joker qui signifie
+            "n'importe quel caractère", y compris le fin de ligne.
+            Il est assez puissant dans la commande Replace : voir le fichier
+            Commandes.doc.
+    (V) Convert C
+            Conversion des chaînes des zones de saisie selon des règles de
+            substitution similaires à celles du langage C : voir le fichier
+            Commandes.doc.
+
+[Sensibilité]
+    (V) Maj/min
+            L'occurence est trouvée en tenant compte des majuscules et des
+            minuscules.
+    (V) Accents
+            L'occurence est trouvée en tenant compte des accents.
+
+
+PREFERENCES GENERALES
+---------------------
+
+[Sauvegarde]
+    (V) Purge Esp  Enlève les espaces de fin de ligne lors de la sauvegarde
+    (V) LF > CR    Les fins de ligne sont transformées en "retour chariot"
+    (V) LF > CRLF  Les fins de ligne sont ajoutées à un "retour chariot"
+    (V) Icône      Crée une icône après avoir sauvegardé
+    (S) Outil      Pour mettre dans le champ "Outil par défaut" de l'icône
+
+[Chargement]
+    (V) Purge Esp  Enlève les espaces à la fin des lignes
+    (V) CR > LF    Transforme le "retour chariot" et "retour chariot + fin
+                   de ligne" en un simple "fin de ligne".
+    (V) Icône      Relis les informations contenues dans l'icône comme les
+                   plis, les blocks, les paragraphes, la position, les
+                   marques...
+
+[Autosauve]
+    (V) Actif       Active les sauvegardes automatiques si texte modifié
+    (S) Nom         Constuction du nom du fichier : le symbole "*" représente
+                    le nom du fichier, et on peut lui ajouter des caractères
+                    avant et après pour différencier et personnaliser ce nom.
+    (S) Répertoire  Répertoire où écrire le nom ci-dessus. Un répertoire
+                    vide signifie : dans le même répertoire.
+    (S) Secondes    Sauvegarder (si nouvelle modification) toutes les N
+                    secondes. 0 inhibe cette option.
+    (S) Modifications Sauvegarder toutes les N nouvelles modifications.
+                      0 inhibe cette option.
+
+[Backup]
+    (V) Actif        Active la recopie (backup) du fichier avant de le
+                     sauvegarder.
+    (V) (sans titre) Utilise la chaîne de la zone de saisie suivante pour le
+                     nom du fichier de backup.
+                     Si ce bouton est inactif le nom du fichier de backup est
+                     composé de "AZur-" suivi de l'adresse de la tâche en
+                     héxadécimal, et de ".bkp". Exemple : "AZur-7DE4110.bkp".
+    (S) (sans titre) Constuction du nom du fichier de backup : le symbole "*"
+                     représente le nom du fichier, et on peut lui ajouter des
+                     caractères avant et après pour différencier et
+                     personnaliser ce nom.
+    (S) Répertoire   Répertoire où écrire le nom ci-dessus. Un répertoire
+                     vide signifie : dans le même répertoire.
+    (S) Rotations    Nombre de rotations des fichiers de backups. Cela permet
+                     de garder plusieurs versions successives des fichiers.
+                     Exemple avec "Toto", comme nom "*.bkp", et 2 rotations :
+                        - "Toto2.bkp" est effacé,
+                        - "Toto1.bkp" est renommé en "Toto2.bkp",
+                        - "Toto.bkp" est renommé en "Toto1.bkp",
+                        - "Toto" est recopié en "Toto.bkp".
+
+[Mode]
+    (V) Minitel     Indique que le port série est relié à un minitel. Ce
+                    drapeau peut être utilisé par n'importe quelle commande
+                    externe qui pourrait avoir besoin de savoir si un Minitel
+                    est relié à l'ordinateur.
+    (V) Lecture     Pas de modification possible : lecture seulement.
+    (S) Priorité    Priorité des tâches d'édition : de -128 à +127.
+    (S) Clip d'effacement : c'est le numéro de l'unité du "Clipboard" qui est
+                    utilisé pour la recopie du texte avant de l'effacer de la
+                    zone d'édition. On peut ensuite le remettre dans la
+                    fenêtre avec par exemple la commande "CB2Win <numéro>"
+                    (c'est d'ailleurs dans le menu "Edition/Remettre" du
+                    fichier de paramètres par défaut).
+
+[Tailles]
+    (S) Blocs de texte (Ko) : La mémoire utilisée pour stocker le texte est
+                    allouée par blocs. Des grands blocks accélèrent le
+                    chargement des gros fichiers et empêche la fragmentation
+                    de la mémoire. Unité : kilo octets.
+    (S) Buffers d'E/S (Ko) : Un double buffer est alloué lors de l'écriture
+                    ou la lecture d'un fichier de façon asynchrone. Un grand
+                    bloc accélère la lecture et l'écriture.
+                    Ce bloc est alloué tout de suite avant l'opération, et
+                    libéré tout de suite après. Unité : kilo octets.
+    (S) Lignes de commande
+                    Nombre de lignes pour mémoriser l'historique de la ligne
+                    de commande en bas de la fenêtre AZur.
+    (S) Bloc Pour Undo : pas encore utilisé.
+
+[Port ARexx]
+    (V) Caractère de séparation : le nom du port ARexx est composé du nom de
+                    l'application, d'une séparation, et d'un numéro d'ordre
+                    qui évite les duplications.
+                    Si ce bouton est actif, la séparation est simplement le
+                    caractère indiqué dans la zone de saisie qui suit.
+    (S) (sans titre) : le caractère de séparation lui-même.
+    (V) Numérote le premier : Donne un numéro d'ordre même au premier port
+                    de cette application.
+    (S) Port ARexx Maître : nom du port de l'application pour la tâche maître.
+    (S) Port Arexx d'édition : nom du port de l'application pour les tâches
+                    d'édition.
+
+[Fichiers]
+    (S) Motif de sélection : le "joker" qui sera donné au sélecteur de fichier.
+    (S) Fichier de paramètres : nom (chemin complet) du fichier de paramètres.
+    (S) Console ARexx : définition de la console utilisée pour ARexx.
+    (S) Console DOS : définition de la console utilisée par les scripts DOS et
+                    la commande SetDebug.

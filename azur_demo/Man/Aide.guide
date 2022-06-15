@@ -1,0 +1,539 @@
+@DATABASE "Aide.guide"
+
+@REMARK -----------------------------------------------------------
+@REMARK       Ce fichier est destiné à être lu par Amigaguide
+@REMARK       mais il est organisé pour être lu facilement avec
+@REMARK       AZur pour ceux qui n'ont pas AmigaGuide : des
+@REMARK       replis ont été faits pour faciliter l'accès aux
+@REMARK       informations.
+@REMARK -----------------------------------------------------------
+
+@REMARK @AUTHOR "Jean-Michel Forgeas"
+@REMARK @(C) "Aide.guide, Copyright © 1994 Jean-Michel Forgeas, Tous Droits Reservés"
+@REMARK @$VER: Aide.guide 1.0 (29.1.95)
+
+@REMARK ***********************************************************
+@NODE Main "Paramétrage standard de AZur"     (Déplier cette ligne)
+
+                      PARAMETRAGE STANDARD
+
+
+Toutes les définitions qui suivent sont paramétrables en modifiant le
+fichier des paramètres : "AZur:Parms/AZur.par". Les autres fichiers de
+paramètres ont des comportements complètements différents.
+
+Cette aide en ligne est succinte pour un usage rapide d'aide mémoire.
+Pour une documentation détaillée, prenez le nom de la commande dans le
+fichier de paramètres qui est associée à un menu, raccourcis, etc...,
+et reportez-vous à la documentation de cette commande.
+
+                    @{" Les menus standards " Link Menus}
+                    @{" La souris standard " Link Mouse}
+                    @{" Les raccourcis standards " Link Keys}
+
+
+Les commandes attachées aux touches, souris, menus, joystick, peuvent
+aussi voir leur comportement modifié de façon importante.
+Par exemple :
+- Pour que le curseur reste à l'extérieur des blocs comme avec CEd ou
+  TurboText, ajouter l'option EXTCURS aux commandes "Block" (voir dans
+  AZur:Parms/ttx.par).
+- Pour que le curseur passe automatiquement du bout de ligne à la
+  ligne en dessous, ajouter l'option WRAP aux commandes "Cursor"
+  et "Block" (voir dans AZur:Parms/ced.par).
+
+@ENDNODE
+
+@REMARK ***********************************************************
+@NODE Menus "Les menus standards"             (Déplier cette ligne)
+
+                @{" Projet " Link Menus_Project}
+                @{" Edition " Link Menus_Edit}
+                @{" Recherche " Link Menus_Search}
+                @{" Outils " Link Menus_Tools}
+                @{" Macro " Link Menus_Macros}
+                @{" Plis " Link Menus_Folds}
+                @{" Prefs " Link Menus_Prefs}
+@ENDNODE
+
+@NODE Menus_Project "Menu Projet"
+
+    Effacer tout            Vide la fenêtre qui devient sans titre
+    Nouvelle fenêtre        Ouvre une nouvelle fenêtre (tâche d'édition)
+    Ouvrir...               Ouvre le sélecteur de fichier
+    Autres
+        Reouvrir            Ouvre le même fichier que celui édité
+        Insérer...          Insère un fichier à partir du curseur
+        Lire...             Ouvre un fichier en interdisant sa modification
+        Sous Curseur...     Essaye d'ouvrir le fichier dont le nom est sous le curseur
+        Backups...          Ouvre le sélecteur de fichier sur les sauvegardes
+    Sauver                  Sauvegarde sous le nom en cours
+    Sauver en...            Sauvegarde sous un nom qui devient le nom courant
+    Autres
+        Sauver vers...      Sauvegarde sous un nom qui ne devient pas le nom courant
+        Ajouter à...        Sauvegarde à la fin d'un autre fichier
+        Sauver bloc...      Sauvegarde le contenu des blocs
+        Sauver ProPage      Sauvegarde les paragraphes sans les espaces de début
+    Imprimer
+        Tout                Imrime vers PRT: directement
+        Tout Async          Imrime vers un fichier temporaire, puis vers PRT:
+        Bloc                Imrime vers PRT: directement
+        Bloc Async          Imrime vers un fichier temporaire, puis vers PRT:
+        Clip                Imrime vers PRT: directement
+        Clip Async          Imrime vers un fichier temporaire, puis vers PRT:
+        Pré-Visualiser      Ouvre une autre fenêtre avec la police topaz 4
+    Fichier
+        Effacer...          Effacer un fichier choisi avec le sélecteur
+        Renommer...         Renommer un fichier choisi avec le sélecteur
+        Créer répertoire... Donner un nom à l'aide du sélecteur
+    Attributs               Change le commentaire et les protections du fichier
+    Arranger
+        En horizontal       Met les fenêtres ouvertes les unes en dessous des autres
+        En vertical         Met les fenêtres ouvertes les unes à côté des autres
+        En cascade          Met les fenêtres les unes derrière les autres, décalées
+    Iconifier               Iconifie la fenêtre sur la barre de l'écran
+    Fermer                  Ferme uniquement cette fenêtre
+    A Propos                Montre la version et le Copyright de AZur
+    Info                    Donne divers renseignements sur l'édition en cours
+    Projet entier
+        Charger un projet       Ré-ouvre un ensemble de fenêtres
+        Sauvegarder ce projet   Sauvegarde l'état de toutes les fenêtres
+        Sauver si modifiés      Demande à toutes les fenêtres de sauvegarder
+        Tout iconifier          Demande à toutes les fenêtres de s'iconifier
+        Tout dé-iconifier       Demande à toutes les fenêtres de se dé-iconifier
+    Quitter & Laisser       Fermer toutes les fenêtres en laissant la tâche mère
+                            en mémoire (si elle est résidente)
+    Quitter & Oublier       Fermer toutes les fenêtres en arrêtant la tâche mère
+                            même si elle est résidente
+@ENDNODE
+
+@NODE Menus_Edit "Menu Edition"
+
+    Couper
+        Unité 0 à 3         Supprime le texte des blocs et le met dans un clipboard
+    Copier
+        Unité 0 à 3         Copie juste le texte dans un clipboard
+    Coller
+        Unité 0 à 3         Insère le contenu d'un clipboard dans le texte
+    Coller
+        Vertical unité 0 à 3    Insère le contenu d'un clipboard en mode vertical
+        Par-dessus              Ecrit le clipboard 0 par-dessus le texte
+        Par-dessus Vertical     Ecrit le clipboard 0 par-dessus le texte, en vertical
+    Sélectionner Tout       Crée un bloc englobant tout le texte
+    Majuscule
+        En Majuscule        Transforme le caractère ou les blocs en majuscule
+        En minuscule        Transforme le caractère ou les blocs en minuscule
+        Inverser Maj/min    Inverse l'état du caractère ou des blocs
+    Insérer/Remplacer       Alterne l'écriture par insertion et par remplacement
+    Cloner ligne            Duplique la ligne
+    Joindre lignes          colle la ligne du dessous à celle du curseur
+    Formater
+        Formater Paragraphe Fait tenir les mots d'un paragraphe dans les marges (ou blocs)
+        Formater & joindre  Idem, et colle deux paragraphes en un seul (ou toutes les lignes d'un bloc)
+    Justifier
+        Centrer             Centre le texte dans les marges ou le bloc
+        A gauche            Colle le texte sur la marge de gauche ou la gauche d'un bloc rectangulaire
+        A droite            Colle le texte sur la marge de droite ou la droite d'un bloc rectangulaire
+        Remplir             Espace les mots pour qu'ils collent aux deux marges (ou côtés d'un bloc)
+    Echanger
+        Echanger blocs      Inverse le contenu de deux blocs
+        Echanger mots       Inverse les deux mots juste avant le curseur
+        Echanger caract     Inverse les deux caractères juste avant le curseur
+    Insérer Texte
+        Date                Insère la date Système (localisée)
+        Heure               Insère l'heure Système
+        Saut de page        Insère le code $0C
+        Séquence ANSI       Modifie les couleurs et les attributs pour un lecteur de texte ANSI
+        Séquence AmigaGuide Insère des ordres AmigaGuide pour construire une database
+        Insérer Héxa...     Demande des codes héxadécimaux à insérer dans le texte
+        Table ASCII...      Fenêtre avec tous les caractères sur lesquels on peut cliquer
+    Remettre                Remet un bloc ou une ligne effacée (sauvés dans le clipboard 1)
+    Remettre vertical       Remet verticalement le contenu du clipboard 1
+@ENDNODE
+
+@NODE Menus_Search "Menu Recherche"
+
+    Chercher bloc           Recherche le texte pris dans le bloc
+    Chercher...             Ouvre la requête de recherche
+    Compter...              Ouvre la requête de recherche préparée pour toutes les occurences
+    Palette...              Ouvre la requête de recherche qui reste ouverte
+    Chercher suivant        Continue la recherche en avant
+    Chercher précédent      Continue la recherche en arrière
+    Chercher tous           Met un bloc sur toutes les occurences trouvée
+    Remplacer bloc...       Recherche le texte pris dans le bloc et ouvre la requête
+    Remplacer...            Ouvre la requête de remplacement
+    Palette...              Ouvre la requête de remplacement qui reste ouverte
+    Remplacer suivant       Continue le remplacement en avant
+    Remplacer précédent     Continue le remplacement en arrière
+    Tous, texte entier      Remplace sur tout le texte
+    Tous, depuis curseur    Remplace du curseur jusqu'à la fin
+@ENDNODE
+
+@NODE Menus_Tools "Menu Outils"
+
+    Aller à la ligne
+        Une fois...             Demande la ligne où aller
+        Palette flottante...    Demande la ligne et la colonne où aller et reste ouverte
+    Aller à l'offset
+        Une fois...             Demande l'offset où aller
+        Palette flottante...    Demande l'offset où aller et reste ouverte
+    Aller à la marque
+        N°1 à 4                 Dont le nom est 1 2 3 ou 4
+        Nommée...               Dont on veut taper le nom
+        Suivante                Qui suit dans l'ordre du texte
+        Précédente              Qui précède dans l'ordre du texte
+        Palette flottante...    Fenêtre avec la liste qui reste ouverte
+    Aller au bloc
+        Suivant                 Qui suit dans l'ordre du texte
+        Précédent               Qui précède dans l'ordre du texte
+    Aller au pli
+        Suivant                 Qui suit dans l'ordre du texte
+        Précédent               Qui précède dans l'ordre du texte
+    Poser des marques
+        N°1 à 4                 Crée une marque dont le nom est 1 2 3 ou 4
+        Mot                     Crée une marque dont le nom est le mot sous le curseur
+        Bloc                    Crée une marque dont le nom est pris dans le bloc
+        Nommer...               Crée une marque dont on veut taper le nom
+        Fonctions C             Crée une marque sur chaque fonction d'un source C
+        Fonctions Asm           Crée une marque sur chaque label d'un source Asm
+        Fonct. Autodoc          Crée une marque sur chaque fonction d'une autodoc
+        Noeuds AmigaGuide       Crée une marque sur chaque noeud d'une database
+    Enlever des marques
+        Enlever une seule...    Ouvre la fenêtre pour sélectionner la marque à enlever
+        Vider tout              Supprime toutes les marques
+        Laisser les chiffres    Ne laisse que les marques dont le nom a un caractère
+        Avec joker...           Demande le motif de recherche pour les noms à supprimer
+    Convertir bloc
+        ASCII 7 bits            Converti le bloc en codes compris de 0 à 127
+        Rotation 13             Prend la lettre + 13 en tournant dans l'alphabet
+        Amiga -> Vidéotex       Transforme les caractères Amiga en séquences Vidéotex
+        Vidéotex -> Amiga       Idem mais inverse
+        Amiga -> MSDOS          Transforme les accents Amiga d'un bloc en accents MSDOS
+        MSDOS -> Amiga          Idem mais inverse
+    Entourer bloc               Entoure un bloc rectangulaire sur les deux côtés...
+        C /** **/               Transforme le bloc en commentaire pour langage C
+        C //                    Idem
+        C Header                Entoure un nom de fonction d'une en-tête
+        Asm ;                   Idem pour langage Asm
+        Asm Header              Entoure un nom de fonction d'une en-tête
+        Colonnes                Insère des colonnes autour des blocs rectangulaires
+        Citation                Insère "> " au début des lignes de blocs normaux
+    Trier bloc
+        Ascendant               Trie le bloc entre ses colonnes de début et de fin, en croissant
+        Descendant              Trie le bloc entre ses colonnes de début et de fin, en décroissant
+    Lancer programme
+        Calculatrice...     Lance la calculette du Système
+        Horloge...          Lance l'horloge du Système
+    Executer
+        Executer bloc DOS       Exécute le contenu des blocs comme un script DOS
+        Executer script DOS...  Exécute un script DOS (comme ceux dans Sys:S/...)
+        Executer bloc ARexx     Exécute le contenu des blocs comme un script ARexx
+        Executer script ARexx...Exécute un script DOS (comme ceux dans Rexx:...)
+        Révision+1...           Incrémente le numéro de version du fichier édité
+        Numéroter/Enlever...    Ajoute ou (supprime si ils sont mis) des numéros de ligne
+        Mailing...              Lance un mailing (lire le fichier "Azur:Rexx/Mailing.raz")
+    Tester
+        Tester []{}()           Tester le correspondant d'une de ces paires
+        Tester DO END           Tester le correspondant de cette paire
+        Tester /* */            Tester le correspondant de cette paire
+        Tout []{}()             Tester la correspondance de ces paires sur tout le texte
+        Tout /* */              Tester la correspondance de cette paire sur tout le texte
+    Aide
+        Paramétrage             Appelle AmigaGuide avec l'aide en ligne sur le paramétrage standard
+        AZMan                   Cherche la référence AZur du mot sous le curseur
+        AZMan fenêtre           Ouvre la fenêtre de recherche des références AZur
+        Créer des index         Crée les références AZur
+        AmigaGuide              Demande la référence AmigaGuide du mot sous le curseur
+        AmigaGuide, Fenêtre     Idem mais demande une autre fenêtre
+        Includes Système        Ouvre une fenêtre avec le sélecteur sur les includes Système
+        Includes Intuition      Idem sur les includes Intuition
+        Autodocs                Idem sur les autodocs
+    Priorité                    Donne la priorité actuelle et demande la nouvelle
+    Console AZur...             Ouvre la console AZur
+    Console de test ON/OFF      Ouvre/Ferme la console de sortie DOS
+@ENDNODE
+
+@NODE Menus_Macros "Menu Macro"
+
+    Enregistrer Macro       Commence l'enregistrement des touches, menus, ARexx
+    Effacer dernier         Efface la dernière commande enregistrée
+    Arrêter Enreg.          Arrête l'enregistrement des commandes
+    Jouer Macro             Exécute toutes les commandes enregistrées dans la macro
+    Jouer plusieurs...      Demande le nombre d'exécutions, puis exécute la macro
+    Macro vers texte        Insère le texte de la macro à la position du curseur
+    Bloc vers Macro         Charge la macro avec le contenu des blocs
+    Charger Macro...        Charge la macro avec le contenu d'un fichier
+    Sauver Macro...         Sauvegarde le texte de la macro dans un fichier
+    Exécuter...             Exécute en direct un fichier de macro
+    Editer...               Ouvre une autre fenêtre sur un fichier macro
+@ENDNODE
+
+@NODE Menus_Folds "Menu Plis"
+
+    Créer               Créer soit sur un bloc, soit depuis le curseur jusqu'à la ligne dont
+                        l'indentation revient à celle de la ligne du curseur
+    Créer1              Créer soit sur un bloc, soit depuis le curseur jusqu'à la ligne précédant
+                        celle dont l'indentation revient à celle de la ligne du curseur
+    Créer-Plier         Créer et plier dans la foulée
+    Créer1-Plier        Créer et plier dans la foulée
+    Plier               Plier un pli ou tous les plis contenus dans un bloc
+    Déplier             Déplier un pli ou tous les plis contenus dans un bloc
+    Changer             Alterner l'état plié/déplié
+    Enlever             Déplier et enlever le pli
+    Plier   imbriqué    Plier ce pli et tous ses sous-plis
+    Déplier imbriqué    Déplier ce pli et tous ses sous-plis
+    Changer imbriqué    Alterner l'état plié/déplié de ce pli et tous ses sous-plis
+    Enlever imbriqué    Déplier et enlever ce pli et tous ses sous-plis
+    Plier   tout        Plier tous les plis du texte
+    Déplier tout        Déplier tous les plis du texte
+    Changer tout        Alterner l'état plié/déplié de tous les plis du texte
+    Enlever tout        Enlever tous les plis du texte
+@ENDNODE
+
+@NODE Menus_Prefs "Menu Prefs"
+
+    Mode écran AZur...       Modes d'affichage pour l'écran AZur
+    Edition...               Réglages concernant l'édition de texte
+    Recherche...             Réglages concernant la recherche
+    Général/ARexx...         Réglages concernant le reste
+    Fenêtre/Polices...       Réglages concernant l'aspect de la fenêtre
+    Fichier de paramètres    Ouvre une fenêtre d'édition du fichier de paramètres standard. Pour
+                             qu'il soit pris en compte il faut lancer un nouveau AZur.
+    Requête AutoSauve ON/OFF Dés/Active la demande de confirmation pour l'autosauve
+    Protège/Déprotège ON/OFF Dés/Active la protection contre la modification du texte
+    PowerPacker       ON/OFF Dés/Active la sauvegarde compactée
+    Sauver avec icône ON/OFF Dés/Active la création d'icône lors de la sauvegarde
+    Icône Application ON/OFF Dés/Active l'AppIcon de la tâche mère
+    Pavé numérique    ON/OFF Dés/Active les fonctions alternées du pavé numérique
+    Marges            ON/OFF Dés/Active la prise en compte des marges
+    Auto formatage    ON/OFF Dés/Active le formatage automatique des paragraphes
+    Marge gauche au curseur  Place la marge gauche à la colonne du curseur
+    Marge droite au curseur  Place la marge droite à la colonne du curseur
+    Tabulation
+        Tabulation 3         Change la longueur de tabulation à 3
+        Tabulation 4         Idem à 4
+        Tabulation 8         Idem à 8
+    Edition binaire          Inactive toutes les modifications automatiques
+    Charger Prefs            Recharger les préférences par défaut
+    Charger depuis...        Charger d'autres préférences
+    Sauver Prefs             Sauvegarder ces préférences sous le même nom (vers le défaut)
+    Sauver Prefs en...       Sauvegarder ces préférences sous un autre nom
+@ENDNODE
+
+@REMARK ***********************************************************
+@NODE Mouse "La souris standard"              (Déplier cette ligne)
+
+
+    Bouton Gauche : Efface les éventuels blocks, place le curseur
+        sous le pointeur qui devient la position de départ du
+        prochain bloc.
+    Bouton Gauche + double clic : Idem à simple clic, mais trace
+        un bloc en mode "mots entiers".
+    Bouton Gauche + triple clic : Idem à simple clic, mais trace
+        un bloc en mode "lignes entières".
+
+    Bouton Droit : Efface les éventuels blocks, place le curseur
+        sous le pointeur qui devient la position de départ du
+        prochain bloc. La différence est que le bloc est en mode
+        "Rectangulaire".
+
+    Blocs multiples :
+        Pour tracer des nouveaux blocs sans effacer les précédents,
+        appuyez sur la touche CTRL pendant que vous effectuez les
+        actions ci-dessus.
+
+    Le déplacement de la souris en maintenant le bouton enfoncé
+    provoque le changement de taille du bloc en cours de traçage.
+
+    Pour pouvoir agrandir ou rétrécir le dernier bloc tracé même
+    après avoir relâché le bouton de la souris, appuyez sur la
+    touche SHIFT pendant que vous cliquez sur la position voulue.
+
+    Bouton Gauche, puis Bouton Droit : change l'état du pli qui se
+        trouve sous le curseur, soit pour le replier soit pour le
+        déplier.
+
+    En standard, aucune commande n'est attachée au bouton du milieu
+    ni au joystick, mais cela est faisable d'un simple ajout dans
+    le fichier des paramètres.
+@ENDNODE
+
+@REMARK ***********************************************************
+@NODE Keys "Les raccourcis standards"         (Déplier cette ligne)
+
+    Ne sont traités ici que les raccourcis claviers qui n'apparaissent
+    pas dans les menus. Pour ces derniers reportez vous au chapitre
+    précédent : "Les menus standards".
+
+
+                @{" Touches de fonction " Link Keys_Functions}
+                @{" Touche Tabulation " Link Keys_Tab}
+                @{" Touches Return et Enter " Link Keys_Return}
+                @{" Touche BackSpace " Link Keys_Back}
+                @{" Touche Del " Link Keys_Del}
+                @{" Touches Fléchées " Link Keys_Arrows}
+                @{" Pavé numérique " Link Keys_NumPad}
+                @{" Actions spéciales " Link Keys_Specials}
+@ENDNODE
+
+@NODE Keys_Functions "Touches de fonction"
+
+    F1  : Change l'état d'un pli, plie ou déplie
+    F2  : Aller au pli suivant
+    F3  : Ouvrir une nouvelle fenêtre
+
+    F4  : Copier le texte vers le clipboard 0  (= Amiga+C)
+    F5  : Coller le clipboard 0 dans le texte  (= Amiga+V)
+    F6  : Coller verticalement le clipboard 0
+
+    F7  : Changer la hauteur de la fenêtre à 400 pixels
+    F8  : Iconifier la fenêtre
+    F9  : Sauvegarder le fichier (= Amiga+S)
+    F10 : Sauvegarder le fichier seulement si il est marqué comme
+          modifié, puis fermer la fenêtre
+
+    F4, F5 et F6 permettent d'accéder à des clipboards différents
+    selon qu'ils sont utilisés avec les touches Ctrl ou Alt.
+
+    SHIFT+F8 : Changer la taille de la fenêtre de grande à petite
+               ou de petite à grande.
+@ENDNODE
+
+@NODE Keys_Tab "Touche Tabulation"
+
+    Tab             : Indente vers la droite d'une tabulation
+    Tab+SHIFT       : Indente vers la gauche d'une tabulation
+    Tab+CTRL        : Indente vers la droite d'une position
+    Tab+SHIFT+CTRL  : Indente vers la gauche d'une position
+    Les actions ci-dessus s'appliquent aussi lorsqu'un seul bloc
+    est tracé :
+        - Bloc rectangulaire : à partir de son bord gauche
+        - Bloc normal        : à partir de la colonne 1
+
+    Tab+ALT         : Curseur sur le premier mot de la ligne
+    Tab+AMIGA       : Curseur vers la droite (sans insertion)
+    Tab+SHIFT+AMIGA : Curseur vers la gauche (sans insertion)
+@ENDNODE
+
+@NODE Keys_Return "Touches Return et Enter"
+
+    Return       : Insère un saut de ligne à la position courante
+                   (coupe la ligne à l'endroit du curseur)
+    Return+SHIFT : Insère un saut de ligne à la fin de la ligne
+                   (ne coupe pas la ligne)
+    Enter        : Comme Return, puis place le curseur à une
+                   tabulation vers la gauche
+    Enter+SHIFT  : Comme Return, puis place le curseur à une
+                   tabulation vers la gauche
+
+    Ces touches se répètent si on les laisse appuyées. Pour qu'elles
+    ne se répètent plus, il faut aller modifier le fichier de
+    paramétrage de la façon suivante :
+        - Chercher les mots "Return" puis "Enter",
+        - Ajouter "+NOREPEAT" collé juste après.
+        - Exemple : Return ...      -> Return+NOREPEAT ...
+                    Enter+SHIFT ... -> Enter+SHIFT+NOREPEAT ...
+@ENDNODE
+
+@NODE Keys_Back "Touche BackSpace"
+
+    Lorsqu'on efface un bloc avec cette touche, le texte contenu
+    dans le bloc n'est pas recopié dans le clipboard d'effacement
+    (à l'inverse de la touche Del).
+
+    BackSpace       : Efface un caractère vers la gauche
+    BackSpace+SHIFT : Efface vers la gauche jusqu'au début de ligne
+    BackSpace+CTRL  : Efface la ligne entière
+    BackSpace+ALT   : Efface un mot (ou un non-mot) vers la gauche
+@ENDNODE
+
+@NODE Keys_Del "Touche Del"
+
+    Lorsqu'on efface un bloc avec cette touche, le texte contenu
+    dans le bloc est recopié dans le clipboard d'effacement (à
+    l'inverse de la touche BackSpace).
+
+    Del       : Efface le caractère sous le curseur
+    Del+SHIFT : Efface du curseur jusqu'à la fin de ligne
+    Del+CTRL  : Efface la ligne entière
+    Del+AMIGA : Efface la ligne entière
+    Del+ALT   : Efface le mot (ou le non-mot) à partir du curseur
+                vers la droite
+@ENDNODE
+
+@NODE Keys_Arrows "Touches Fléchées"
+
+    Haut                : Une position vers le haut
+    Bas                 : Une position vers le bas
+    Gauche              : Une position vers la gauche
+    Droite              : Une position vers la droite
+    SHIFT+Haut          : Une page vers le haut
+    SHIFT+Bas           : Une page vers le bas
+    SHIFT+Gauche        : Début de ligne
+    SHIFT+Droite        : Fin de ligne
+    ALT+Haut            : Début du texte
+    ALT+Bas             : Fin du texte
+    ALT+Gauche          : Un mot vers la gauche (début de mot)
+    ALT+Droite          : Un mot vers la droite (fin de mot)
+    ALT+SHIFT+Haut      : Défilement rapide de 3 lignes vers le haut
+    ALT+SHIFT+Bas       : Défilement rapide de 3 lignes vers le haut
+    ALT+SHIFT+Gauche    : Une page vers la gauche
+    ALT+SHIFT+Droite    : Une page vers la droite
+
+    La touche CTRL ajoutée aux séquences précédentes permet au contraire
+    de modifier le bloc en cours ou d'en créer un nouveau, uniquement en
+    utilisant le clavier.
+
+    CTRL+Espace : efface les blocs en cours et marque une nouvelle
+    position de départ.
+@ENDNODE
+
+@NODE Keys_NumPad "Pavé numérique"
+
+    SHIFT+ALT suivis d'une des touches du pavé numérique provoque
+    l'action indiquée la face avant de la touche.
+@ENDNODE
+
+@NODE Keys_Specials "Actions spéciales"
+
+    Executer à nouveau la dernière commande : AMIGA+Espace
+
+    Activer la ligne de commande du bas (si elle existe) :
+        AMIGA+µ
+
+    Mettre un bloc sur un mot : AMIGA+1 ou AMIGA+&
+        Utile en conjonction avec les menus AMIGA+2 et AMIGA+3
+        pour la recherche ou le remplacement d'un mot.
+
+    Mettre le curseur sur...
+        - la colonne 80             : ALT+<
+        - la position précédente    : ALT+CTRL+Haut
+        - la dernière modification  : ALT+CTRL+Bas
+
+    Blocage/déblocage des entrées (souris, clavier...) uniquement
+    dans cette fenêtre : CTRL+&
+
+    Provoquer une erreur sur la prochaine commande venue par ARexx
+    pour par exemple arrêter l'exécution d'un script :
+            Deux touches à la suite : Escape,A
+
+    Faire des macros comme avec Emacs, avec des séquences de deux
+    touches dont la première est Escape :
+        - Début d'enregistrement            : Escape,(
+        - Taper ce qu'on veux enregistrer...
+        - Fin d'enregistrement              : Escape,)
+        - Répéter N fois l'enregistrement   : Escape,N
+              (N représente un chiffre de 1 à 9)
+
+    Insérer des éléments de programmation en langage C, à l'aide de
+    séquences de deux touches dont la première est CTRL+< :
+        - Ligne kprintf("\n");      : CTRL+<,K
+        - Ligne kprintf() complexe  : CTRL+<,L
+        - Bloc "switch"             : CTRL+<,S
+        - Bloc "if/else"            : CTRL+<,I
+        - Bloc "for"                : CTRL+<,F
+        - Bloc "while"              : CTRL+<,W
+        - Bloc "Open/Close"         : CTRL+<,O
+
+    Fermer la fenêtre sans requête de confirmation : ALT+Escape
+@ENDNODE

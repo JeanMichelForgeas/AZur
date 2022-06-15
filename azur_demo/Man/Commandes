@@ -1,0 +1,248 @@
+
+						   COMMANDES
+
+
+
+
+L'UTILISATEUR
+-------------
+
+Les commandes sont le moyen d'action sur AZur. L'utilisateur a à sa
+disposition différents points d'accès au programme :
+	Menus
+	Clavier
+	Souris
+	Joystick
+	ARexx
+De ces différents points d'accès, l'utilisateur envoie les mêmes
+commandes. Bien sûr il peut les paramétrer différement.
+
+La liste des commandes se trouve à la fin de ce fichier. Dans la version
+commerciale une documentation complête décrit chaque commande.
+
+
+LE PROGRAMMEUR
+--------------
+
+L'utilisateur qui programme en assembleur ou en langage compilé
+tel que le C peut se programmer ses propres commandes. Ce sont
+alors des commandes externes au programme.
+C'est une des raisons pour lesquelles une commande AZur s'appelle
+un objet de commande.
+
+Pour agir sur AZur, le programmeur a un ensemble de fonctions
+qu'il peut appeler depuis son objet de commande.
+Cela lui permet de faire l'équivalent d'un script ARexx, mais qui
+s'exécutera beaucoup plus rapidement, car compilé.
+
+Pour faire ses propres objets de commande le programmeur doit se
+procurer le kit de développement AZur.
+
+
+SCHEMA
+------
+
+	 Points d'accès    Commandes	Fonctions	  Programme
+	 --------------    ---------	---------	  ---------
+
+			Menu
+				\
+		 Clavier |
+				\|_____objet de_____fonctions_____exécutable
+		Joystick-|	   commande 	internes		 AZur
+				/|
+		  Souris |
+				/
+		   ARexx
+	   \___________________X__________________/
+			Utilisateur 		Programmeur
+
+
+
+INDICATEURS
+-----------
+
+Si vous ouvrez la console et tapez "Help FULL nomdelacommande" vous verrez
+des indicateurs entre parenthèses. Voici leur signification :
+
+	Y - La commande modifie le texte
+	O - La commande est autorisée depuis une macro
+	A - La commande est autorisée depuis ARexx
+	M - La commande est autorisée depuis un menu
+	K - La commande est autorisée depuis une touche
+	S - La commande est autorisée depuis la souris
+	J - La commande est autorisée depuis le joystick
+	T - La commande est autorisée depuis la tâche maîtresse
+	I - La commande est autorisée depuis l'input.device (hotkey)
+
+
+AREXX
+-----
+
+Le script ARexx "Console.raz" permet d'avoir un Shell ARexx pour
+chaque tâche fille.
+Dans la console ouverte on peut taper directement soit le nom d'un
+objet de commande AZur, soit le nom d'un script ARexx qui sera exécuté
+de la même façon, et adressé automatiquement à la tâche fille d'où a
+été lancé ce Shell.
+
+Les commandes "AbortARexx" et "Lock AREXX ON/OFF" peuvent permettre de
+verrouiller le port ARexx.
+
+
+ERREURS
+-------
+
+Qu'une commande se termine par un succès ou par une erreur, elle
+positionne des résultats qui sont renvoyés à ARexx si la commande est
+venue par ARexx (les textes sont visibles quand on exécute une commande
+depuis une console AZur), sinon si la tâche d'édition possède une
+fenêtre elle peut afficher une requête d'information comportant le
+texte de l'erreur.
+
+LISTE DES COMMANDES
+
+Leur documentation (200 kilo octets) n'est fournie qu'avec la version
+commerciale de AZur, mais afin de donner une idée de leur puissance en
+voici la liste avec leurs options :
+
+AbortARexx
+ActivateCmdLine
+Beep
+Block			CLIP=UNIT/K/N,CLEAR=OFF/S,ERASE=DEL/S,BC=BCHAR/S,BW=BWORD/S,BL=BLINE/S,BR=BRECT=BVERT/S,BF=BFULLRECT/S,ALL/S,MC=MOVECURS/S,START/S,STARTDO/S,FOLDS/S,REQ=REQUEST/S,LINE/N,COL=COLUMN/N,PAGE/S,REL=RELATIVE/S,WORD/N,TAB/N,OF=OFFSET/N,UP/S,LEFT/S,W=WRAP/S,ENDWORD/S,LINES/N,CHARS/N,PO=POINTER/S,EC=EXTCURS/S,CONT=CONTINUE/S
+Block2CB		CLIP=UNIT/N
+Block2File		NB=NOBACKUP/S,NI=NOICON/S,AP=APPEND/S,NAME,PAT=PATTERN/K
+Block2Mac		CLEAR/S,AP=APPEND/S
+BMAdd			RESET/S,BLOCK/S,NAME=BOOKMARK,CLEAR=OFF/S,MC=MOVECURS/S,DELPROOF/S,FOLDS/S,REQ=REQUEST/S,LINE/N,COL=COLUMN/N,PAGE/S,REL=RELATIVE/S,WORD/N,TAB/N,OF=OFFSET/N,UP/S,LEFT/S,W=WRAP/S,ENDWORD/S,LINES/N,CHARS/N,PO=POINTER/S
+BMCursor		NAME=BOOKMARK,NUM=ID/N/K,CLEAR=OFF/S
+BMRemove		NAME=BOOKMARK,NUM=ID/N/K,ALL/S,PAT=PATTERN/K
+CB2File 		CLIP=UNIT/K/N,NB=NOBACKUP/S,NI=NOICON/S,AP=APPEND/S,NAME,PAT=PATTERN/K
+CB2Win			CLIP=UNIT/N,RECT=VERTICAL/S,REPL=OVERLAY/S,CC=CONVERT/S,NC=NOCURS/S
+CharConvert 	CHAR/S,WORD/S,LINE/S,ALL/S,LOWER/S,UPPER/S,TOGGLE/S,NOACCENT/S,ASCII7/S,VDX2AM/S,AM2VDX/S,MS2AM/S,AM2MS/S,ROT=ROTATE/S,XORKEY/K,NC=NOCURS/S
+CursLastChange
+Cursor			FOLDS/S,REQ=REQUEST/S,LINE/N,COL=COLUMN/N,PAGE/S,REL=RELATIVE/S,WORD/N,TAB/N,OF=OFFSET/N,UP/S,LEFT/S,W=WRAP/S,ENDWORD/S,LINES/N,CHARS/N,PO=POINTER/S,CLEAR=OFF/S,PB=PREVBLOCK/S,NB=NEXTBLOCK/S,PM=PREVMARK/S,NM=NEXTMARK/S,PF=PREVFOLD/S,NF=NEXTFOLD/S
+CursorOld
+Debug
+Del 			NUM/N,CHARS/S,LINES/S,WORDS/S,PREV=BACK=PREVIOUS/S,BOUND/S,LINE/N,COL=COLUMN/N,PAGE/S,REL=RELATIVE/S,WORD/N,TAB/N,OF=OFFSET/N,UP/S,LEFT/S,W=WRAP/S,ENDWORD/S,NC=NOCURS/S,NOCLIP/S
+ExeARexxCmd 	BLOCK/S,CONSOLE/S,ASYNC/S,BA=BLOCKARG/S,CMD=COMMAND=MACRO/F
+ExeARexxScript	BLOCK/S,CONSOLE/S,ASYNC/S,BA=BLOCKARG/S,PAT=PATTERN/K,SCRIPT=NAME/F
+ExeDOSCmd		BLOCK/S,CONSOLE/S,ASYNC/S,BA=BLOCKARG/S,PORT/S,SCREEN/S,CMD=COMMAND=NAME/F
+ExeDOSScript	BLOCK/S,CONSOLE/S,ASYNC/S,BA=BLOCKARG/S,PORT/S,SCREEN/S,PAT=PATTERN/K,SCRIPT=NAME/F
+ExeLastCmd
+File2CB 		NAME,CLIP=UNIT/K/N,PAT=PATTERN/K
+File2File		NB=NOBACKUP/S,NI=NOICON/S,AP=APPEND/S,FROM=NAME,TO=DEST,PAT=PATTERN/K,DESTPAT=DESTPATTERN/K
+File2Mac		AP=APPEND/S,NAME,PAT=PATTERN/K
+File2NewWin 	ICONIFY/S,FILEREQ/S,CMD=FC=FROMCMD/K,F=FROM=MACRO/K,PN=PORTNAME/K,NW=NOWINDOW/S,RO=READONLY/S,PRI=PRIORITY/K/N,PAT=PATTERN/K,NAME,BLOCK/S,LEFT/K/N,TOP/K/N,WIDTH/K/N,HEIGHT/K/N,CREATE/S,NI=NOICON/S,CURSNAME/S
+File2Prefs		DEFAULT/S,NAME
+File2Win		QUIET=FORCE/S,CLEAR/S,SAME/S,CREATE=SC=SETCURRENT/S,NAME=FILENAME,RECT=VERTICAL/S,REPL=OVERLAY/S,CC=CONVERT/S,NC=NOCURS/S,RO=READONLY/S,BLOCK/S,PAT=PATTERN/K,NI=NOICON/S,CURSNAME/S,ND=NODECOMPRESS/S
+Fold			LINE/N,ENDLINE/N,SET/S,ADDSAME/S,UNSET/S,ON/S,OFF/S,TOGGLE/S,SUB=NESTED/S,ALL/S
+GetBlock		NUM=ID/N,ALL/S
+GetBlockInfo	NUM=ID/N
+GetBMInfo		NAME=BOOKMARK,NUM=ID/N/K
+GetBMList
+GetChar
+GetCurrentDir
+GetError		ERROR/N,LAST/S
+GetFileInfo
+GetFilePath
+GetFold 		NUM=FOLDNUM/A/N,SUB/S,FSL=FIRSTSUBLINE/S
+GetFoldInfo 	FULL/S
+GetFontInfo
+GetLine 		STARTCOL/N,ENDCOL/N,LINE/N
+GetLineInfo 	LINE/N
+GetLockInfo
+GetMasterPort
+GetModified
+GetNumBlocks
+GetNumBM
+GetNumFolds
+GetNumLines
+GetPort 		NAME
+GetPortList 	OI=ONLYICONS/S,NI=NOTICONS/S
+GetPos			LINE/S,COL=COLUMN/S,IN=INFOLD/S,FOLDS/S
+GetPrefs		ATTR/A/K/F
+GetPri
+GetReadonly
+GetResident
+GetScreenInfo	NOBAR/S
+GetScreenList	PUBLIC/S
+GetTaskInfo 	HEX/S
+GetText 		SL=STARTLINE/N,SC=STARTCOL/N,EL=ENDLINE/N,EC=ENDCOL/N,RECT=VERT/S
+GetVar			NAME/A
+GetVarList
+GetViewInfo 	NUM=VIEWNUM/N
+GetWinBorders
+GetWinInfo		WINDOW/S
+GetWinList		OI=ONLYICONS/S,NI=NOTICONS/S
+GetWord 		LINE/N,COL=COLUMN/N,PREV/S,NEXT/S,MC=MOVECURS/S
+Help			COMMAND/A,VB=VERBOSE/S,FULL/S,T=TEMPLATE/S,S=SYNONYM/S,F=FLAGS/S
+Illegal
+InactivateCmdLine
+Indent			BACK/S,SPACE/S
+kprintf 		TEXT/F
+LineClone
+LineJoin
+Load			NAME/F/A
+Lock			D=DISPLAY/S,I=INPUT/S,M=MODIFY/S,S=SAVE/S,B=STATUS/S,A=AREXX/S,ON/S,OFF/S,TOGGLE/S
+Mac2File		NB=NOBACKUP/S,NI=NOICON/S,AP=APPEND/S,NAME,PAT=PATTERN/K
+Mac2Win
+MacDelete
+MacEnd
+MacPlay 		COUNT/N
+MacRecord		AP=APPEND/S,QUIET/S
+Match			FULL/S,NC=NOCURS/S,PAIRS/A/F
+NOp
+Prefs2File		DEFAULT/S,NAME
+Qualifier		CTRL/S,SHIFT/S,ALT/S,AMIGA/S,QUAL1/S,QUAL2/S,QUAL3/S,LOCK1/S,LOCK2/S,LOCK3/S,ANY/S,ON/S,OFF/S,TOGGLE/S
+Replace 		PREFS/S,RESET/S,FB=FROMBLOCK/S,CASE/S,ACC=ACCENT/S,ALL/S,SINGLE/S,BACK=BACKWARD=PREV=PREVIOUS/S,FORW=FORWARD=NEXT/S,FULL/S,FC=FROMCURS/S,IB=INTOBLOCK/S,PAT=PATTERN/S,CC=CONVERT/S,CLEAR=OFF/S,TB=TOBLOCKS/S,NB=NOBLOCK/S,SOL/S,EOL/S,SOW/S,EOW/S,REQ=REQUEST=PROMPT/S,NC=NOCURS/S,SEARCH=FIND=TEXT=REPL=REPLACE=CHANGE,WITH=BY,NV=NOVERIFY/S
+ReqClose		REQUESTER/A
+ReqFile 		TITLE=PROMPT,PATH,PAT=PATTERN,DIRMODE/S,AS=ASSIGN/S,EXIST/S,SI=SHOWICONS/S
+ReqList 									@..AMKSJT..- *TITLE,CONV=CONVERT/S,SORT/S,STR/S,DS=DEFSTR=DEFAULT/K,SEL=SELECT/K,LIST=TEXT=PROMPT/A/F
+ReqMulti		TITLE,CONV=CONVERT/S,REQWIN/S,ACT=STRACTIVATE/S,STR1/S,T1=TITLESTR1,D1=DEFSTR1=DEFAULT,STR2/S,T2=TITLESTR2,D2=DEFSTR2=DEFAULT2,B1=BUTOK/K,B2=BUTMID/K,B3=BUTCANCEL/K,STDOK/S,STDCANCEL/S,TEXT=PROMPT/F
+ReqOpen 		REQUESTER/A
+RexxNameClear	NAME/A
+RexxNameObtain	NAME/A
+RexxNameRelease NAME/A
+Screen2Back
+Screen2Front
+Search			PREFS/S,RESET/S,FB=FROMBLOCK/S,CASE/S,ACC=ACCENT/S,ALL/S,SINGLE/S,BACK=BACKWARD=PREV=PREVIOUS/S,FORW=FORWARD=NEXT/S,FULL/S,FC=FROMCURS/S,IB=INTOBLOCK/S,PAT=PATTERN/S,CC=CONVERT/S,CLEAR=OFF/S,TB=TOBLOCKS/S,NB=NOBLOCK/S,SOL/S,EOL/S,SOW/S,EOW/S,REQ=REQUEST=PROMPT/S,NC=NOCURS/S,SEARCH=FIND=TEXT
+SetCompress 	ON/S,OFF/S,TOGGLE/S
+SetCurrentDir	NAME
+SetDebug		ON/S,OFF/S,TOGGLE/S
+SetFilePath 	NAME/A
+SetModified 	ON/S,OFF/S,TOGGLE/S
+SetPrefs		ATTR/A/K/F
+SetPri			PRIORITY/N
+SetResident 	ON/S,OFF/S,TOGGLE/S
+SetVar			NAME/A,WITH=CONTENTS/F
+SetWriteReplace  ON/S,OFF/S,TOGGLE/S
+Sort			SL=STARTLINE/N,EL=ENDLINE/N,SC=STARTCOL/N,EC=ENDCOL/N,GL=GROUPLINES/N,GO=GROUPOFFSET/N,ALL/S,CASE/S,ACCENT/S,DATE/S,DS=DESCENDING/S
+Surround		F=FIRST/A,L=LAST,M=MIDDLE,C=CORNER,LINE/S,RECT/S,SL=STARTLINE/N,SC=STARTCOL/N,EL=ENDLINE/N,EC=ENDCOL/N,OV=OVERLAY/S,NC=NOCURS/S,CC=CONVERT/S
+Text2CB 		CLIP=UNIT/K/N,CC=CONVERT/S,TEXT/F
+Text2File		NB=NOBACKUP/S,NI=NOICON/S,AP=APPEND/S,NAME,PAT=PATTERN/K,CC=CONVERT/S,TEXT/F
+Text2Win		LINE/K/N,COL=COLUMN/K/N,PAGE/S,REL=RELATIVE/S,WORD/K/N,TAB/K/N,OF=OFFSET/K/N,UP/S,LEFT/S,W=WRAP/S,ENDWORD/S,IP=INDENTPREV/S,I=INDENT=STAY/S,IN=INDENTNEXT/S,PREFS/S,NC=NOCURS/S,RECT=VERTICAL/S,REPL=OVERLAY/S,CC=CONVERT/S,NF=NOFORMAT/S,TEXT/F
+TextFormat		JP=JOINPARA/S
+TextJustify 	C=CENTER/S,F=FLUSH/S,L=LEFT/S,R=RIGHT/S
+Unload			FORCE/S,NAME/F/A
+Version
+ViewUpdate		ALL/S
+Win2Back
+Win2CB			CLIP=UNIT/N
+Win2File		NB=NOBACKUP/S,NI=NOICON/S,SAME/S,AP=APPEND/S,SC=SETCURRENT/S,MODIFIED/S,NAME,PAT=PATTERN/K,PAR=PARAGRAPH/S,NT=NOSPACE2TAB/S
+Win2Front
+WinAct
+WinChange		LEFT=LEFTEDGE/N,TOP=TOPEDGE/N,WIDTH/N,HEIGHT/N
+WinClear		QUIET=FORCE/S
+WinClose		QUIET=FORCE/S,ALL/S,SAVE/S
+WinIconify		ON/S,OFF/S,TOGGLE/S
+WinLast
+WinNext
+WinPrev
+WinZoom 		FULL/S,ON/S,OFF/S,TOGGLE/S
+
+AZur:Objects/AZCharTable	FP=FILLPEN/K/N,TP=TEXTPEN/K/N,BP=BACKPEN/K/N,TITLE/F
+AZur:Objects/AZColDel		SL=STARTLINE/N,SC=STARTCOL/N,EL=ENDLINE/N,EC=ENDCOL/N,R=RECT/S,NC=NOCURS/S
+AZur:Objects/AZColIns		TEXT/A,SL=STARTLINE/N,SC=STARTCOL/N,EL=ENDLINE/N,OV=OVERLAY/S,NC=NOCURS/S,INC/N
+AZur:Objects/AZColNum		VALUE/N,SL=STARTLINE/N,SC=STARTCOL/N,EL=ENDLINE/N,OV=OVERLAY/S,NC=NOCURS/S,BL=BLOCK/S
+AZur:Objects/AZFileProt 	TITLE/F
+AZur:Objects/AZMan			NAME=FUNC,DOC=DOCNAME,PROMPT=REQ=REQUEST/S,CLEAR/S

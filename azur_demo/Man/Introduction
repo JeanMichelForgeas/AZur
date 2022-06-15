@@ -1,0 +1,95 @@
+
+
+                            INTRODUCTION
+
+
+
+
+Azur est un éditeur de texte et plus encore : c'est une véritable boite à
+outils destinés à manipuler le texte de toutes les façons possibles.
+Mais AZur pourra aussi vous permettre d'effectuer le plus simplement du
+monde vos tâches courantes comme écrire une lettre.
+
+AZur est puissant, évolué et évolutif : il a non seulement la possibilité
+d'enchainer ses commandes dans des scripts, mais il accepte des commandes
+externes.
+Ainsi AZur devient un investissement qui va évoluer de tous les côtés.
+Fini les programmes fixes, voici le produit qui se place de lui-même comme
+le premier éditeur de texte d'une nouvelle génération avec son système de
+commandes "orientées objet".
+
+Pour vous donner la parfaite maîtrise de ce système, AZur vous permet un
+paramétrage complet. Vous pouvez reconfigurer tout l'existant, et lui
+ajouter aussi les futures commandes externes comme si elles lui avaient
+toujours été intégrées.
+Un fichier de paramètrage en ASCII permet de configurer totalement les
+menu, touches, souris et joystick, et un ensemble d'éditeurs de
+préférences s'occuppe du reste. Il y a environ 150 commandes dont
+certaines ont plus de 20 options, ce qui dépasse en possibilité les autres
+éditeurs du marché ou du shareware, et permet des scripts ARexx plus
+simples et compacts.
+le fichier de paramétrage ASCII apporte plusieurs avantages : il permet
+d'écrire directement des scripts ARexx imbriqués dans les définitions, de
+voir beaucoup de lignes à la fois et d'effectuer des beaucoup de
+modifications en un temps record.
+
+Les possibilités techniques enfermées dans le noyau de AZur sont en avance
+sur celles des concurrents : raccourcis clavier sur séquences de plusieurs
+touches (comme l'éditeur emacs), blocs rectangulaires, nombre de blocs
+illimité, replis illimités et imbriqués, marques-pages illimités et nommés
+et qui se déplacent selon les modifications, plusieurs vues sur le même
+texte dans la même fenêtre, macro interne rapide (pré-interprétée), accès
+aux 255 clipboards, formatage automatique du texte avec marges et
+"word-wrap", justifications, fonctions de backup et de sauvegarde
+automatique, recherche avec nombreuses possibilités, lecture et
+compression automatique des fichiers "PowerPacker", 45 scripts ARexx
+fournis, sauvegarde des attributs d'édition dans l'icône (paragraphes,
+replis, blocs, positions, marque-pages, préférences d'édition, ...)
+permettant de conserver le fichier purement ASCII, conversions MSDOS /
+vidéotex / accents / 7bits / codage / rotation13, indentation, entourage
+et tableaux, tris, mailing, lancement de programmes et de scripts, tests
+de parenthèses et de mots (pour tous langages), aide indexée intégrée plus
+Amigaguide, console de commande, ligne de commande, table ASCII,
+modification des bits de protection du fichier, palettes flottantes de
+fonctions, AppIcon et AppWindow, multi-tâches et multi-fenêtres,
+composition de numéros de téléphone, etc...
+
+Un autre aspect peu exploré du grand public est la possibilité de AZur de
+synchroniser plusieurs scripts ARexx entre eux en suspendant leur
+exécution par un méchanisme de résevation de mot-clef. Ceci permet la
+gestion de files d'attente multiples, le déblocage en cascade, etc... Cela
+permet par exemple à AZur de devenir un chef d'orchestre synchronisant
+plusieurs applications qui peuvent par ARexx positionner des conditions
+dont vont dépendre d'autres scripts.
+
+Une mention spéciale sur la gestion des plis dans AZur : le fait qu'ils
+soient imbriqués et manipulables d'un clic de souris permet d'utiliser
+AZur comme un processeur d'idées.
+L'existence d'une commande ARexx qui retrouve le texte de n'importe quel
+niveau de n'importe quel pli permet d'utiliser AZur comme une base de
+données accessible par ARexx pour d'autres programmes.
+
+Un multi-dictionnaire est en préparation avec la possibilité de correction
+orthographique, traduction au mot à mot, ou remplacement de mot-clef. Il
+sera disponible sous forme d'objets de commande externes.
+
+Si vous êtes déjà habitué à un autre éditeur, pour vous faciliter la
+transition vers AZur des fichiers de paramétrage tous prêts existent déjà
+pour les principaux éditeurs du marché.
+
+
+NOTES SUR CETTE VERSION D'EVALUATION
+
+Cette version vous permettra de travailler en réel et de pouvoir tester
+AZur complètement.
+
+Cependant deux restrictions existent qui rendent la version commerciale
+plus avantageuse que cette version d'évaluation :
+- Afin de pouvoir tester AZur de façon simple sans devoir l'installer
+  sur disque dur, des fichiers ont été enlevés comme la documentation
+  détaillée de toutes les commandes, des scripts ARexx, et des
+  paramétrages d'émulation d'autres éditeurs comme CygnusEd, TurboText
+  ou GoldEd.
+- Le nombre de lignes éditables est de 400 avec au plus 10000 caractères
+  et une heure d'affilée d'utilisation.
+

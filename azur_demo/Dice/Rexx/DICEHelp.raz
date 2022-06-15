@@ -1,0 +1,59 @@
+/*
+**      $Id: DICEHelp.raz,v 1.4 1994/10/05 14:28:30 DBernard Rel $
+**
+**      DICEHelp link script for AZur editor (©1994 J.M. Forgeas).
+**
+**      Rexx script modeled after versions by David Joiner and Bryce Nesbitt
+*/
+
+OPTIONS RESULTS
+
+GetLine
+searchline = RESULT
+if length(searchline)=0 then exit
+GetPos
+searchcol = word(RESULT, 2)
+
+hostname = address()            /* Source AZur window */
+portname = 'DICEHELP'           /* DICEHelp's port name */
+tempname = 't:DICEHelp.temp'    /* Temporary file for passing clips */
+
+if ~show('p',portname) then do
+    address COMMAND 'RUN >NIL: <NIL: DCC:Bin/DICEHelp REXXSTARTUP'
+
+    do i = 1 to 6
+        if ~show('p',portname) then do
+            address COMMAND 'wait 1'
+        end
+    end
+
+    if ~show('p',portname) then do
+        'REQMULTI' "DICEHelp program not found !"
+        exit
+    end
+end
+
+address value portname
+'Z' searchcol searchline
+if RC=0 then do
+    refline   = RESULT
+        refstring = SUBWORD( refline, 2 )
+
+    address value hostname           /* Back to AZur */
+    if WORD( refline, 1 ) = "E" then do
+        'REQMULTI' "TEXT" refstring
+        exit
+    end
+
+    File2NewWin NAME refstring RO
+    if RC > 0 then do       /* if not there, then error       */
+        'REQMULTI' "TEXT Error opening" refstring
+        exit
+    end
+
+    exit
+end
+else do
+    address value hostname
+    'REQMULTI' "TEXT Error code" RC "DICEHelp failed!"
+end

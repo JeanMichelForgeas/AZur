@@ -1,0 +1,135 @@
+
+                         FONCTIONNALITES
+
+
+
+Chaque soulignement de titre ci-dessous est un pli contenant les
+explications.
+
+
+LES REPLIS (FOLDS)
+==================
+
+On peut replier n'importe quelle partie du texte. On plie toujours des
+lignes entières. Lors de la création d'un repli, ses limites peuvent
+être précisées de différentes façons par les arguments de la commande ou
+selon un bloc tracé.
+
+Les replis peuvent être imbriqués. Deux replis imbriqués ne peuvent pas
+avoir la même ligne de début.
+
+La même commande est utilisée pour toutes les opérations sur les replis,
+c'est la commande "Fold".
+
+La commande "Fold TOGGLE" attachée aux boutons de la souris ainsi que la
+possibilité d'imbrication permettent de se servir d'AZur comme d'un
+programme "processeur d'idées", c'est à dire de plier/déplier des
+paragraphes et des sous-paragraphes d'un seul coup de souris.
+
+Le travail avec les blocs multiples permet de créer plusieurs plis à la
+fois, ou bien d'agir sur plusieurs plis existants à la fois :
+plier/déplier/enlever.
+
+
+LES BLOCS
+=========
+
+AZur permet les blocs multiples c'est à dire autant de blocs que l'on
+veut dans le texte au même moment. De plus ils peuvent être de
+différents types :
+    - par ligne entière
+    - par mot entier
+    - par caractère
+    - rectangulaire
+
+Beaucoup de commandes ont un comportement différent selon qu'un bloc est
+rectangulaire ou non. Par exemple "Indent" repoussera à partir de la
+limite gauche du bloc, "Surround" entourera des deux côtés au lieu d'un
+seul, etc...
+En règle générale un bloc rectangulaire entraine une restriction des
+actions à l'intérieur du rectangle.
+
+
+LES MARQUES (BOOKMARKS)
+=======================
+
+On peut marquer n'importe quel endroit d'un texte, et donner un nom à
+cette marque. Le nom peut aller jusqu'à 54 caractères.
+Le nom d'une marque peut être pris automatiquement dans un bloc ou
+encore dans le mot juste sous le curseur.
+
+A chaque fois que le texte est modifié, les marques situées en aval
+(après la modification) se déplacent automatiquement pour suivre le
+texte marqué.
+
+
+LES MACROS
+==========
+
+AZur contient un réceptacle interne où peut être mémorisée une séquence
+de commandes. Ce réceptacle est appelé la "Macro interne".
+
+Pour être prises en compte lors de l'enregistrement par MacRecord, les
+commandes doivent être issues d'une de ces de trois sources :
+    - d'un menu,
+    - d'une touche,
+    - ou de ARexx.
+Tout ce qui est fait à la souris n'est pas enregistré dans la macro. Par
+exemple pour tracer un bloc avec la macro, pendant l'enregistrement il
+faut tracer le bloc au clavier (CTRL + touches flêchées).
+
+Une fois remplie, la macro interne de AZur peut être transformée en
+texte pour être insérée dans le texte édité (Mac2Win), ou bien
+sauvegardée dans un fichier (Mac2File).
+
+
+LES VARIABLES
+=============
+
+Chaque tâche maîtresse a son propre ensemble de variables qui peuvent
+être considérées commes locales par la tâche maîtresse, mais globales
+par ses tâches filles.
+
+Elles peuvent être utilisées de deux façons :
+- dans les scripts ARexx grâce à des commandes (GetVar, SetVar, etc...)
+- dans les objets de commande eux-mêmes grâce à des fonctions de
+  l'ensemble de développement AZur : AZ_Var...().
+
+
+LE FORMATAGE ET LES MARGES
+==========================
+
+Les préférences permettent d'activer les marges. Ces marges ne sont
+prises en compte que lors d'opérations bien précises : le formatage et
+la justification du texte.
+
+Ils agissent à partir de la ligne sous le curseur et jusqu'à la ligne
+terminée par le caractère de fin de ligne (jusqu'à la fin du
+paragraphe).
+Si un bloc est dessiné ses limites définissent celles de ces commandes :
+- un bloc rectangulaire : ses limites supérieures et inférieures
+définissent les lignes prises en compte, et ses limites gauche et droite
+définissent : soit des nouvelles marges pour TextFormat, soit la largeur
+d'action pour TextJustify.
+- un bloc autre que rectangulaire : pareil sauf que les marges gauche et
+droite sont celles des préférences. Si les marges des préférences ne
+sont pas activées, la limite gauche est donnée par la colonne de début
+de la première ligne du bloc, et la limite droite est donnée par la
+colonne de fin de la dernière ligne du bloc.
+
+Attention : les premières lignes de paragraphe se comportent d'une façon
+un peu différente des autres lignes : afin de garder leur indentation
+(alinéa) les espaces de début de ligne ne sont pas effacés ni par un
+reformatage de la ligne ni par une justification. Il existe cependant un
+moyen pour les traiter de la même façon que les autres : l'utilisation
+d'un bloc rectangulaire.
+
+
+LA COMPRESSION
+==============
+
+AZur peut relire des fichiers comprimés avec PowerPacker et les
+sauvegarder en les comprimant. Dans le futur de nouveaux modes de
+compression seront ajoutés.
+La librairie "powerpacker.librairie" est nécessaire, la version 35 ou
+plus pour pouvoir sauvegarder.

@@ -1,0 +1,356 @@
+
+
+                        OPTIONS DE DEMARRAGE
+
+
+Voici le modèle de la ligne de commande de AZur, compatible avec les
+commandes standards de l'AmigaDOS (tout ne tient pas sur une ligne).
+Ne vous laissez pas impressionner par leur nombre, La plupart de ces
+options (pas toutes, voir dans "Détail des options") correspondent à
+des réglages de préférences :
+
+  NAME/M,MPN=MASTPORTNAME/K,PN=PORTNAME/K,
+  FN=FONTNAME/K,FH=FONTHEIGHT/K/N,VFN=VIEWFONTNAME/K,VFH=VIEWFONTHEIGHT/K/N,
+  F=FROM/K,CMD=FC=FROMCMD/K,PARM=PARMFILE/K,PREFS=PREFSID/K,PAT=PATTERN/K,
+  TL=TABLEN/K/N,SN=SCREENNAME=PUBSCREEN/K,SA=SCREENADDR/K/N,SF=SCREENFRONT/S,
+  SZ=SCREENAZUR/S,FS=FULLSCREEN/S,DB=DELBLOCK/S,BKP=BACKUP/S,LM=LINEMODE/S,
+  MINITEL/S,REPLACE/S,IT=INDTYPE/N,NW=NOWINDOW/S,RO=READONLY/S,
+  H=HELP/K/S,PRI=PRIORITY/K/N,RES=RESIDENT/S,IOB=IOBUFFER/K/N,OR=OPENREQ/S,
+  NOS=NOAUTOSIZE/S,ML=MAXLINES/K/N,NP=NOPROC/S,Q=QUIET/S,SAVE/S,REQWIN/S,
+  SCD=SCDEPTH/K/N,SCM=SCMODE/K/N,EM=ELEMASK/K/N,PU=PUDDLE/K/N,
+  DELCLIP=DELUNIT/K/N,TABTAB/S,NPT=NULLPOINTER/S,
+  DEBUG/S,LEFT/K/N,TOP/K/N,WIDTH/K/N,HEIGHT/K/N,ASYNC/S
+
+Voici le modèle de la ligne de commande de AZurQuick :
+
+  NAME/M,MPN=MASTPORTNAME/K,PN=PORTNAME/K,F=FROM/K,CMD=FC=FROMCMD/K,
+  PAT=PATTERN/K,NW=NOWINDOW/S,RO=READONLY/S,PRI=PRIORITY/K/N,OR=OPENREQ/S,
+  KILL/S,ASYNC/S,RES=RESIDENT/S
+
+Les paramètres de mêmes noms ont la même signification pour les deux
+programmes.
+
+Dépliez les replis ci-dessous pour accéder au texte.
+
+
+Détail des options AZur
+-----------------------
+
+Dans le détail des options ci-dessous, si "(Prefs)" est présent juste
+à doite du mot-clef cela indique que cette option modifie le drapeau
+ou la valeur directement dans les préférences.
+Lorsque AZur est lancé le fichier des préférecnces est lu en premier,
+donc les options données sur la ligne de commande sont une façon très
+pratique de ne changer que quelques réglages dans un but particulier.
+
+NAME/M
+    Noms de fichiers à ouvrir. On peut indiquer plusieurs fichiers à
+    la suite.
+    Sous 2.0 et plus des pattern AmigaDOS sont acceptés comme "#?.c"
+    ou "~(#?.o)".
+    Exemple :
+      > AZur x.c y.c z.asm xyz#?.(h|i)
+
+MPN=MASTPORTNAME/K  (Prefs)
+    Nom à donner au port ARexx de la tâche maîtresse.
+
+PN=PORTNAME/K       (Prefs)
+    Nom à donner au port ARexx de chaque tâche fille.
+
+FN=FONTNAME/K       (Prefs)
+    Nom de la police à utiliser dans le titre de la fenêtre et dans
+    les boites de dialogue.
+
+FH=FONTHEIGHT/K/N   (Prefs)
+    Hauteur de la police à utiliser dans le titre de la fenêtre et
+    dans les boites de dialogue.
+
+VFN=VIEWFONTNAME/K  (Prefs)
+    Nom de la police à utiliser pour le travail dans la zone d'édition.
+    Ce doit être une police de largeur fixe (non proportionnelle).
+
+VFH=VIEWFONTHEIGHT/K/N  (Prefs)
+    Hauteur de la police à utiliser pour le travail dans la zone
+    d'édition.
+
+F=FROM/K
+    Nom d'un script ARexx à lancer sur chaque fichier ouvert.
+
+CMD=FC=FROMCMD/K
+    Nom d'un objet de commande à lancer sur chaque fichier ouvert.
+
+PARM=PARMFILE/K     (Prefs)
+    Nom d'un fichier de paramètres pour remplacer le défaut qui est
+    "AZur:Parms/AZur.par".
+
+PREFS=PREFSID/K
+    Identificateur qui sert de nom pour sauvegarder et relire les
+    préférences dans ENV: et ENVARC:.
+    Le nom par défaut est "AZur.prefs".
+
+PAT=PATTERN/K       (Prefs)
+    Pattern utilisée par la requête de fichier.
+
+TL=TABLEN/K/N       (Prefs)
+    Longueur de tabulation (en caractères).
+
+SN=SCREENNAME=PUBSCREEN/K
+    Pour ouvrir la fenêtre sur l'écran dont le nom doit être donnée en
+    argument.
+
+SA=SCREENADDR/K/N
+    Pour ouvrir la fenêtre sur l'écran dont l'adresse doit être donnée
+    en argument.
+
+SF=SCREENFRONT/S    (Prefs)
+    Pour ouvrir la fenêtre sur l'écran de devant, quel qu'il soit.
+
+SZ=SCREENAZUR/S     (Prefs)
+    Pour ouvrir la fenêtre sur un écran séparé qui appartient à AZur.
+
+FS=FULLSCREEN/S     (Prefs)
+    Permet d'ouvrir la fenêtre de façon à ce qu'elle occupe tout l'écran
+    physique, tout en laissant la barre de titre disponible pour gérer
+    les fenêtres iconifiées.
+
+DB=DELBLOCK/S       (Prefs)
+    Avec cette option, la frappe d'un caractère supprime les blocs avant
+    d'insérer le caractère.
+
+BKP=BACKUP/S        (Prefs)
+    Active le backup d'un fichier pré-existant avant chaque sauvegarde.
+
+LM=LINEMODE/S       (Prefs)
+    Remplace tous les modes de tracé de bloc par le mode bloc-par-ligne,
+    sauf le mode par rectangle qui reste disponible.
+
+MINITEL/S           (Prefs)
+    Indique que le port série est relié à un minitel au lieu d'un
+    modem.
+
+REPLACE/S           (Prefs)
+    Active le mode de remplacement des caractères au lieu du mode
+    d'insertion, lors de la frappe au clavier.
+
+IT=INDTYPE/N        (Prefs)
+    Type d'indentation utilisé lors de l'insertion de texte :
+        0 : pas d'indentation
+        1 : indentation à gauche
+        2 : indentation sous le début de la ligne précédente, à une
+            tabulation près.
+        3 : indentation à droite
+
+NW=NOWINDOW/S       (Prefs)
+    Pas de fenêtre ouverte sur les fichiers. Permet les traitements
+    en "tâche de fond".
+
+RO=READONLY/S       (Prefs)
+    Pas de modification ni sauvegarde possibles.
+
+H=HELP/K/S
+    Ouvre la fenêtre d'aide.
+
+PRI=PRIORITY/K/N
+    Priorité des tâches filles d'édition, la tâche maîtresse se met
+    toujours +1 par rapport aux tâches filles.
+
+RES=RESIDENT/S
+    La tâche maîtresse doit rester en mémoire même si aucun fichier
+    n'est demandé à l'édition. Cela permet de lancer des tâches
+    filles ultérieurement depuis ARexx ou avec AZurQuick.
+    Dans ce mode la fermeture de la fenêtre de la dernière tâche
+    fille n'entraine pas la fin de la tâche maîtresse. Il suffit de
+    lui envoyer un CTRL+C ou la commande ARexx "Quit".
+
+IOB=IOBUFFER/K/N    (Prefs)
+    Taille en Kilo octets des buffers de lecture/écriture sur disque.
+    Le défaut est de 20. La taille allouée est double car la lecture
+    et l'écriture des fichiers sont implémentées en double-buffer
+    (pour l'asynchronisme qui est plus rapide).
+
+OR=OPENREQ/S        (Prefs)
+    Provoque l'ouverture de la requête de fichier lors de l'ouverture
+    de chaque nouvelle fenêtre.
+
+NOS=NOAUTOSIZE/S    (Prefs)
+    Empêche l'adaptation automatique de l'épaisseur des bords des
+    vues.
+
+ML=MAXLINES/K/N
+    Nombre maximum de lignes dans la fenêtre.
+
+NP=NOPROC/S
+    La tâche maîtresse ne doit pas lancer de tâche fille d'édition
+    (donc pas d'ouverture de fenêtre) lors du démarrage.
+    Cette option positionne automatiquement l'option RES=RESIDENT/S.
+
+Q=QUIET/S
+    Empêche l'ouverture des requêtes annonçant une erreur.
+
+SAVE/S
+    Juste avant que la tâche fille se termine, son contenu sera
+    sauvegardé automatiquement dans le fichier sous le nom en cours.
+
+REQWIN/S            (Prefs)
+    Remplace les requêtes par des fenêtres.
+
+SCD=SCDEPTH/K/N     (Prefs)
+    Complémentaire de SCREENAZUR : indique la profondeur (nombre de
+    bitplanes) voulue pour l'écran AZur (défaut 2).
+
+SCM=SCMODE/K/N      (Prefs)
+    Complémentaire de SCREENAZUR : indique le mode graphique voulu
+    pour l'écran AZur.
+    Voir la documentation Commodore pour tous les modes et monitors
+    possibles.
+
+EM=ELEMASK/K/N      (Prefs)
+    Permet de placer dans les bordures de la fenêtre seulement les
+    éléments d'interface (boutons, ascenseurs...) de son choix.
+    Utilisez plutôt les préférences.
+
+PU=PUDDLE/K/N       (Prefs)
+    L'option PUDDLE permet de changer la taille (en Kilo octets) des
+    blocs d'allocation de la mémoire utilisée pour stocker le texte
+    (taille en kilo octets).
+
+DELCLIP=DELUNIT/K/N (Prefs)
+    Indique le numéro du Clipboard qui doit être utilisé lors de la
+    sauvegarde avant effacement d'un bloc de caractères.
+    La valeur par défaut est 1.
+    Une commande "CB2... UNIT=1" permet ainsi de récupérer ce qui a
+    été effacé ("CB2..." signifie "ClipBoard vers...").
+
+TABTAB/S
+    Supprime les transformations d'espaces en tabs ou de tabs en espaces.
+
+NPT=NULLPOINTER/S
+    Dès qu'un caractère est tapé dans la fenêtre le pointeur disparait
+    et réapparait quand on utilise la souris.
+
+DEBUG/S
+    Affiche des informations comme le texte des commandes reçues sur le
+    port ARexx.
+
+LEFT/K/N
+    Abscisse de la fenêtre
+
+TOP/K/N
+    Ordonnée de la fenêtre
+
+WIDTH/K/N
+    Largeur de la fenêtre
+
+HEIGHT/K/N
+    Hauteur de la fenêtre
+
+ASYNC/S
+    Cette option n'a aucun effet. Elle est là dans le cas où AZurQuick
+    passe sa ligne de commande à AZur afin d'éviter d'essayer de lire
+    un fichier nommé "ASYNC".
+
+
+Le programme AZurQuick
+----------------------
+
+AZur a deux défauts qui sont inhérents à sa nature et qui sont éliminés
+par l'emploi conjoint d'un autre programme : AZurQuick.
+
+1) AZur est un gros programme : son temps de chargement est long.
+AzurQuick est petit, environ 10K, donc se charge rapidement.
+
+2) AZur a beaucoup d'initialisations à faire car il est sophistiqué et
+puissant : il peut s'écouler plusieurs secondes entre le chargement et
+avant qu'il ne soit prêt sur une machine à base de 68000..
+AZurQuick ne fait pas d'initialisations : il demande juste à un AZur
+déjà en mémoire de lancer une nouvelle tâche d'édition (plus simplement
+d'ouvrir une nouvelle fenêtre).
+
+AZurQuick permet donc de bénéficier du multi-tâches de AZur et d'avoir
+plusieurs tâches d'édition pour une tâche maîtresse, ce qui économise
+aussi beaucoup de mémoire.
+Du fait que AZurQuick est un programme, il peut être utilisé dans des
+scripts ou par d'autres programmes.
+
+AZur et AZurQuick peuvent être mis "Resident" au sens AmigaDOS grâce à
+la commande C:Resident, ce qui annule ensuite leur temps de chargement,
+et diminue la mémoire occupée lors de lancements multiples.
+
+
+Détail des options AZurQuick
+----------------------------
+
+AZurQuick accepte un sous-ensemble des options de AZur, que ces programmes
+soient lancés depuis un Shell ou depuis le Workbench.
+
+NAME/M              Voir option AZur
+
+MPN=MASTPORTNAME/K  Nom du port ARexx de la tâche mère à qui on veut faire
+                    ouvrir une fenêtre supplémentaire. Voir option AZur.
+
+PN=PORTNAME/K       Voir option AZur
+
+F=FROM/K            Voir option AZur
+
+CMD=FC=FROMCMD/K    Voir option AZur
+
+PAT=PATTERN/K       Voir option AZur
+
+NW=NOWINDOW/S       Voir option AZur
+
+RO=READONLY/S       Voir option AZur
+
+PRI=PRIORITY/K/N    Voir option AZur
+
+OR=OPENREQ/S        Voir option AZur
+
+PREFS=PREFSID/K     Voir option AZur
+
+KILL/S
+    Envoie un CTRL+C à la tâche maîtresse qui a un MASTPORTNAME (c'est à
+    dire un nom de port ARexx) correspondant.
+    La tâche maîtresse ferme alors toutes ses fenêtres (sans requète de
+    confirmation si le texte avait été modifié) puis s'arrête même si elle
+    avait été lancée avec RESIDENT ou NOPROC.
+
+ASYNC/S
+    Rend la main tout de suite après avoir envoié un message à la tâche
+    maîtresse : il n'attend pas le retour du message et donc se termine
+    immédiatement, pendant que la tâche maîtresse est en train de lancer
+    la tâche d'édition demandée.
+
+RES=RESIDENT/S
+    Permet de rendre résidente la tâche maîtresse à laquelle ce AZurQuick
+    va s'adresser. Par exemple si la tâche maîtresse possède une AppIcon
+    celle-ci restera même après qu'on ait fermé la dernière fenêtre AZur
+    car la tâche maîtresse restera en attente en mémoire.
+
+
+Exemple sous Shell
+------------------
+
+AZur nomfichier VIEWFONTNAME=courier VIEWFONTHEIGHT=13
+ou encore :
+AZur nomfichier VFN courier VFH 13
+
+Ou pour lancer AZur en tâche de fond puis ouvrir très rapidement de
+nouvelles fenêtres basées sur cette tâche :
+    Run >Nil: AZur NOPROC SCREENAZUR FULLSCREEN
+    AZurQuick ASYNC t:x t:y ram:#?.bkp
+    AZurQuick ASYNC PAT="#?.(c|asm|s|h|i)"
+
+Autre exemple, avec sur l'utilisation de plusieurs fichiers de préférences :
+    Run >nil: AZur NOPROC
+    Run >nil: AZur NOPROC MPN=AZurDevel PREFS=Devel.prefs
+
+Exemple sous Workbench
+----------------------
+
+Mettre les options dans l'icône de AZur :
+    VIEWFONTNAME=courier
+    VIEWFONTHEIGHT=13
+Puis cliquez une fois sur l'icône de AZur, et tout en maintenant la
+touche SHIFT enfoncée, double-cliquez sur l'icône d'un fichier.
+
+Remarque : Dans une icône le signe "=" est obligatoire si une valeur suit
+l'option, et il ne doit pas être entouré d'espaces.

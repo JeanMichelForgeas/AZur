@@ -1,0 +1,21 @@
+/*
+**      $Id: OpenFile.raz,v 1.5 1994/12/04 22:36:16 DBernard Rel $
+**
+**      VMake integration.  Script for AZur editor (©1994 J.M. Forgeas).
+**
+**      Original work from Bryce Nesbitt
+**
+*/
+OPTIONS RESULTS
+'GetPort'
+
+'GetVar' 'DCC_'||RESULT
+clip = RESULT
+if clip = "" THEN
+   DO
+      'REQMULTI' "CONVERT TEXT Pas de projet VMAKE actif\npour cette fenêtre"
+      exit 0
+   END
+
+ADDRESS VALUE Clip
+'Jump' "AZur Screen"

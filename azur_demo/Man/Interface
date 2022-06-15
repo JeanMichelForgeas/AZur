@@ -1,0 +1,198 @@
+
+
+                        INTERFACE UTILISATEUR
+
+
+
+    Les lignes de soulignements sont des plis repliés.
+
+
+NOTATION DES RACCOURCIS CLAVIER
+===============================
+
+    Les raccourcis clavier (présents dans les menus et dans le fichier de
+    configuration) peuvent être composés de plusieurs combinaisons de
+    touches, chaque combinaison pouvant être la somme de plusieurs touches
+    pressées en même temps.
+    - Exemple de combinaison :  ALT+SHIFT+R.
+    - Exemple de séquence : ALT+SHIFT+R,ALT-SHIFT-X,CTRL+Q
+
+    Par exemple CTRL+X,A signifie qu'on doit :
+    - Appuyer sur CTRL, puis tout en la maintenant enfoncée, appuyer sur X
+    - Relâcher toutes les touches
+    - Appuyer sur la touche A
+    - Relâcher la touche A
+
+
+LA BARRE DE STATUS
+==================
+
+    Exemple :       39/233  14  $0A ISF--R ----- --- M   Ram:Toto
+    Découpage :     [A]     [B] [C] [D]    [E]   [F] [G] [H]
+
+    [A] : Numéro de ligne du curseur / nombre total de lignes
+    [B] : Numéro de colonne du curseur
+    [C] : Code ASCII (en héxadécimal) du caractère sous le curseur
+    [D] : Drapeaux d'état :
+            - I ou R : mode d'écriture : Insert ou Remplace
+            - S ou I : recherche Sensible ou Insensible aux majuscules
+            - F ou - : Formatage automatique ou non
+            - D ou - : console de Debugage autorisée ou non
+            - C ou - : sauvegarde Compressée ou non
+            - R ou - : la tâche maîtresse est Résidente ou non
+    [E] : Verrous correspondant à la commande "Lock"
+            - D ou - : Display -> affichage bloqué
+            - I ou - : Input   -> plus de menus ni clavier ni souris
+            - M ou - : Modify  -> modification du texte interdite
+            - S ou - : Save    -> sauvegarde interdite
+            - A ou - : ARexx   -> toute commande ARexx tombe en erreur
+    [F] : Etat des qualifieurs virtuels de la commande "Qualifier"
+            1 pour LOCK1, 2 pour LOCK2, 3 pour LOCK3
+    [G] : Indique si le texte a été modifié depuis la dernière sauvegarde
+    [H] : Nom complet du fichier en cour d'édition
+
+
+LA ZONE DE COMMANDE
+===================
+
+    Si elle est activée dans les préférences (Menu Prefs/Fenêtre/Ligne de
+    commande), une zone de saisie en bas de chaque fenêtre AZur permet
+    d'entrer des commandes qui sont exécutées directement par AZur.
+
+
+LE BOUTON DE CREATION DE VUE
+============================
+
+    Dans le coin inférieur droit se trouve un petit bouton carré. Il est
+    utilisable seulement si la fenêtre est assez grande pour pouvoir
+    contenir une vue supplémentaire sur le même texte en le faisant
+    coulisser.
+    Pour supprimer une vue : descendez son bouton carré avec la souris
+    jusqu'à ce qu'il touche le bouton d'une vue du dessous, et relâchez.
+
+
+AREXX
+=====
+
+    Les commandes peuvent être passées au port ARexx de AZur soit :
+    - depuis un autre programme
+    - depuis un script ARexx
+    - depuis sa console AZur
+
+    Chaque fenêtre (tâche) d'édition peut posséder sa console AZur si on
+    lui demande de l'ouvrir avec par exemple la commande :
+            "ExeARexxScript CONSOLE Console.raz"
+    L'option "CONSOLE" ouvre une console AmigaDOS qui servira d'entrée/
+    sortie à ARexx lorsqu'il exécutera le script donné en argument. Le
+    script "Console.raz" est un simple script ARexx qui lit l'entrée
+    standard et exécute ce qu'il y a lu. Vous pouvez le modifier ou
+    mettre votre propre script en argument...
+
+    La console accepte des commandes AZur en direct, mais qui vont passer
+    par l'intermédiaire de ARexx.
+    Il est possible de taper des commandes ARexx qui ne soient pas AZur en
+    mettant un " ou un ' en début de ligne (si il y a des " dans la
+    commande mettez un ' et inversement).
+
+    Par exemple pour afficher 5 fois XXX vous pouvez taper :
+        "do i=1 to 5; say XXX; end
+
+
+HERITAGE DE UIK
+===============
+
+    L'interface utilisateur (UI) de AZur repose sur les fonctionnalités de
+    UIK (User Interface Kit, produit commercial du même auteur).
+
+Raccourcis claviers
+-------------------
+
+    Les boutons et zones de saisie peuvent être activés par une touche
+    indiquée par la lettre soulignée dans leur titre.
+
+    Si vous voulez utiliser le raccourcis clavier associé à un bouton et
+    qu'une zone de saisie est active, vous devez d'abord la désactiver
+    avec ESCAPE, puis appuyer sur la touche voulue. A l'inverse, afin de
+    taper du texte si aucune zone n'est active, appuyez sur TAB afin
+    d'activer la première zone, puis continuez
+    jusqu'à ce que la zone voulue soit activée.
+
+    UIK possède par défaut certains raccourcis claviers qui ne sont pas
+    indiqués visuellement :
+
+Les zones de saisie
+-------------------
+
+    Tab
+        Active la première zone de saisie, puis active la suivante,
+        et ainsi de suite.
+
+    SHIFT+Tab
+        Active la zone précédente.
+
+    Les flêches HAUT ou BAS
+        Activent la zone précédente ou suivante.
+
+    Escape
+        Désactive une zone de saisie.
+
+
+Les requêtes
+------------
+
+    Lorsque aucune zone de saisie n'est active, les touches RETURN et
+    ESCAPE sont des raccourcis pour les boutons de confirmation ou
+    d'annulation de toutes les requêtes.
+
+Le sélecteur de fichiers
+------------------------
+
+o Raccourcis clavier :
+
+    Il comporte beaucoup de raccourcis et peut se piloter entièrement avec
+    le clavier. Il possède aussi la facilité de complémenter les
+    noms de fichiers.
+    Les raccourcis claviers ne sont actifs que lorsque aucune zone de
+    saisie n'est active.
+
+    Essayez les touches : flêche haut et flêche bas, avec les touches
+    SHIFT et ALT.
+    La touche RETURN simule le bouton OK pour une ligne sélectionnée.
+
+    Si vous appuyez sur CTRL en plus des touches ci-dessus, leur effet se
+    porte sur la liste de gauche (liste des périphériques).
+    Si fous faites CTRL+ESPACE vous basculez soit sur les Assigns soit sur
+    les périphériques, comme avec le bouton droit de la souris.
+
+    Si vous appuyez sur CTRL et que vous retaillez la fenêtre en même
+    temps, c'est la liste de gauche qui va se retailler, sinon c'est celle
+    de droite.
+
+    La touche ESPACE seule active la zone de saisie de gauche. Alt gauche
+    + ESPACE active la zone de saisie de gauche puis en vide
+    le contenu.
+    Alt droite + ESPACE active la zone de saisie de droite puis initialise
+    son contenu avec "#?".
+
+    Le "!" arrête l'examen du répertoire.
+    Le "?" recommence l'examen du répertoire.
+
+    Les touches flêches gauches et droites ont le même effet que les
+    boutons fléchés gauche et droits qui servent à circuler dans le
+    chemin d'un répertoire.
+
+o Zones de saisie :
+
+    Les zones de saisie du sélecteur de fichiers de UIK sont maintenant en
+    bas (des utilisateurs se sentent perturbés par leur ancienne place
+    qu'ils jugent trop inhabituelle). Les programmes comme AZur utilisant
+    les objets intermédiaires UIKObj_WFileButton ou UIKObj_WinFileSel
+    peuvent
+    changer ce défaut. Marche à suivre :
+     - Lancer une fois AZur, ouvrir le sélecteur de fichiers,
+     - Déplacer le sélecteur ou modifier sa taille,
+     - Quitter AZur,
+     - Editer avec AZur le fichier d'environnement suivant :
+            ENV:UIK/Objects/ObjWinFileSel.prefs
+     - Mettez une valeur autre que 0 pour le 7ème nombre.
+     - Quittez AZur puis relancez : elles sont en haut.

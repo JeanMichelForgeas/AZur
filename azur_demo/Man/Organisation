@@ -1,0 +1,127 @@
+
+                          ORGANISATION
+
+
+
+MULTI-TACHES
+============
+
+Lorsqu'on lance AZur une première tâche est démarrée qui a pour nom
+celui de la commande qui a servie à le démarrer, comme par exemple
+"Work:AZur/AZur".
+Le nom de son port ARexx est "AZURMAST" pour la première tâche, et pour
+les suivantes "AZURMAST." suivi du numéro de cette tâche maîtresse
+(plusieurs tâches maîtresses peuvent être lancées), exemple :
+"AZURMAST.1".
+
+Cette tâche est désignée comme la tâche maîtresse. Elle peut ouvrir un
+écran avec une fenêtre minimum qui permet d'avoir des menus lorsqu'on
+clique dans le fond de l'écran. Elle ne gère pas de fichier elle-même,
+car elle laisse ce soin à ses tâches filles qu'elle crée selon les
+besoins de l'utilisateur.
+Une tâche fille peut être créée de trois façons : par la commande
+"File2NewWin", par la fonction du DevKit "AZ_LaunchProcess" (pour les
+programmeurs), et par l'exécution du programme compagnon "AZurQuick".
+
+Due à l'extrème sophistication du noyau de AZur son initialisation peut
+prendre quelques secondes sur une machine équipée d'un 68000. Par
+contre le programme "AZurQuick" permet de lancer une nouvelle fenêtre
+de façon instantanée, en profitant des initialisations d'une tâche
+maîtresse pré-existante...
+Ainsi on peut simplement lancer AZur en tâche de fond juste après le
+boot :
+    "Run >Nil: AZur NOPROC"
+Puis ensuite on pourra ouvrir toutes les fenêtres voulues en faisant
+par exemple :
+    AZurQuick ASYNC Work:Docs/xxx
+    etc...
+Ce programme est tout petit, "pure", et peut être mis "resident" au
+sens AmigaDOS du terme.
+
+Chaque tâche fille a pour nom "AZURED". Le nom de leur port ARexx est
+"AZUR" pour la premier tâche fille, et pour les suivantes il est formé
+de "AZUR." et d'un numéro d'identification, exemple : "AZUR.3". A
+chaque fois que l'utilisateur veut lire/créer/modifier un nouveau
+fichier, une tâche fille est créée. Elle gère sa propre liste de lignes
+de texte, sa propre fenêtre avec une seule ou bien plusieurs vues sur
+le texte.
+
+
+CONFIGURATION
+=============
+
+Le fichier de préférences
+-------------------------
+
+C'est le premier fichier lu. Il remplace tous les défauts des valeurs
+inscrites dans le programme. Certains arguments donnés sur la ligne de
+commande de AZur viennent ensuite modifier les valeurs prises dans le
+fichier.
+
+Le fichier de paramètres
+------------------------
+
+Il est lu par la tâche maîtresse avant que des tâches filles ne soient
+lancées. Son nom est stocké dans les préférences (à l'origine il est
+nommé "Parms/AZur.par") et peut être changé par une option sur la ligne
+de commande de AZur. Si le fichier ne peut pas être ouvert, un deuxième
+essai est fait avec le nom "AZur:Parms/AZur.par".
+Ainsi un fichier de paramètres peut être associé au répertoire courant.
+
+Le script de démarrage
+----------------------
+
+Chaque tâche fille, après être initialisée de façon correcte, exécute
+le script ARexx donné en argument à AZur avec l'option FROM. On peut
+utiliser ceci de plusieurs façons, par exemple comme un script de
+configuration ou bien pour faire des traitements en tâche de fond.
+Voir les options de AZur NOWINDOW et SAVE.
+
+La commande de démarrage
+------------------------
+
+L'option CMD de AZur permet d'exécuter une ligne de commande ARexx dans
+les mêmes conditions que le script ci-dessus. Cette ligne peut
+comporter une syntaxe ARexx standard comme :
+    "DO x=1 TO 10; Commande_AZur xxx; IF ... THEN ...; END"
+Cette facilité de ARexx de construire une simple commande comme un
+script est souvent utile car elle permet de ne pas avoir à créer un
+fichier séparé pour une script. Voir par exemple dans le fichier de
+paramètres, les menus associés à la commande AZur "ExeARexxCmd".
+
+
+UIK (pour les techniciens)
+===
+
+AZur a été programmé avec le moteur d'objets UIK (User Interface Kit)
+du même auteur que AZur. UIK a permis une programmation plus facile et
+plus puissante de AZur par le découpage de l'application en plusieurs
+objets. D'autre part les objets fournis avec UIK ont pu être utilisés
+comme ARexx, la requête de fichiers, de fontes, etc... Les facilités
+comme la gestion des langages, les buffers dynamiques, et autres ont
+aussi contribué à un programme très ouvert et qui a pu se jouer de
+beaucoup des difficultés rencontrées habituellement.
+
+Voici l'arborescence des objets que AZur utilise sous UIK. Certains
+objets sont fournis avec UIK, d'autres sont privés à AZur. Chaque tâche
+fille commence à s'attacher un objet "UIK", puis un objet "ARexx",
+"Timer", puis un objet "Ecran" si besoin, et enfin un objet "Fichier",
+qui lui-même s'ajoute ... etc...
+
+       ARexx           Barre d'info     Zone d'affichage du texte
+      /               |                /
+  UIK --Timer         | Vues(plusieurs)--Barre de séparation
+     |\               |/               \
+     | Fichier--Fenêtre--Menu           Ascenceurs,boutons,...
+     |                |\
+      Ecran           | Requêtes
+                      |
+                       Ligne de commande
+
+Donc, 1 tâche = 1 fichier, avec une fenêtre ou non, et dans la même
+fenêtre plusieurs vues sont possibles sur le même fichier.
+
+Des éditions en "tâche de fond" peuvent être lancées qui n'ouvrent pas
+de fenêtre mais exécutent seulement un script ARexx ou un objet de
+commande sur le texte chargé (voir les options de lancement NOWINDOW,
+FROM, CMD, SAVE).

@@ -1,0 +1,113 @@
+/*
+**      $Id: VMake.raz,v 1.7 1994/12/04 22:38:33 DBernard Rel $
+**
+**      VMake integration.  Script for AZur editor (©1994 J.M. Forgeas).
+**
+**      Original work from Bryce Nesbitt
+*/
+PARSE UPPER ARG COMMAND /* Build Run Debug Front Open Compile */
+
+OPTIONS RESULTS
+
+'GetPort'
+port = Result
+'GetVar' 'DCC_'||Result
+clip = RESULT
+if clip = "" THEN
+   DO
+      'REQMULTI' "TEXT Aucun projet VMAKE actif pour ce fichier."
+      exit 0
+   END
+
+'GetDocuments'
+docs = RESULT
+
+OKSAVE = 0
+DO WHILE docs ~= ''
+
+   PARSE VAR docs dummy ',' port ',' docs
+
+   port = STRIP( port, 'B', '"' )
+   ADDRESS VALUE port
+
+   'GetFileInfo'
+   changed = word(RESULT, 2)
+
+   'BMRemove' "PAT DERR_#?"
+
+    IF changed = "YES" THEN DO
+        IF OKSAVE = 0 then DO
+            'REQMULTI' "CONVERT B1 _Oui B3 _Non TEXT Tous les fichiers n''ont pas été sauvegardés\n\nFaut-il effectuer la sauvegarde ?"
+            PARSE VAR RESULT button "," string1 "," string2
+            IF button ~= 'OK' THEN LEAVE
+            OKSAVE = 1
+        END
+        'WIN2FILE' 'SAME'
+    END
+    ADDRESS
+END
+
+IF show('p','DICE_ERROR_PARSER') THEN
+   ADDRESS DICE_ERROR_PARSER Clear
+
+ADDRESS VALUE Clip
+
+SELECT
+   WHEN COMMAND = 'COMPILE' THEN
+      DO
+         ADDRESS
+         'GetFileInfo'
+         PARSE value RESULT with d1 d2 '"' file '"'
+         ADDRESS
+
+         'Select' file
+         IF RC = 0 THEN
+            'CALL 1'
+         CRC = RC
+      END
+
+    WHEN COMMAND = 'BUILD' THEN
+        DO
+            'CALL 2'
+            CRC = RC
+        END
+   WHEN COMMAND = 'RUN'   THEN
+      DO
+         'CALL 2'
+         IF RC = 0 THEN
+            'CALL 4'
+         CRC = RC
+      END
+   WHEN COMMAND = 'DEBUG' THEN
+      DO
+         'CALL 2'
+         IF RC = 0 THEN
+            'CALL 5'
+         CRC = RC
+      END
+   WHEN COMMAND = 'FRONT' THEN
+      DO
+         'FRONT'
+         CRC = RC
+      END
+   WHEN COMMAND = 'OPEN' THEN
+      DO
+         'FRONT'
+         CRC = RC
+      END
+   OTHERWISE
+      DO
+         address
+         'REQMULTI' "TEXT Commande inconue:" COMMAND
+         exit 5
+      END
+END
+
+ADDRESS
+
+IF CRC ~= 0 THEN DO
+   'REQMULTI' "TEXT" COMMAND "Failed / RC:" CRC
+END
+ELSE DO
+   'REQMULTI' "TEXT" COMMAND "Done"
+END
