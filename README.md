@@ -12,15 +12,15 @@ Fully configurable, multi-process, one per edited file, ARexx, multi-clipboards,
 FOLDS
 
 Any part of the text can be folded. We always fold whole lines. 
-When creating a fold, its limits can be specified in different ways be specified in different ways by the arguments of the command or according to a according to a drawn block.
+When creating a fold, its limits can be specified in different ways by the arguments of the command or according to a drawn block.
 
-Folds can be nested. Two nested folds cannot have the same have the same start line.
+Folds can be nested. Two nested folds cannot have the same start line.
 
 The same command is used for all operations on folds, it is the "Fold" command.
 
-The "Fold TOGGLE" command attached to the mouse buttons as well as the possibility of nesting allow to use AZur as an "idea processor", and idea processor" program, i.e. to fold/unfold paragraphs and paragraphs and sub-paragraphs with a single mouse click.
+The "Fold TOGGLE" command attached to the mouse buttons as well as the possibility of nesting allow to use AZur as an "idea processor" program, i.e. to fold/unfold paragraphs and paragraphs and sub-paragraphs with a single mouse click.
 
-Working with multiple blocks allows to create several folds at the same time, or to act on at the same time, or to act on several existing folds at the same time: fold/unfold/remove.
+Working with multiple blocks allows to create several folds at the same time, or to act on several existing folds at the same time: fold/unfold/remove.
 
 
 BLOCKS
