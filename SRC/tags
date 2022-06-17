@@ -1,0 +1,919 @@
+
+main.c,667
+struct Glob 87,2327
+static void LibAlert(263,10053
+static void StartErr(268,10205
+static AZUR *Init(273,10306
+static ULONG My_IsListEmpty(307,11895
+static void signal_all(317,12047
+static void ReplyQuickMsg(330,12406
+static void Cleanup(341,12653
+static ULONG add_filenode(417,15655
+static UBYTE *char_found(432,16042
+static void verif_fontname(438,16171
+static void launch_quick(447,16361
+static ULONG add_main_interface(603,23323
+static void activate_window(653,25777
+void main(670,26206
+ULONG func_LaunchProcess(1078,46158
+void ChangeMainScreen(1225,52482
+static void ProcCleanup(1259,54041
+void CopyProt(1369,59324
+void ProcessMain(1383,59639
+
+funcs_bookm.c,677
+extern struct Glob 32,692
+static ULONG __asm get_name_id(49,1125
+static ULONG __asm get_pos_id(63,1438
+static ULONG __asm get_new_id(77,1778
+void func_BMAddLines(105,2507
+void func_BMRemLines(120,2875
+void func_BMAddChars(174,4641
+void func_BMRemChars(190,5082
+void func_BMSwapLines(230,6306
+void func_BMJoinLines(254,6965
+void func_BMSplitLine(278,7566
+ULONG func_BMExists(300,8166
+struct AZBM *func_BMGetPtr(305,8232
+struct AZBM *func_BMAdd(315,8444
+ULONG func_BMInside(335,8996
+ULONG func_BMApply(354,9433
+ULONG func_BMGetId(374,10064
+ULONG func_BMRemove(388,10281
+ULONG func_BMRemAll(407,10731
+ULONG func_BMInit(424,11095
+void func_BMCleanup(443,11542
+
+cmd_win.c,745
+extern struct Glob 29,649
+struct UIKObjWindow *get_winicon_ptrs(44,990
+void CmdFunc_WinClose_Do(58,1340
+void CmdFunc_File2NewWin_Do(86,2233
+void CmdFunc_WinIconify_Do(138,4608
+void CmdFunc_ViewUpdate_Do(161,5155
+void CmdFunc_Win2Back_Do(186,5743
+void CmdFunc_Win2Front_Do(196,5912
+void CmdFunc_WinAct_Do(209,6137
+void CmdFunc_WinChange_Do(219,6358
+struct AZurNode *func_PLTaskNode(277,8414
+struct AZurNode *func_PLFindNode(291,8830
+struct AZurNode *func_PLLastActiveNode(305,9253
+static void do_win_act(315,9498
+void CmdFunc_WinLast_Do(338,10263
+void CmdFunc_WinNext_Do(345,10356
+void CmdFunc_WinPrev_Do(352,10449
+void CmdFunc_WinZoom_Do(359,10576
+void CmdFunc_Screen2Back_Do(374,10938
+void CmdFunc_Screen2Front_Do(384,11116
+
+funcs_list.c,431
+extern struct Glob 56,1235
+static void __regargs do_okfunc(75,1798
+static void __regargs do_cancelfunc(81,1996
+static void reqlist_closed(87,2185
+static ULONG __regargs do_str_name(94,2348
+static void __regargs do_list_name(112,2727
+static void SelectRPList(137,3394
+static void SelectRPKeys(153,3902
+static void StringKeys(182,5029
+static void GadOK(188,5209
+static void GadCancel(193,5327
+ULONG func_ReqList(198,5422
+
+funcs_prefs.c,1016
+extern struct Glob 71,1877
+void ActualizePrefs(103,3252
+static void add_button(128,4072
+void verif_maxval(155,5213
+void verif_maxval_signed(176,5750
+static UBYTE *prep_edit2(206,6585
+static ULONG AddReqEdit2(236,7530
+static ULONG edit1_maxheight(282,9071
+static UBYTE *prep_edit1(300,9588
+static void StartEdit2End(342,11192
+static void StartEdit2(375,12503
+static ULONG AddReqEdit1(388,13031
+void show_edit1char(487,17013
+static void ReqEditPrefsEnd(512,17718
+ULONG func_ReqOpenEditPrefs(565,19745
+static UBYTE *prep_env2(588,20438
+static ULONG AddReqEnv2(624,21548
+static ULONG env1_maxheight(666,23188
+static UBYTE *prep_env1(701,24326
+static void StartEnv2End(788,27622
+static void StartEnv2(815,28806
+void endisable_bkpname(828,29333
+static void able_autosauve(838,29565
+void endisable_autosauve(857,30128
+static void able_backup(876,30702
+void endisable_backup(895,31316
+static ULONG AddReqEnv1(914,31943
+static void ReqEnvPrefsEnd(1001,35853
+ULONG func_ReqOpenEnvPrefs(1056,38219
+
+funcs_macro.c,439
+extern struct Glob 32,692
+ULONG func_MacroExists(50,1143
+void func_MacroReset(55,1219
+void func_MacroDelete(68,1494
+ULONG func_MacroAdd(79,1693
+ULONG func_MacroPlay(170,4550
+ULONG func_MacroApply(188,5166
+ULONG func_MacroRecord(200,5469
+void func_MacroEndRecord(209,5731
+ULONG func_MacroInit(218,5999
+void func_MacroCleanup(232,6290
+static ULONG macro2buf(240,6445
+ULONG func_Macro2Buf(262,7051
+ULONG func_Buf2Macro(288,7655
+
+funcs_conv.c,320
+extern struct Glob 29,694
+UBYTE func_CharStripAccent(51,1719
+UBYTE func_CharStripBit7(67,2053
+void func_Amiga2Vdx(208,4756
+UBYTE *func_Vdx2Amiga(261,6298
+static void do_tables(391,10766
+static void transcode(402,11002
+void func_MSDOS2Amiga(419,11372
+void func_Amiga2MSDOS(424,11479
+UBYTE *func_C2Bin(431,11673
+
+cmd_sort.c,651
+#define D_S(26,607
+extern struct Glob 32,804
+static int cmp_noaccent_case(54,1345
+static int cmp_accent_case(68,1734
+static int cmp_noaccent_nocase(80,2003
+static int cmp_accent_nocase(96,2458
+static int cmp_date(110,2793
+static ULONG CombSort(137,3698
+ULONG func_TextSort(193,5515
+void CmdFunc_Sort_Do(245,7101
+struct PairElement 312,9323
+typedef struct PairElement PE;316,9386
+struct matchinfo 318,9418
+ULONG CharMatch_Next(328,9595
+ULONG CharMatch_Back(363,10829
+static ULONG MatchOne(398,12036
+static ULONG MatchFull(451,13833
+void CmdFunc_Match_Do(471,14461
+static LONG get_frontcol(544,16617
+void CmdFunc_Indent_Do(559,16985
+
+_saveicon.c,89
+From: carolyn@cbmvax.cbm.commodore.com 2,35
+will probably get you default stack 20,688
+
+_patch.c,46
+static ULONG search(12,320
+void main(34,818
+
+datalayouts.c,0
+
+funcs_search.c,540
+#define D_S(27,677
+#define DBUG(30,805
+extern struct Glob 35,891
+static ULONG lfverif_found(50,1233
+static ULONG te_LFStringEqual(97,2692
+static ULONG Search_LFNext(132,3873
+static ULONG Search_LFPrev(156,4626
+static ULONG verif_found(182,5458
+static ULONG te_StringEqual(218,6514
+static ULONG Search_NoLFNext(240,7172
+static ULONG Search_NoLFPrev(290,9061
+static ULONG SearchInto(347,11333
+ULONG func_TextSearch(468,15934
+static ULONG ReplaceInto(617,20822
+void verif_searchflags(804,28272
+ULONG func_TextReplace(820,28655
+
+funcs_clip.c,230
+extern struct Glob 18,483
+LONG func_CBWrite(33,828
+struct IOClipReq *func_CBWriteStart(45,1128
+void func_CBWriteEnd(74,2081
+LONG func_CBRead(104,2907
+struct IOClipReq *func_CBReadStart(115,3180
+void func_CBReadEnd(158,4585
+
+funcs_block.c,1047
+extern struct Glob 38,1088
+static LONG redresse(53,1474
+static ULONG MarkLines(82,2476
+static ULONG UnmarkLines(94,2985
+ULONG func_BlockExists(107,3698
+ULONG func_BlockCurrent(112,3785
+void func_BlockGetStart(117,3875
+void func_BlockGetLimit(125,4032
+struct AZBlock *func_BlockPtr(133,4189
+struct AZBlock *func_BlockGetPrev(143,4415
+struct AZBlock *func_BlockGetNext(158,4779
+static ULONG get_newid(173,5150
+ULONG func_BlockStart(215,6614
+static void get_clip(228,7138
+static ULONG arrange_limits(270,8262
+struct AZBlock *func_BlockModify(369,12812
+struct AZBlock *func_BlockDefine(438,15056
+ULONG func_BlockLineInside(484,16827
+ULONG func_BlockInside(505,17366
+ULONG func_BlockApply(547,18772
+ULONG func_BlockRemove(567,19427
+ULONG func_BlockRemAll(595,20152
+ULONG func_BlockInit(624,21094
+void func_BlockCleanup(643,21575
+static ULONG bloc_del(650,21719
+ULONG func_BlockEraseAll(666,22149
+ULONG func_BlockClearAll(679,22451
+static ULONG write_buf(713,23522
+ULONG bloc_2_buf(719,23707
+ULONG func_Block2Buf(726,24015
+
+datachip.c,0
+
+filedef_mouse.c,308
+extern struct Glob 44,884
+ULONG Parm_InitMouse(154,4454
+ULONG Parm_CleanupMouse(161,4542
+void Mouse_Joy(190,5471
+void FromInpuTick(283,8956
+static LONG trouve_ecart(313,10298
+static void ScrollMouse(331,10939
+void FromMouse(357,12011
+ULONG interpret_mouse(418,14763
+ULONG Parm_VerifMouse(561,20245
+
+cmd_exe.c,630
+extern struct Glob 35,766
+static void security(63,1547
+void CmdFunc_ExeARexx_SetMenu(79,2254
+static ULONG arexx_OpenConsole(83,2310
+static void arexx_FS_OKFunc(112,3358
+static void arexx_FS_CancelFunc(164,5254
+static void ARexxCommon(169,5355
+void CmdFunc_ExeARexxCmd_Do(268,9127
+void CmdFunc_ExeARexxScript_Do(275,9312
+static ULONG dos_execute(293,9872
+static ULONG dos_OpenConsole(358,11929
+static void dos_FS_OKFunc(387,12972
+static void dos_FS_CancelFunc(421,14082
+static void DOSCommon(432,14352
+void CmdFunc_ExeDOSCmd_Do(536,18181
+void CmdFunc_ExeDOSScript_Do(543,18378
+void CmdFunc_ExeLastCmd_Do(551,18528
+
+datatemplate2.c,0
+
+funcs_div.c,831
+extern struct Glob 35,830
+void PrintDebug(58,1433
+void __asm SET_MODIFIED(69,1746
+void __asm CLR_MODIFIED(79,2067
+void Month_Day(87,2245
+void SetCmdResultWith(126,3703
+void StoreLastCmd(148,4368
+void LayoutString(171,4988
+void LayoutGad(197,5827
+struct AZLayout *LayoutFrame(214,6344
+struct AZLayout *LayoutPrepare(278,8946
+struct AZLayout *LayoutWidthFrame(298,9463
+void LayoutWidth(340,11210
+ULONG LayoutAddObjects(352,11442
+struct StoreVar 468,17841
+static UBYTE ** __asm find_var(474,17944
+void func_FreeVarList(492,18339
+void func_GetVarList(509,18655
+APTR func_VarNew(534,19303
+APTR func_VarLock(564,20206
+APTR func_VarLockResize(582,20736
+void func_VarUnlock(604,21382
+static void cleanup_varlist(619,21696
+void func_VarDispose(631,21949
+ULONG func_VerifyOff(706,24418
+void func_VerifyOn(731,25087
+
+filedef_equal.c,152
+extern struct Glob 28,626
+ULONG Parm_InitEqual(43,979
+ULONG Parm_CleanupEqual(48,1022
+ULONG Parm_VerifEqual(75,1789
+ULONG interpret_equals(82,1892
+
+hash.c,190
+extern struct Glob 29,1376
+static ULONG __asm HPJW(36,1551
+HashRoot *Hash_Init(54,1856
+APTR Hash_Add(68,2271
+APTR Hash_Find(106,3104
+void Hash_Remove(120,3436
+void Hash_Free(140,4011
+
+filedef_menu.c,440
+extern struct Glob 33,742
+ULONG Parm_InitMenu(131,3557
+ULONG Parm_InitMainMenu(135,3598
+static ULONG cleanup_menu(141,3645
+ULONG Parm_CleanupMenu(182,5114
+ULONG Parm_CleanupMainMenu(187,5248
+static void MenuFunction(201,5762
+static ULONG interpret_item(206,5905
+static UBYTE *find_title(277,8274
+ULONG interpret_menus(291,8709
+static ULONG verif_menu(429,13566
+ULONG Parm_VerifMenu(465,14816
+ULONG Parm_VerifMainMenu(469,14896
+
+funcs_curs.c,293
+extern struct Glob 33,767
+static void add_offset(61,1460
+LONG func_ComputeLineCol(78,1842
+static void set_all_hprops(219,5718
+static ULONG hv_scroll(231,6105
+void func_CursorPosReal(321,9280
+void func_CursorPos(396,11706
+void func_CursorErase(401,11794
+void func_CursorDraw(409,11937
+
+cmd_curs.c,1101
+extern struct Glob 34,800
+static ULONG decrypt_position(51,1188
+void CmdFunc_Cursor_Do(128,3977
+void CmdFunc_CursorOld_Do(165,5198
+void CmdFunc_Block_New(178,5697
+void CmdFunc_Block_Do(186,5841
+static ULONG clip_buf(307,11253
+static ULONG bloc_clip(317,11475
+ULONG func_Block2CB(324,11786
+void CmdFunc_Block2CB_Do(348,12354
+ULONG func_Win2CB(360,12612
+void CmdFunc_Win2CB_Do(383,13125
+static ULONG write_buf(395,13426
+static ULONG bloc_file(402,13605
+ULONG func_Block2File(409,13917
+void CmdFunc_Block2File_Do(418,14124
+static ULONG func_CB2File(441,15014
+void CmdFunc_CB2File_Do(469,15878
+void CmdFunc_CB2Win_Do(495,16876
+void CmdFunc_CursLastChange_Do(542,18760
+// static void BM_copy_name(549,19105
+ULONG BM_apply_2_buftmp(554,19231
+static ULONG trunc_BM_name(563,19515
+ULONG BM_sel_2_buftmp(575,19787
+static void BM_ok(590,20074
+void BM_cancel(596,20195
+void BM_update_palette(601,20267
+static UBYTE *get_BM_name_id(625,20974
+void CmdFunc_BMAdd_Do(667,22515
+void CmdFunc_BMCursor_Do(701,23529
+static ULONG BM_remove_pat(723,24122
+void CmdFunc_BMRemove_Do(732,24346
+
+cmd_tltemplates.c,0
+
+cmd_text.c,657
+#define DBUG(28,650
+extern struct Glob 33,736
+void CmdFunc_Del_Do(50,1265
+UBYTE commun_text_2(129,3914
+void CmdFunc_Text2Win_Do(150,4549
+ULONG func_Buf2CB(192,5947
+void CmdFunc_Text2CB_Do(211,6381
+static ULONG func_Text2File(240,7100
+void CmdFunc_Text2File_Do(251,7328
+void CmdFunc_LineClone_Do(287,8348
+void CmdFunc_LineJoin_Do(313,8970
+static ULONG convert_chars(372,10929
+void CmdFunc_CharConvert_Do(444,13361
+ULONG DoRealSearch(559,17717
+ULONG search_common(744,24264
+void CmdFunc_Search_Do(816,27539
+void CmdFunc_Replace_Do(827,27748
+static ULONG print(875,28952
+static ULONG DoSurround(888,29269
+void CmdFunc_Surround_Do(941,31359
+
+funcs_text.c,1116
+#define D_S(27,677
+#define DBUG(30,805
+extern struct Glob 35,891
+ULONG func_intSplitLine(52,1334
+ULONG func_SplitLine(76,2029
+ULONG func_intJoinLine(82,2153
+ULONG func_JoinLine(109,3032
+ULONG func_LinePadSpace(115,3154
+ULONG func_LineTruncateSpace(131,3661
+ULONG func_CharFirst(142,4008
+void text_sync(157,4356
+void text_reset(166,4567
+LONG func_FindIndentPos(184,4980
+UBYTE *func_CharPrev(216,5847
+UBYTE *func_CharNext(232,6231
+UBYTE *func_PosPrev(266,7015
+UBYTE *func_PosNext(275,7200
+LONG func_CountTabs(284,7385
+ULONG func_CountWords(299,7667
+static ULONG clip_buf(384,10641
+ULONG func_Text2CBRect(394,10863
+ULONG func_Text2CB(411,11322
+LONG func_TextDel(504,14272
+LONG func_TextDelRect(634,18601
+struct TextApplyParms 739,22126
+static ULONG put_str_rect(755,22405
+static ULONG put_str(779,23063
+static ULONG text_apply(806,23821
+ULONG func_TextApply(945,28589
+ULONG func_TextApplyReal(950,28802
+ULONG func_TextPrep(957,29084
+static ULONG store_std_line_norect(1013,31003
+static ULONG store_std_line_rect(1076,33217
+ULONG func_TextPut(1149,35632
+ULONG func_Buf2Text(1306,41268
+
+filedef_key.c,212
+extern struct Glob 51,1055
+static void InitKeyTabs(304,9363
+ULONG Parm_InitKey(341,10465
+ULONG Parm_CleanupKey(349,10570
+void RawKeys(382,11682
+ULONG interpret_keys(633,21538
+ULONG Parm_VerifKey(817,29233
+
+_asyncio.c,229
+extern struct Glob 23,719
+#define D_S(30,911
+static void SendPacket(37,1122
+static LONG WaitPacket(49,1470
+struct AsyncFile *OpenAsync(164,5188
+LONG CloseAsync(332,12201
+LONG ReadAsync(365,13073
+LONG WriteAsync(390,13819
+
+cmd_req.c,232
+extern struct Glob 37,769
+#define REQOFFS(61,1515
+static struct cmdreq_functab *get_tab_entry(95,3309
+ULONG func_ReqOpen(107,3553
+void func_ReqClose(142,4349
+void CmdFunc_ReqOpen_Do(179,5347
+void CmdFunc_ReqClose_Do(189,5546
+
+datalogos.c,0
+
+funcs_table.c,0
+
+funcs_display.c,449
+extern struct Glob 34,821
+void map_view_nodes1_nolock(59,1823
+static void map_view_nodes1(74,2219
+static void map_view_nodes4(91,2680
+void func_RefreshZones(110,3245
+void func_Scroll(121,3539
+void func_Display(126,3664
+void func_ReDisplay(132,3854
+void func_DisplayBlock(137,3924
+void func_DisplayCmd(142,4000
+void func_ViewsTopLeft(148,4158
+void func_ResetProps(153,4233
+void func_DisplayStats(158,4312
+void func_DisplayCurs(176,4863
+
+funcs_reqs.c,2441
+extern struct Glob 46,1180
+static struct Window *verif_window(76,1910
+static struct Window *activate_window(102,2449
+static void setbuffers(118,2801
+struct ASSR 140,3367
+static void cleanup_asyncrs(145,3436
+static void sm_okfunc(160,3850
+static void sm_middlefunc(170,4127
+static void sm_cancelfunc(180,4416
+static void okfunc(199,5096
+static void req_rawkeys(205,5217
+static void req_rawkeys_async(212,5395
+ULONG sync_request(219,5580
+ULONG func_AskReqBegin(248,6316
+ULONG func_AskReqQuery(289,7862
+void func_AskReqEnd(308,8282
+void func_ReqShowText(317,8556
+static ULONG bouchon(353,9798
+static ULONG smart_request(380,10995
+ULONG func_SmartRequest(508,16911
+ULONG func_IntSmartRequest(513,17228
+UBYTE *make_listptr(526,18004
+void __asm getgad_check(542,18493
+ULONG __asm getgad_radio(547,18718
+ULONG __asm getgad_strnum(552,18875
+void __asm setgad_active(557,19032
+void __asm setgad_disable(562,19238
+void __asm setgad_strnum(567,19447
+static UBYTE *prep_rsr(575,19726
+void set_backw_radio(619,21188
+void set_search_radio(628,21497
+static ULONG AddReqSearchReplace(636,21773
+static void ReqSearchPrefsEnd(696,23869
+static void ReqSearchAsyncPrefsEnd(731,25153
+static void ReqSearchAsyncNormEnd(736,25273
+static ULONG do_reqsearch(755,25718
+static void req_search_err(795,27293
+ULONG func_ReqSearch(805,27562
+ULONG func_ReqSearchReplace(817,27858
+ULONG func_ReqNumber(831,28235
+ULONG func_ReqString(847,28709
+static void calc_line_col(862,29134
+ULONG func_ReqLineColumn(874,29627
+ULONG func_ReqOffset(900,30283
+static void remove_async_rs(926,31083
+ULONG func_ReqOpenSearch(933,31250
+ULONG func_ReqOpenSearchReplace(943,31575
+ULONG func_ReqOpenSearchPrefs(953,31909
+ULONG func_ReqOpenWindowPrefs(962,32126
+static void display_okfunc(996,33249
+static void display_cancelfunc(1009,33645
+static void display_windowclosed(1014,33763
+ULONG func_ReqOpenDisplayPrefs(1019,33868
+ULONG func_ReqOpenPrintPrefs(1066,35529
+static void Font_Cancel(1100,36650
+static void Font_OK(1105,36764
+ULONG func_ReqOpenFontPrefs(1210,41267
+ULONG func_ReqOpenInfo(1243,42241
+ULONG func_ReqOpenAbout(1290,45166
+static void InsertHexString(1395,48964
+ULONG func_ReqOpenHex(1438,50237
+static void do_line_col(1448,50707
+ULONG func_ReqOpenLineColumn(1464,51296
+static void do_req_offset(1475,51865
+ULONG func_ReqOpenOffset(1490,52311
+static void BM_ok(1503,52833
+ULONG func_ReqOpenBookmark(1513,53124
+
+funcs_pointeur.c,286
+extern struct Glob 24,593
+static struct Window *get_window(97,2339
+void func_SetRecordPointer(102,2479
+void func_SetPlayPointer(109,2640
+void func_SetWaitPointer(116,2797
+void func_SetSystemPointer(137,3335
+void func_SetNullPointer(162,3952
+void func_RemoveNullPointer(173,4241
+
+cmd_file.c,1040
+extern struct Glob 37,836
+static ULONG AskModified(56,1278
+void err_cancel(67,1649
+void err_memory(68,1735
+void update_file2fs(70,1818
+void CmdFunc_WinClear_Do(94,2572
+void patch_lf(110,3256
+void CmdFunc_File2Win_Do(119,3382
+static ULONG cmd_loadfile(176,5500
+void CmdFunc_Win2File_Do(290,9832
+static ULONG func_File2CB(339,11840
+void CmdFunc_File2CB_Do(379,13165
+static ULONG func_File2File(403,13890
+void CmdFunc_File2File_Do(431,14760
+//»»»»»» Cmd_Prefs2File     DEFAULT/S,NAME 454,15739
+static UBYTE *make_dirlist(456,15845
+static void setenvname(519,18205
+static UBYTE *setallnames(531,18506
+static void update_mast_prefs(543,18869
+static void prefs_cancel(571,19608
+static ULONG do_saveprefs(576,19690
+void CmdFunc_Prefs2File_Do(624,21500
+//»»»»»» Cmd_File2Prefs     DEFAULT/S,NAME652,22301
+static ULONG do_openprefs(654,22345
+void CmdFunc_File2Prefs_Do(704,24224
+void CmdFunc_File2Parms_Do(734,25067
+void CmdFunc_File2Mac_Do(757,25595
+static ULONG macro2file(797,26930
+void CmdFunc_Mac2File_Do(816,27392
+
+cmd_tlnames.c,0
+
+cmd_tlgerms.c,1752
+extern struct Glob 31,721
+static void CmdFunc_kprintf_Do(61,1373
+static void CmdFunc_AddParm_Do(94,2283
+static void CmdFunc_CorrectWord_Do(219,5794
+static void CmdFunc_CorrectWordCase_Do(234,6210
+static void CmdFunc_Fold_Do(408,11286
+static void CmdFunc_FormatParagraph_Do(423,11660
+static void CmdFunc_GetFontInfo_Do(522,14442
+static void CmdFunc_GetPrefs_Do(620,17140
+static void CmdFunc_LineCenter_Do(798,22157
+static void CmdFunc_LineJustify_Do(830,22980
+static void CmdFunc_LineUndo_Do(845,23389
+static void CmdFunc_NOp_Do(946,26075
+static void CmdFunc_ReDo_Do(980,26983
+static void CmdFunc_RemakeScreen_Do(994,27304
+static void CmdFunc_ReqBool_Do(1018,27942
+static void CmdFunc_ReqFile_Do(1043,28614
+static void CmdFunc_ReqNum_Do(1058,28997
+static void CmdFunc_ReqStr_Do(1083,29656
+static void CmdFunc_SetResident_Do(1166,32095
+static void CmdFunc_SetChar_Do(1181,32503
+static void CmdFunc_SetPrefs_Do(1226,33806
+static void CmdFunc_SetQuoteMode_Do(1251,34477
+static void CmdFunc_SetStatusBar_Do(1266,34896
+static void CmdFunc_ShiftLeft_Do(1291,35588
+static void CmdFunc_ShiftRight_Do(1305,35932
+static void CmdFunc_Space2Tab_Do(1319,36280
+static void CmdFunc_Tab2Space_Do(1354,37230
+static void CmdFunc_Template_Do(1369,37627
+static void CmdFunc_Undo_Do(1414,38878
+static void CmdFunc_ViewActivate_Do(1448,39754
+static void CmdFunc_ViewCenter_Do(1462,40126
+static void CmdFunc_ViewDown_Do(1477,40529
+static void CmdFunc_ViewLeft_Do(1492,40920
+static void CmdFunc_ViewRight_Do(1506,41258
+static void CmdFunc_ViewScroll_Do(1520,41602
+static void CmdFunc_ViewSize_Do(1535,42005
+static void CmdFunc_ViewSplit_Do(1550,42397
+static void CmdFunc_ViewSwitch_Do(1565,42796
+static void CmdFunc_ViewUp_Do(1579,43141
+
+cmd_tltable.c,0
+
+cmd_div.c,930
+extern struct Glob 34,759
+void CmdFunc_Qualifier_Do(56,1605
+void CmdFunc_Help_Do(71,2105
+void CmdFunc_Illegal_Do(114,3751
+void CmdFunc_AbortARexx_Do(126,4023
+void CmdFunc_Lock_Do(135,4225
+void CmdFunc_Load_Do(169,5216
+void CmdFunc_Unload_Do(177,5390
+void CmdFunc_Version_Do(188,5655
+void CmdFunc_Beep_Do(203,6100
+void CmdFunc_ActivateCmdLine_Do(210,6202
+void CmdFunc_InactivateCmdLine_Do(217,6361
+void CmdFunc_Debug_Do(224,6478
+void CmdFunc_Block2Mac_Do(231,6589
+void CmdFunc_Mac2Win_Do(248,7061
+void CmdFunc_MacEnd_Do(262,7429
+void CmdFunc_MacDelete_Do(269,7529
+void CmdFunc_MacPlay_Do(277,7722
+void CmdFunc_MacRecord_Do(297,8293
+static void queue_remove(310,8691
+void rxn_Cleanup(316,8793
+static struct WaitAppl *queue_add(338,9699
+static struct WaitAppl *queue_search(351,10064
+void CmdFunc_RexxNameObtain_Do(366,10454
+void CmdFunc_RexxNameRelease_Do(389,11071
+void CmdFunc_RexxNameClear_Do(424,12182
+
+funcs_fileio.c,711
+extern struct Glob 35,888
+ULONG func_ResetFile(50,1233
+ULONG func_LoadFile(67,1716
+static ULONG buildbackupname(111,3110
+static ULONG do_backup(174,5269
+static ULONG replace_auts_name(263,9449
+static ULONG same_autsname(313,10974
+ULONG build_auts_name(333,11502
+ULONG func_SaveFile(361,12306
+void do_autosave(411,14038
+void AutosaveFunc(426,14480
+void AutosaveMod(431,14551
+static UBYTE *set_pattern(460,15403
+static void reset_pattern(477,15857
+ULONG IsNotFileSystem(488,16180
+ULONG MayBeFileName(506,16581
+static UBYTE *ReqFileName(520,16931
+UBYTE *func_ReqFileNameO(557,18000
+UBYTE *func_IntReqFileNameO(562,18206
+UBYTE *func_ReqFileNameS(567,18464
+UBYTE *func_IntReqFileNameS(572,18670
+
+filedef.c,332
+extern struct Glob 35,850
+static void add_file(50,1193
+static ULONG link(80,2294
+static UBYTE *cutbuf(117,3374
+void strip_comments(126,3617
+static ULONG interpret_vide(177,4956
+static ULONG interpret(193,5313
+static ULONG ParmRead(268,8089
+ULONG ParmInit(324,9574
+void ParmCleanup(336,9890
+ULONG func_ReadParms(345,10074
+
+datatext.c,0
+
+_test.c,46
+static void Cleanup(32,772
+void main(39,896
+
+eng_obj.c,702
+extern struct Glob 32,704
+struct CmdGerm *func_FindRegGerm(51,1153
+void eng_ShowRequest(87,2194
+static void no_memory(110,3005
+static ULONG __asm PrepareNewGerm(115,3191
+static void unload_germ(127,3567
+ULONG eng_RegisterInternalObjects(134,3744
+void eng_UnregisterAllObjects(159,4441
+ULONG __asm eng_DisposeGerm(165,4543
+void __asm eng_DisposeObject(180,4928
+struct CmdObj * __asm eng_NewPrivateObject(195,5296
+static struct TagItem *FindHunkGerm(239,6964
+struct CmdGerm * __asm eng_NewGerm(255,7496
+struct CmdObj * __asm eng_NewObject(339,10504
+UIKBUF *EqualReplace(349,10826
+ULONG eng_ExecuteAZurCmd(371,11371
+ULONG func_ExecuteAZurCmd(418,12783
+ULONG func_ExecuteCmdObj(425,12996
+
+eng_actions.c,27
+extern struct Glob 23,551
+
+arexx.c,1682
+extern struct Glob 44,1002
+void Mast_CmdComeBack(61,1396
+static ULONG locked_port(70,1617
+ULONG Mast_ReceiveARexxCmd(80,1842
+void Proc_CmdComeBack(148,3872
+ULONG Proc_ReceiveARexxCmd(157,4093
+static void trunc_result(216,5693
+void CmdFunc_GetResident_Do(230,5980
+void CmdFunc_GetBlockInfo_Do(237,6154
+void CmdFunc_GetChar_Do(255,6759
+void CmdFunc_GetCurrentDir_Do(274,7205
+void CmdFunc_GetFileInfo_Do(281,7326
+void CmdFunc_GetFilePath_Do(291,7584
+void CmdFunc_GetLockInfo_Do(298,7737
+void CmdFunc_GetMasterPort_Do(311,8134
+void CmdFunc_GetPort_Do(322,8552
+void get_win_list(332,8813
+void CmdFunc_GetPortList_Do(367,10126
+void CmdFunc_GetWinList_Do(374,10265
+void CmdFunc_GetPos_Do(381,10414
+void CmdFunc_GetPri_Do(397,10979
+void CmdFunc_GetReadonly_Do(404,11147
+void CmdFunc_GetError_Do(411,11304
+void CmdFunc_GetBlock_Do(422,11656
+void CmdFunc_GetLine_Do(441,12183
+void CmdFunc_GetWord_Do(492,13617
+void CmdFunc_GetNumBlocks_Do(539,15001
+void CmdFunc_GetNumLines_Do(546,15151
+void CmdFunc_GetVarList_Do(553,15321
+void CmdFunc_GetVar_Do(560,15450
+void CmdFunc_GetScreenInfo_Do(577,15802
+static void __asm get_scr_title(616,17144
+void CmdFunc_GetScreenList_Do(625,17438
+void CmdFunc_GetTaskInfo_Do(656,18257
+void CmdFunc_GetViewInfo_Do(682,18997
+void CmdFunc_GetWinBorders_Do(719,20234
+void CmdFunc_GetWinInfo_Do(738,20932
+void CmdFunc_GetNumBM_Do(758,21540
+void CmdFunc_GetBMInfo_Do(765,21715
+ULONG bm_2_buf(788,22286
+void CmdFunc_GetBMList_Do(797,22498
+void CmdFunc_SetVar_Do(811,22818
+void CmdFunc_SetModified_Do(845,23850
+void CmdFunc_SetCurrentDir_Do(856,24153
+void CmdFunc_SetFilePath_Do(900,25613
+void CmdFunc_SetPri_Do(927,26416
+
+lock.c,338
+extern struct Glob 28,678
+void time1(51,1237
+void time2(56,1362
+ULONG time3(69,1688
+void time4(75,1849
+ULONG lo_GetFIB(91,2173
+ULONG lo_FileExists(103,2374
+ULONG lo_FileSize(113,2561
+ULONG lo_DirCreate(122,2709
+ULONG lo_NewerFile(138,3000
+void lo_GetPath(157,3610
+ULONG lo_SetCurDir(186,4440
+UBYTE *lo_MakeTotalPath(223,5401
+
+objfile.c,1647
+extern struct Glob 52,1269
+static void linkviews(99,2752
+static void RemoveViewNode(127,3440
+static struct AZObjView *AddViewNode(153,4186
+static void get_aspect(178,5047
+static void auto_size(199,5817
+void ofi_VerifViewSize(245,7418
+void ofi_LinkViews(282,9168
+struct AZObjView *ofi_AddViewObj(287,9237
+struct AZObjView *ofi_AddView(292,9407
+void ofi_RemView(315,10095
+void ofi_ActualizeViewLimits(320,10194
+void ofi_SetActiveView(347,11014
+struct AZObjView *ofi_WhichViewPointer(357,11250
+struct UIKObjMenu *ofi_AddMenuObj(373,11727
+void set_intui_vars(409,12982
+void ofi_QuitVerify(426,13597
+static void CtrlD_QuitVerify(457,14741
+static void BlinkCursor(463,14869
+void ofi_TickUpdateDisplay(494,15810
+static void Inact_SetCursor(524,16596
+static void NewWindowSize(534,16879
+void ofi_ActivateFObjKeyTank(543,17326
+static void WindowKeyTank(561,17724
+static void PatchLastDoc(569,17946
+static void DoMouseClick(578,18209
+static void WindowButtons(599,18686
+static void WindowMove(631,19526
+static void WindowTick(639,19734
+static void MenuCancel(654,20190
+void ofi_SetIconColor(678,21005
+void ofi_ComputeViewBox(705,21722
+struct UIKObj *ofi_AddStat(718,22308
+struct UIKObj *ofi_AddCmdLine(733,22885
+static void hdl_reactivate_fobj(759,24066
+static void CmdLine_InactHandler(778,24514
+static void Key2CmdLine(785,24816
+static ULONG IsUIKWindow(885,28773
+static void test_over_window(907,29315
+static void WinStopFunc(951,30484
+static int GenericAdd(956,30550
+static void GenericRemove(1189,42480
+void ofi_FS_OKFunc(1217,43135
+void ofi_FS_CancelFunc(1224,43366
+static int GenericStartAfter(1231,43546
+
+main2.c,114
+static void ShowRequest(77,1780
+static void no_memory(91,2217
+static void LibAlert(96,2339
+void main(101,2484
+
+objview.c,1062
+extern struct Glob 32,757
+static int CrossResize(72,2247
+static void DecTimer(111,3292
+static void StartTimer(116,3397
+static void ZeroTimer(121,3482
+static ULONG install_delay(126,3566
+static void DisplayCursor(138,3980
+static LONG link_upbut_2_vprop(152,4287
+static ULONG link_downbut_2_vprop(164,4545
+static ULONG link_updown_2_vprop(178,4965
+static void link_vprop(200,5503
+static LONG link_leftbut_2_hprop(212,5860
+static LONG link_rightbut_2_hprop(224,6120
+static LONG link_leftright_2_hprop(239,6523
+static void link_hprop(262,7097
+static int GenericAdd(277,7499
+static void GenericRefresh(527,18996
+void oview_Display(538,19307
+void oview_ReDisplay(544,19504
+void oview_DisplayBlock(550,19613
+void oview_DisplayCmd(556,19728
+void oview_ViewTopLeft(562,19872
+void oview_ResetProps(569,20022
+void oview_ScrollView(589,20575
+void oview_DisplayCurs(602,21052
+ULONG oview_ChangeViewPosition(607,21173
+void UpdateHProp(645,22539
+void oview_DisplayView(660,22969
+void oview_ChangeView(669,23158
+void oview_SetResizeFlags(711,25496
+
+objsplit.c,567
+extern struct Glob 38,859
+static WORD but_top(108,2951
+static void MoveBar_Start(115,3155
+static void MoveBar(149,4348
+static void MoveBar_End(212,7373
+static void MoveBar_EndMB(308,10969
+static int GenericAdd(327,11580
+static int GenericStart(358,12871
+static void GenericStop(364,12969
+static void GenericRemove(369,13051
+static void GenericRefresh(374,13159
+static void GenericResize(379,13247
+static void __asm GenericAct(385,13364
+static void __asm GenericInact(391,13551
+static void __asm GenericMove(397,13742
+void ospl_SetImageTitle(407,14061
+
+objstat.c,92
+extern struct Glob 38,858
+void ostat_Display(58,1302
+static void GenericRefresh(154,4550
+
+objzone.c,583
+extern struct Glob 37,862
+static void GetRows(73,1982
+static void VerifPosNum(82,2226
+void HGetMaxLen(107,2808
+static void GetCols(133,3691
+static void HVerifPosNum(142,3933
+static int GenericAdd(166,4489
+static void GenericStop(184,4986
+static void GenericRemove(191,5092
+static void GenericResize(195,5147
+static int GenericStart(217,5908
+static void GenericRefresh(227,6145
+static UBYTE __asm CharImage(293,8715
+void ozone_DisplayCurs(319,9295
+static void draw_text(386,11726
+static void draw_rect(449,14130
+void ozone_Display(478,14942
+            if 665,23533

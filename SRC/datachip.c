@@ -1,0 +1,624 @@
+#include "uiki:uikgfx.h"
+
+static UWORD chip TabData[4][5][1] =
+   {
+   0x1000,    /* ...#............ */
+   0x1800,    /* ...##........... */
+   0xfc00,    /* ######.......... */
+   0x1800,    /* ...##........... */
+   0x1000,    /* ...#............ */
+
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+   0x0000,    /* ................ */
+
+   0x1000,    /* ...#............ */
+   0x1800,    /* ...##........... */
+   0xfc00,    /* ######.......... */
+   0x1800,    /* ...##........... */
+   0x1000,    /* ...#............ */
+   };
+struct UIKBitMap __far UBM_Tab = { &TabData[3][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    6, 2,5, 0,3,0, &TabData[0][0][0], &TabData[1][0][0], &TabData[2][0][0], 0, 0, 0, 0, 0 };
+
+
+static UWORD chip ButUp1Data[5][7][1] =
+   {
+   0xfe00,
+   0xee00,
+   0xc600,
+   0xc600,
+   0x8200,
+   0x8200,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0xfe00,
+   0xee00,
+   0xc600,
+   0xc600,
+   0x8200,
+   0x8200,
+   0x0000,
+   };
+struct UIKBitMap __far UBM_ButUp1 = { &ButUp1Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,7, 0,4,0, &ButUp1Data[0][0][0], &ButUp1Data[1][0][0], &ButUp1Data[2][0][0], &ButUp1Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip UpDown1Data[5][19][1] =
+   {
+   0x1000,
+   0x1000,
+   0x3800,
+   0x3800,
+   0x7c00,
+   0x7c00,
+   0xfe00,
+   0xfe00,
+   0x0000,
+   0x0000,
+   0x0000,
+   0xfe00,
+   0xfe00,
+   0x7c00,
+   0x7c00,
+   0x3800,
+   0x3800,
+   0x1000,
+   0x1000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x1000,
+   0x1000,
+   0x3800,
+   0x3800,
+   0x7c00,
+   0x7c00,
+   0xfe00,
+   0xfe00,
+   0x0000,
+   0x0000,
+   0x0000,
+   0xfe00,
+   0xfe00,
+   0x7c00,
+   0x7c00,
+   0x3800,
+   0x3800,
+   0x1000,
+   0x1000,
+   };
+struct UIKBitMap __far UBM_UpDown1 = { &UpDown1Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,19, 0,4,0, &UpDown1Data[0][0][0], &UpDown1Data[1][0][0], &UpDown1Data[2][0][0], &UpDown1Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButDown1Data[5][7][1] =
+   {
+   0x0000,
+   0x8200,
+   0x8200,
+   0xc600,
+   0xc600,
+   0xee00,
+   0xfe00,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x8200,
+   0x8200,
+   0xc600,
+   0xc600,
+   0xee00,
+   0xfe00,
+   };
+struct UIKBitMap __far UBM_ButDown1 = { &ButDown1Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,7, 0,4,0, &ButDown1Data[0][0][0], &ButDown1Data[1][0][0], &ButDown1Data[2][0][0], &ButDown1Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButLeft1Data[5][7][1] =
+   {
+   0xfc00,
+   0xf000,
+   0xc000,
+   0x8000,
+   0xc000,
+   0xf000,
+   0xfc00,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0xfc00,
+   0xf000,
+   0xc000,
+   0x8000,
+   0xc000,
+   0xf000,
+   0xfc00,
+   };
+struct UIKBitMap __far UBM_ButLeft1 = { &ButLeft1Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,7, 0,4,0, &ButLeft1Data[0][0][0], &ButLeft1Data[1][0][0], &ButLeft1Data[2][0][0], &ButLeft1Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip LeftRight1Data[5][7][2] =
+   {
+   0x0318, 0x0000,
+   0x0f1e, 0x0000,
+   0x3f1f, 0x8000,
+   0xff1f, 0xe000,
+   0x3f1f, 0x8000,
+   0x0f1e, 0x0000,
+   0x0318, 0x0000,
+
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+
+   0x0318, 0x0000,
+   0x0f1e, 0x0000,
+   0x3f1f, 0x8000,
+   0xff1f, 0xe000,
+   0x3f1f, 0x8000,
+   0x0f1e, 0x0000,
+   0x0318, 0x0000,
+   };
+struct UIKBitMap __far UBM_LeftRight1 = { &LeftRight1Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    19, 4,7, 0,4,0, &LeftRight1Data[0][0][0], &LeftRight1Data[1][0][0], &LeftRight1Data[2][0][0], &LeftRight1Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButRight1Data[5][7][1] =
+   {
+   0x7e00,
+   0x1e00,
+   0x0600,
+   0x0200,
+   0x0600,
+   0x1e00,
+   0x7e00,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x7e00,
+   0x1e00,
+   0x0600,
+   0x0200,
+   0x0600,
+   0x1e00,
+   0x7e00,
+   };
+struct UIKBitMap __far UBM_ButRight1 = { &ButRight1Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,7, 0,4,0, &ButRight1Data[0][0][0], &ButRight1Data[1][0][0], &ButRight1Data[2][0][0], &ButRight1Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButUp2Data[5][5][1] =
+   {
+   0xff00,
+   0xe700,
+   0xc300,
+   0x8100,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0xff00,
+   0xe700,
+   0xc300,
+   0x8100,
+   0x0000,
+   };
+struct UIKBitMap __far UBM_ButUp2 = { &ButUp2Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    8, 2,5, 0,4,0, &ButUp2Data[0][0][0], &ButUp2Data[1][0][0], &ButUp2Data[2][0][0], &ButUp2Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip UpDown2Data[5][12][1] =
+   {
+   0x0800,
+   0x1c00,
+   0x3e00,
+   0x7f00,
+   0xff80,
+   0x0000,
+   0x0000,
+   0xff80,
+   0x7f00,
+   0x3e00,
+   0x1c00,
+   0x0800,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0800,
+   0x1c00,
+   0x3e00,
+   0x7f00,
+   0xff80,
+   0x0000,
+   0x0000,
+   0xff80,
+   0x7f00,
+   0x3e00,
+   0x1c00,
+   0x0800,
+   };
+struct UIKBitMap __far UBM_UpDown2 = { &UpDown2Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    9, 2,12, 0,4,0, &UpDown2Data[0][0][0], &UpDown2Data[1][0][0], &UpDown2Data[2][0][0], &UpDown2Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButDown2Data[5][5][1] =
+   {
+   0x0000,
+   0x8100,
+   0xc300,
+   0xe700,
+   0xff00,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x8100,
+   0xc300,
+   0xe700,
+   0xff00,
+   };
+struct UIKBitMap __far UBM_ButDown2 = { &ButDown2Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    8, 2,5, 0,4,0, &ButDown2Data[0][0][0], &ButDown2Data[1][0][0], &ButDown2Data[2][0][0], &ButDown2Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButLeft2Data[5][5][1] =
+   {
+   0xfc00,
+   0xf000,
+   0xc000,
+   0xf000,
+   0xfc00,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0xfc00,
+   0xf000,
+   0xc000,
+   0xf000,
+   0xfc00,
+   };
+struct UIKBitMap __far UBM_ButLeft2 = { &ButLeft2Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,5, 0,4,0, &ButLeft2Data[0][0][0], &ButLeft2Data[1][0][0], &ButLeft2Data[2][0][0], &ButLeft2Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip LeftRight2Data[5][5][2] =
+   {
+   0x038e, 0x0000,
+   0x1f8f, 0xc000,
+   0xff8f, 0xf800,
+   0x1f8f, 0xc000,
+   0x038e, 0x0000,
+
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+   0x0000, 0x0000,
+
+   0x038e, 0x0000,
+   0x1f8f, 0xc000,
+   0xff8f, 0xf800,
+   0x1f8f, 0xc000,
+   0x038e, 0x0000,
+   };
+struct UIKBitMap __far UBM_LeftRight2 = { &LeftRight2Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    21, 4,5, 0,4,0, &LeftRight2Data[0][0][0], &LeftRight2Data[1][0][0], &LeftRight2Data[2][0][0], &LeftRight2Data[3][0][0], 0, 0, 0, 0 };
+
+static UWORD chip ButRight2Data[5][5][1] =
+   {
+   0x7e00,
+   0x1e00,
+   0x0600,
+   0x1e00,
+   0x7e00,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+   0x0000,
+
+   0x7e00,
+   0x1e00,
+   0x0600,
+   0x1e00,
+   0x7e00,
+   };
+struct UIKBitMap __far UBM_ButRight2 = { &ButRight2Data[4][0][0], UIKBMAP_MASKED|UIKBMAP_CONTIG,
+    7, 2,5, 0,4,0, &ButRight2Data[0][0][0], &ButRight2Data[1][0][0], &ButRight2Data[2][0][0], &ButRight2Data[3][0][0], 0, 0, 0, 0 };
+
+
+struct UIKBitMap * __far ButBitMapTable[] = {
+    &UBM_ButUp1,
+    &UBM_UpDown1,
+    &UBM_ButDown1,
+    &UBM_ButLeft1,
+    &UBM_LeftRight1,
+    &UBM_ButRight1,
+    &UBM_ButUp2,
+    &UBM_UpDown2,
+    &UBM_ButDown2,
+    &UBM_ButLeft2,
+    &UBM_LeftRight2,
+    &UBM_ButRight2,
+    &UBM_Tab,
+    0
+    };
