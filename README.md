@@ -9,7 +9,7 @@ Text editor for Amiga OS in 1995
 Fully configurable, multi-process, one per edited file, ARexx, multi-clipboards, rectangular blocks, multi-blocks, bookmarks, macros... Commands are objects, and a dev kit allows to create your own external commands. Even UIK objects (UI, ...) can be used in your command objects.
 
 
-#### FOLDS
+### FOLDS
 
 Any part of the text can be folded. We always fold whole lines. 
 When creating a fold, its limits can be specified in different ways by the arguments of the command or according to a drawn block.
@@ -23,7 +23,7 @@ The "Fold TOGGLE" command attached to the mouse buttons as well as the possibili
 Working with multiple blocks allows to create several folds at the same time, or to act on several existing folds at the same time: fold/unfold/remove.
 
 
-BLOCKS
+### BLOCKS
 
 AZur allows multiple blocks, i.e. as many blocks as you want in the text at the same time. Moreover they can be of
 different types :
@@ -37,7 +37,7 @@ For example "Indent" will push back from the left boundary of the left edge of t
 As a general rule, a rectangular block will restrict the actions within the actions inside the rectangle.
 
 
-BOOKMARKS
+### BOOKMARKS
 
 You can mark any place in a text, and give a name to this mark.
 The name can be up to 54 characters long.
@@ -46,7 +46,7 @@ The name of a bookmark can be taken automatically from a block or from the word 
 Each time the text is modified, the marks located downstream (after the change) automatically move to follow the marked text.
 
 
-MACROS
+### MACROS
 
 AZur contains an internal receptacle where a sequence of commands can be stored. This receptacle is called the "Internal Macro".
 
@@ -60,7 +60,7 @@ For example, to draw a block with the macro, during the recording you have to dr
 Once filled in, the internal macro of AZur can be transformed into text to be inserted in the edited text (Mac2Win), or saved in a file (Mac2File).
 
 
-VARIABLES
+### VARIABLES
 
 Each master file has its own set of variables that can be considered as local by the master process, but global by its children process.
 
@@ -69,7 +69,7 @@ They can be used in two ways:
 - in the command objects themselves, even the external ones thanks to functions of the the AZur development set : AZ_Var...().
 
 
-FORMATTING AND MARGINS
+### FORMATTING AND MARGINS
 
 The preferences allow to activate the margins. These margins are only taken into account during specific operations : formatting and justification of the text.
 
@@ -81,7 +81,7 @@ If a block is drawn, its limits define those of these commands:
 Warning: the first lines of a paragraph behave a little differently from the other lines: in order to keep their indentation the spaces at the beginning of the line are not deleted either by reformatting the line or by justification. However, there is a way to treat them in the same way as the others: the use of a rectangular block.
 
 
-COMPRESSION
+### COMPRESSION
 
 AZur can read files compressed with PowerPacker and save them by compressing them. In the future new compression modes will be added.
 
@@ -90,6 +90,6 @@ The library "powerpacker.library" is required, version 35 or higher to be able t
 Translated with www.DeepL.com/Translator (free version)
 
 
-AREXX
+### AREXX
 
 Full implementation of ARexx communications, and a direct ARexx console.
