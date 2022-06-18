@@ -88,3 +88,8 @@ AZur can read files compressed with PowerPacker and save them by compressing the
 The library "powerpacker.library" is required, version 35 or higher to be able to save.
 
 Translated with www.DeepL.com/Translator (free version)
+
+
+AREXX
+
+Full implementation of ARexx communications, and a direct ARexx console.
