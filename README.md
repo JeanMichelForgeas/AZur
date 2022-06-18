@@ -9,7 +9,7 @@ Text editor for Amiga OS in 1995
 Fully configurable, multi-process, one per edited file, ARexx, multi-clipboards, rectangular blocks, multi-blocks, bookmarks, macros... Commands are objects, and a dev kit allows to create your own external commands. Even UIK objects (UI, ...) can be used in your command objects.
 
 
- FOLDS
+# FOLDS
 
 Any part of the text can be folded. We always fold whole lines. 
 When creating a fold, its limits can be specified in different ways by the arguments of the command or according to a drawn block.
