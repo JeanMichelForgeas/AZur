@@ -6,8 +6,8 @@ I could not found my complete doc nor the full set of ARexx scripts provided wit
 
 Please if somebody have them, can you add them here or send them to me ?
 Thanks a ot :)
-
-
+ 
+ 
 
                          FUNCTIONALITIES
 
