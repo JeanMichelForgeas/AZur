@@ -3,7 +3,7 @@ Text editor for Amiga OS in 1995
 
 For more documentation please see in azur_demo/man/ or download the manual (in french) with the link given in the file "AZur manual fr - link".
 
-I could not find my complete doc nor the full set of ARexx scripts provided with the commercial version.
+I could not find the full set of ARexx scripts provided with the commercial version.
 Please if somebody have them, can you add them here or send them to me ?
 Thanks a ot :)
 
