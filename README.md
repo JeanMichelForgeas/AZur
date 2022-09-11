@@ -5,7 +5,7 @@ For more documentation please see in azur_demo/man/ or download the manual (in f
 
 I could not find the full set of ARexx scripts provided with the commercial version.
 Please if somebody have them, can you add them here or send them to me ?
-Thanks a ot :)
+Thanks a lot :)
 
  
 
